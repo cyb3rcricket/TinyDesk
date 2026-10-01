@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>TinyDesk</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="topbar">
+    <a class="brand" href="#/">
+      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+        <path fill="#322b3c" fill-rule="evenodd" d="M6 8c0-1.1.9-2 2-2h16c1.1 0 2 .9 2 2v3.6a2.3 2.3 0 1 0 0 4.6V24c0 1.1-.9 2-2 2H8c-1.1 0-2-.9-2-2v-7.8a2.3 2.3 0 1 0 0-4.6V8z"/>
+        <path fill="none" stroke="#cbbbe4" stroke-width="1.25" d="M6 8c0-1.1.9-2 2-2h16c1.1 0 2 .9 2 2v3.6a2.3 2.3 0 1 0 0 4.6V24c0 1.1-.9 2-2 2H8c-1.1 0-2-.9-2-2v-7.8a2.3 2.3 0 1 0 0-4.6V8z"/>
+        <path fill="#e4d8f4" d="M20.6 11.2a4.3 4.3 0 1 0-.2 9.1 3.3 3.3 0 1 1 .2-9.1z"/>
+      </svg>
+      <span class="wordmark">TinyDesk</span>
+    </a>
+    <p class="org-name">Ashmere Press · Help desk</p>
+    <div class="topbar-actions">
+      <button type="button" id="reset-demo" class="btn">Reset demo data</button>
+    </div>
+  </header>
+  <p id="app-banner" class="banner" role="status" hidden></p>
+
+  <main id="main" tabindex="-1">
+    <section id="view-queue">
+      <h1 id="queue-heading" class="view-heading">Ticket queue</h1>
+      <form id="filter-form" class="toolbar" role="search">
+        <div class="field field-grow">
+          <label for="search">Search</label>
+          <input id="search" type="search" placeholder="Ticket number or subject" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="filter-status">Status</label>
+          <select id="filter-status"></select>
+        </div>
+        <div class="field">
+          <label for="filter-category">Category</label>
+          <select id="filter-category"></select>
+        </div>
+        <div class="toolbar-actions">
+          <button type="button" id="clear-filters" class="btn" hidden>Clear filters</button>
+          <a class="btn btn-primary" href="#/new">New ticket</a>
+        </div>
+      </form>
+      <p id="queue-count" class="queue-count" aria-live="polite"></p>
+      <div class="panel queue-panel">
+        <table class="queue-table" id="ticket-table">
+          <caption class="sr-only">Tickets matching the current search and filters. Activate a ticket number to open it.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Number</th>
+              <th scope="col">Subject</th>
+              <th scope="col">Requester</th>
+              <th scope="col">Category</th>
+              <th scope="col">Priority</th>
+              <th scope="col">Status</th>
+              <th scope="col">Updated</th>
+            </tr>
+          </thead>
+          <tbody id="ticket-rows"></tbody>
+        </table>
+        <div id="ticket-cards" class="ticket-cards"></div>
+        <div id="empty-state" class="empty-state" hidden>
+          <p id="empty-message"></p>
+          <button type="button" id="empty-clear" class="btn" hidden>Clear filters</button>
+          <a id="empty-new" class="btn btn-primary" href="#/new" hidden>New ticket</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-new" hidden>
+      <p><a class="back-link" href="#/">← Back to queue</a></p>
+      <h1 id="new-heading" class="view-heading">New ticket</h1>
+      <p class="lead">Requester name, subject, and description are required. The ticket starts as New with Medium priority.</p>
+      <form id="new-form" class="form-card stack" autocomplete="off" novalidate>
+        <div class="field">
+          <label for="new-requester">Requester name</label>
+          <input id="new-requester" name="requester" required maxlength="80">
+        </div>
+        <div class="field">
+          <label for="new-department">Department</label>
+          <input id="new-department" name="department" maxlength="80">
+        </div>
+        <div class="field">
+          <label for="new-subject">Subject</label>
+          <input id="new-subject" name="subject" required maxlength="160">
+        </div>
+        <div class="field">
+          <label for="new-description">Description</label>
+          <textarea id="new-description" name="description" required maxlength="5000"></textarea>
+        </div>
+        <div class="field">
+          <label for="new-category">Category</label>
+          <select id="new-category" name="category" required></select>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Create ticket</button>
+        </div>
+        <p id="new-form-status" class="form-status" role="status"></p>
+      </form>
+    </section>
+
+    <section id="view-ticket" hidden>
+      <p><a class="back-link" href="#/">← Back to queue</a></p>
+      <div id="ticket-missing" hidden>
+        <h1 id="missing-heading">Ticket not found</h1>
+        <p class="missing-copy">That ticket is not in this browser's TinyDesk data.</p>
+      </div>
+      <div id="ticket-workspace" class="workspace">
+        <article class="ticket-panel">
+          <p id="ws-id" class="ticket-kicker"></p>
+          <h1 id="ws-subject"></h1>
+          <dl class="meta">
+            <div>
+              <dt>Requester</dt>
+              <dd id="ws-requester"></dd>
+            </div>
+            <div>
+              <dt>Department</dt>
+              <dd id="ws-department"></dd>
+            </div>
+            <div>
+              <dt>Opened</dt>
+              <dd><time id="ws-created" class="mono"></time></dd>
+            </div>
+            <div>
+              <dt>Updated</dt>
+              <dd><time id="ws-updated" class="mono"></time></dd>
+            </div>
+          </dl>
+
+          <h2>Description</h2>
+          <p id="ws-description" class="prose"></p>
+
+          <h2>Details</h2>
+          <form id="fields-form">
+            <div class="field-grid">
+              <div class="field">
+                <label for="field-category">Category</label>
+                <select id="field-category" name="category"></select>
+              </div>
+              <div class="field">
+                <label for="field-priority">Priority</label>
+                <select id="field-priority" name="priority"></select>
+              </div>
+              <div class="field">
+                <label for="field-status">Status</label>
+                <select id="field-status" name="status"></select>
+              </div>
+            </div>
+            <div class="field" id="resolution-wrap" hidden>
+              <label for="field-resolution">Resolution note</label>
+              <textarea id="field-resolution" name="resolution" aria-describedby="resolution-hint"></textarea>
+              <p id="resolution-hint" class="hint">Required when the status is Resolved.</p>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+            <p id="save-status" class="form-status" role="status"></p>
+          </form>
+
+          <h2>Activity</h2>
+          <ol id="activity-list" class="activity-list"></ol>
+
+          <form id="update-form">
+            <fieldset>
+              <legend>Add an update</legend>
+              <div class="choice-row">
+                <label class="choice">
+                  <input type="radio" name="update-kind" value="internal" checked>
+                  Internal note
+                </label>
+                <label class="choice">
+                  <input type="radio" name="update-kind" value="reply">
+                  Reply to requester
+                </label>
+              </div>
+            </fieldset>
+            <div class="field">
+              <label for="update-body">Message</label>
+              <textarea id="update-body" aria-describedby="composer-hint"></textarea>
+              <p id="composer-hint" class="hint"></p>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="update-submit">Save internal note</button>
+            </div>
+            <p id="update-status" class="form-status" role="status"></p>
+          </form>
+        </article>
+
+        <aside class="assist-panel" aria-labelledby="assist-heading">
+          <h2 id="assist-heading">TinyTalk Assist</h2>
+          <p class="demo-label">Demo suggestions</p>
+          <p class="assist-intro">Sample results are prepared for the original tickets. Tickets you create are not analyzed until TinyTalk is connected.</p>
+          <button type="button" class="btn btn-primary" id="analyze-btn">Analyze ticket</button>
+          <div id="analysis-output" class="analysis-output" aria-live="polite"></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Demo only. Replies are saved in this browser and are not emailed.</p>
+  </footer>
+
+  <dialog id="confirm-dialog" aria-labelledby="confirm-title">
+    <h2 id="confirm-title"></h2>
+    <p id="confirm-message"></p>
+    <div class="dialog-actions">
+      <button type="button" class="btn" id="confirm-cancel">Cancel</button>
+      <button type="button" class="btn btn-primary" id="confirm-ok">Confirm</button>
+    </div>
+  </dialog>
+
+  <noscript>
+    <p>TinyDesk needs JavaScript to show the ticket queue.</p>
+  </noscript>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
