@@ -442,14 +442,30 @@ function askConfirm({ title, message, confirmLabel }) {
   els["confirm-ok"].textContent = confirmLabel || "Confirm";
   const dialog = els["confirm-dialog"];
   return new Promise((resolve) => {
-    const onOk = () => dialog.close("confirm");
-    const onCancel = () => dialog.close("cancel");
-    const onClose = () => {
+    let settled = false;
+    const finish = (confirmed) => {
+      if (settled) return;
+      settled = true;
       els["confirm-ok"].removeEventListener("click", onOk);
       els["confirm-cancel"].removeEventListener("click", onCancel);
       dialog.removeEventListener("close", onClose);
-      resolve(dialog.returnValue === "confirm");
+      resolve(confirmed);
     };
+    const closeWith = (value) => {
+      // Chrome does not emit close when dialog.close() runs inside the
+      // button click that invoked it. Close on the next turn instead.
+      setTimeout(() => {
+        if (!dialog.open) {
+          finish(value === "confirm");
+          return;
+        }
+        dialog.close(value);
+        if (!dialog.open) finish(dialog.returnValue === "confirm");
+      }, 0);
+    };
+    const onOk = () => closeWith("confirm");
+    const onCancel = () => closeWith("cancel");
+    const onClose = () => finish(dialog.returnValue === "confirm");
     els["confirm-ok"].addEventListener("click", onOk);
     els["confirm-cancel"].addEventListener("click", onCancel);
     dialog.addEventListener("close", onClose);
