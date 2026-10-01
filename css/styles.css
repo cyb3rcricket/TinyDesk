@@ -62,7 +62,8 @@ body {
 h1,
 h2,
 h3,
-p {
+p,
+dl {
   margin: 0;
 }
 
@@ -578,6 +579,14 @@ button:hover,
   border-color: var(--violet-border);
 }
 
+.activity-body {
+  margin-top: 0.35rem;
+}
+
+.activity-body {
+  margin-top: 0.35rem;
+}
+
 .activity-caption {
   margin-top: 0.28rem;
   color: var(--text-muted);
@@ -640,6 +649,8 @@ legend {
 }
 
 .assist-panel {
+  position: sticky;
+  top: 0.8rem;
   min-width: 0;
   padding: 1rem 1rem 1.1rem;
 }
@@ -748,6 +759,10 @@ dialog p {
 @media (max-width: 860px) {
   .workspace {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .assist-panel {
+    position: static;
   }
 }
 
