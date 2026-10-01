@@ -296,6 +296,16 @@ button:hover,
   background: #4a4066;
 }
 
+button:disabled {
+  opacity: 0.62;
+  cursor: progress;
+}
+
+.btn-primary:disabled:hover {
+  background: var(--violet-deep);
+  border-color: var(--violet-border);
+}
+
 .queue-count {
   margin: 0 0 0.5rem;
   color: var(--text-muted);
@@ -669,7 +679,7 @@ legend {
 }
 
 .assist-intro,
-.sample-note {
+.review-note {
   color: var(--text-muted);
   font-size: 0.88rem;
 }
@@ -678,7 +688,7 @@ legend {
   margin-bottom: 0.85rem;
 }
 
-.sample-note {
+.review-note {
   margin-top: 0.85rem;
 }
 
@@ -697,6 +707,10 @@ legend {
   background: var(--bg-input);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+}
+
+.placeholder-note .btn {
+  margin-top: 0.75rem;
 }
 
 .assist-actions {

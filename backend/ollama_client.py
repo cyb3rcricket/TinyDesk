@@ -1,0 +1,70 @@
+"""Local Ollama chat.
+
+TinyTalk talks to Ollama at localhost:11434 with llama3.2:3b. TinyDesk uses that
+same local server and model through Ollama's Python client. Structured output
+uses the JSON schema documented for `/api/chat` `format`. Each call is a new
+request. TinyTalk's identity file, memories, and conversation history are not used.
+"""
+
+import httpx
+from ollama import Client, ResponseError
+
+from backend.config import Settings
+
+CHAT_OPTIONS = {"temperature": 0, "num_predict": 1200}
+
+
+class ModelCallError(Exception):
+    def __init__(self, reason: str, error_type: str, status_code: int | None = None) -> None:
+        super().__init__(reason)
+        self.reason = reason
+        self.error_type = error_type
+        self.status_code = status_code
+
+
+def build_client(settings: Settings, timeout: float) -> Client:
+    return Client(
+        host=settings.base_url,
+        timeout=httpx.Timeout(connect=5.0, read=timeout, write=30.0, pool=5.0),
+    )
+
+
+class OllamaModelClient:
+    def __init__(self, settings: Settings, client_factory=build_client) -> None:
+        self.settings = settings
+        self._client_factory = client_factory
+
+    def complete(self, *, model: str, messages: list[dict], schema: dict, timeout: float) -> str:
+        client = self._client_factory(self.settings, timeout)
+        try:
+            response = self._chat(client, model, messages, schema)
+        finally:
+            close = getattr(client, "close", None)
+            if callable(close):
+                close()
+
+        content = getattr(getattr(response, "message", None), "content", None)
+        if not isinstance(content, str) or not content.strip():
+            raise ModelCallError("invalid_output", "EmptyContent")
+        return content
+
+    def _chat(self, client: Client, model: str, messages: list[dict], schema: dict):
+        try:
+            return client.chat(
+                model=model,
+                messages=messages,
+                format=schema,
+                stream=False,
+                options=CHAT_OPTIONS,
+            )
+        except httpx.ConnectTimeout as exc:
+            raise ModelCallError("unavailable", type(exc).__name__) from None
+        except httpx.TimeoutException as exc:
+            raise ModelCallError("timeout", type(exc).__name__) from None
+        except ResponseError as exc:
+            reason = "model_missing" if exc.status_code == 404 else "bad_response"
+            raise ModelCallError(reason, type(exc).__name__, exc.status_code) from None
+        except ConnectionError as exc:
+            raise ModelCallError("unavailable", type(exc).__name__) from None
+        except httpx.HTTPError as exc:
+            raise ModelCallError("unavailable", type(exc).__name__) from None
