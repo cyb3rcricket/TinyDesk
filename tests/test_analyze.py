@@ -92,6 +92,13 @@ def test_prompt_sends_current_fields_activity_and_rules(client):
     assert "untrusted" in system.lower()
     assert "Do not invent company policies" in system
     assert "Never claim the issue has been fixed" in system
+    assert "resource is unspecified" in system
+    assert "Ticket status" in system
+    assert "at most 3 followUps" in system
+    assert "Do not promise a resolution time" in system
+    assert "approved or granted" in system
+    assert "unspecified" in user
+    assert "ticket status" in user.lower()
     for category in CATEGORIES:
         assert category in system
     data = json.loads(user.split("\n\n", 1)[1])

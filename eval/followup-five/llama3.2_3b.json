@@ -1,0 +1,149 @@
+{
+  "model": "llama3.2:3b",
+  "loaded_before": "NAME    ID    SIZE    PROCESSOR    CONTEXT    UNTIL \n",
+  "warmup": {
+    "ok": true,
+    "wall_s": 4.541,
+    "content": "{\"summary\":\"ready\",\"suggestedCategory\":\"Other\",\"followUps\":[],\"draft\":\"ready\"}",
+    "schema_valid": true,
+    "schema_error_count": null,
+    "done": true,
+    "done_reason": "stop",
+    "timings": {
+      "total_duration": 4535451291,
+      "total_duration_ms": 4535.5,
+      "load_duration": 2316079500,
+      "load_duration_ms": 2316.1,
+      "prompt_eval_count": 841,
+      "prompt_eval_duration": 1668875000,
+      "prompt_eval_duration_ms": 1668.9,
+      "eval_count": 21,
+      "eval_duration": 545927000,
+      "eval_duration_ms": 545.9
+    }
+  },
+  "loaded_after_warmup": "NAME           ID              SIZE      PROCESSOR    CONTEXT    UNTIL               \nllama3.2:3b    a80c4f17acd5    2.5 GB    100% GPU     4096       29 minutes from now    \n",
+  "runs": [
+    {
+      "ticket_id": "FU-01",
+      "repeat": 1,
+      "user_message_sha256": "cb7d570282084350a884e1dfd3e889c9123860860ee89d49008a5f7c8a8a9d96",
+      "ok": true,
+      "wall_s": 4.216,
+      "content": "{\n  \"summary\": \"Helen Cho needs access to the contracts share before the Thursday legal read.\",\n  \"suggestedCategory\": \"Network\",\n  \"followUps\": [\n    \"What is the contracts share?\",\n    \"What work is blocked and when is it needed?\",\n    \"What is the Thursday legal read?\"\n  ],\n  \"draft\": \"Hi Helen, I'm working on your VPN issue. Can you confirm what you need access to before the Thursday legal read? Is it the contracts share? What work is blocked and when is it needed? I need to understand the issue to help you. - Ashmere Press IT\"\n}",
+      "schema_valid": true,
+      "schema_error_count": null,
+      "done": true,
+      "done_reason": "stop",
+      "timings": {
+        "total_duration": 4213950459,
+        "total_duration_ms": 4214.0,
+        "load_duration": 2864667,
+        "load_duration_ms": 2.9,
+        "prompt_eval_count": 1214,
+        "prompt_eval_duration": 863182000,
+        "prompt_eval_duration_ms": 863.2,
+        "eval_count": 131,
+        "eval_duration": 3342690000,
+        "eval_duration_ms": 3342.7
+      }
+    },
+    {
+      "ticket_id": "FU-02",
+      "repeat": 1,
+      "user_message_sha256": "9e0dccbe78a25023bb2bb9e6850b58e234926e30b0811b5d10af64d8e86c4bd5",
+      "ok": true,
+      "wall_s": 3.855,
+      "content": "{\n  \"summary\": \"Omar Vidal needs access to the Press/Contracts/2026 shared folder to read the Vale contract.\",\n  \"suggestedCategory\": \"Access\",\n  \"followUps\": [\n    \"What is the shared folder Press/Contracts/2026?\",\n    \"What work is blocked by this access issue and when is it needed?\"\n  ],\n  \"draft\": \"Hi Omar, I'm working on your access issue. Can you confirm the shared folder Press/Contracts/2026 is the one you're trying to access? What work is blocked by this access issue and when is it needed? - Ashmere Press IT\"\n}",
+      "schema_valid": true,
+      "schema_error_count": null,
+      "done": true,
+      "done_reason": "stop",
+      "timings": {
+        "total_duration": 3853459125,
+        "total_duration_ms": 3853.5,
+        "load_duration": 8049208,
+        "load_duration_ms": 8.0,
+        "prompt_eval_count": 1104,
+        "prompt_eval_duration": 388850000,
+        "prompt_eval_duration_ms": 388.9,
+        "eval_count": 134,
+        "eval_duration": 3449656000,
+        "eval_duration_ms": 3449.7
+      }
+    },
+    {
+      "ticket_id": "FU-03",
+      "repeat": 1,
+      "user_message_sha256": "6489198a83a0fff8fa783dd3a82b012fffff55b5ccb471c7451b59dae0de59a7",
+      "ok": true,
+      "wall_s": 4.41,
+      "content": "{\n  \"summary\": \"Bench scanner SC-2 stays asleep, unclear cause\",\n  \"suggestedCategory\": \"Hardware\",\n  \"followUps\": [\n    \"What is the specific issue with the bench PC that prevents it from waking up the scanner SC-2?\",\n    \"What is the current status of the driver for the scanner SC-2?\"\n  ],\n  \"draft\": \"Hi Priya Nand, I understand the issue with the bench scanner SC-2 staying asleep. Can you tell me more about what happened when you restarted the bench PC and reseated the USB cable? Is the amber power light on SC-2 still present? What work is blocked by this issue and when is it needed?\"\n}",
+      "schema_valid": true,
+      "schema_error_count": null,
+      "done": true,
+      "done_reason": "stop",
+      "timings": {
+        "total_duration": 4408374333,
+        "total_duration_ms": 4408.4,
+        "load_duration": 3627417,
+        "load_duration_ms": 3.6,
+        "prompt_eval_count": 1171,
+        "prompt_eval_duration": 522568000,
+        "prompt_eval_duration_ms": 522.6,
+        "eval_count": 149,
+        "eval_duration": 3875242000,
+        "eval_duration_ms": 3875.2
+      }
+    },
+    {
+      "ticket_id": "FU-04",
+      "repeat": 1,
+      "user_message_sha256": "205e3f7603b9412efa40d7b1bfa88162a4c29e1a014d97269402af8f0935db8d",
+      "ok": true,
+      "wall_s": 4.383,
+      "content": "{\n  \"summary\": \"Headset echo on editorial desk ED-9\",\n  \"suggestedCategory\": \"Hardware\",\n  \"followUps\": [\n    \"What is the specific headset on editorial desk ED-9 that is being used?\",\n    \"What work is blocked by this issue and when is it needed?\",\n    \"Is the issue still present after the resolution noted in the currentFields?\"\n  ],\n  \"draft\": \"Hi Leah Ortiz, I see that the headset on editorial desk ED-9 is echoing on calls. The current resolution is that the USB headset was replaced and a test call was confirmed with no echo. Can you confirm that the issue is resolved? Is there anything else I can help with?\"\n}",
+      "schema_valid": true,
+      "schema_error_count": null,
+      "done": true,
+      "done_reason": "stop",
+      "timings": {
+        "total_duration": 4380985416,
+        "total_duration_ms": 4381.0,
+        "load_duration": 3991375,
+        "load_duration_ms": 4.0,
+        "prompt_eval_count": 1211,
+        "prompt_eval_duration": 587492000,
+        "prompt_eval_duration_ms": 587.5,
+        "eval_count": 147,
+        "eval_duration": 3783487000,
+        "eval_duration_ms": 3783.5
+      }
+    },
+    {
+      "ticket_id": "FU-05",
+      "repeat": 1,
+      "user_message_sha256": "86f5a62e63826331990dba8256d75561f7eed21c336042a9f49e42f118d09f2d",
+      "ok": true,
+      "wall_s": 3.632,
+      "content": "{\n  \"summary\": \"Nia Feldman needs help with an unspecified resource in the Research department.\",\n  \"suggestedCategory\": \"Other\",\n  \"followUps\": [\n    \"What system, folder, or resource is needed?\",\n    \"What work is blocked and when is it needed?\",\n    \"Can you provide more context about the issue?\"\n  ],\n  \"draft\": \"Hi Nia, thanks for reaching out. Can you please tell me more about the issue you're experiencing with your resource? What kind of resource is it (e.g. software, hardware, etc.) and what's the problem you're facing?\"\n}",
+      "schema_valid": true,
+      "schema_error_count": null,
+      "done": true,
+      "done_reason": "stop",
+      "timings": {
+        "total_duration": 3630029208,
+        "total_duration_ms": 3630.0,
+        "load_duration": 4462042,
+        "load_duration_ms": 4.5,
+        "prompt_eval_count": 1065,
+        "prompt_eval_duration": 323492000,
+        "prompt_eval_duration_ms": 323.5,
+        "eval_count": 130,
+        "eval_duration": 3295660000,
+        "eval_duration_ms": 3295.7
+      }
+    }
+  ],
+  "loaded_after_stop": "NAME    ID    SIZE    PROCESSOR    CONTEXT    UNTIL \n"
+}

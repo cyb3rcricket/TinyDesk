@@ -1,0 +1,149 @@
+{
+  "model": "qwen3:4b-instruct-2507-q4_K_M",
+  "loaded_before": "NAME    ID    SIZE    PROCESSOR    CONTEXT    UNTIL \n",
+  "warmup": {
+    "ok": true,
+    "wall_s": 5.561,
+    "content": "{\"draft\":\"ready\",\"followUps\":[],\"suggestedCategory\":\"Other\",\"summary\":\"ready\"}",
+    "schema_valid": true,
+    "schema_error_count": null,
+    "done": true,
+    "done_reason": "stop",
+    "timings": {
+      "total_duration": 5553538000,
+      "total_duration_ms": 5553.5,
+      "load_duration": 2811859000,
+      "load_duration_ms": 2811.9,
+      "prompt_eval_count": 829,
+      "prompt_eval_duration": 2109208999,
+      "prompt_eval_duration_ms": 2109.2,
+      "eval_count": 20,
+      "eval_duration": 620739000,
+      "eval_duration_ms": 620.7
+    }
+  },
+  "loaded_after_warmup": "NAME                             ID              SIZE      PROCESSOR    CONTEXT    UNTIL               \nqwen3:4b-instruct-2507-q4_K_M    0edcdef34593    3.2 GB    100% GPU     4096       29 minutes from now    \n",
+  "runs": [
+    {
+      "ticket_id": "FU-01",
+      "repeat": 1,
+      "user_message_sha256": "cb7d570282084350a884e1dfd3e889c9123860860ee89d49008a5f7c8a8a9d96",
+      "ok": true,
+      "wall_s": 9.476,
+      "content": "{\n  \"draft\": \"Hi Helen, thanks for reaching out. I see you're having an issue with the Ashmere VPN: it connects successfully on the office dock but stalls at 'negotiating' when trying to connect from the cottage. You need access to the Contracts Share before the Thursday legal read. Could you please confirm what system, folder, or resource you need access to—specifically, is it the Contracts Share or another resource? Also, is there a specific work block or task that's preventing you from moving forward? Ashmere Press IT\",\n  \"followUps\": [\n    \"What system, folder, or resource do you need access to (e.g., Contracts Share)?\",\n    \"What work is blocked and when is it needed?\"\n  ],\n  \"suggestedCategory\": \"Network\",\n  \"summary\": \"Helen Cho from the Copy Desk reports that the Ashmere VPN connects on the office dock but stalls at 'negotiating' on the cottage laptop. She needs access to the Contracts Share before the Thursday legal read. The issue is currently in progress and categorized under Network. The resource (e.g., Contracts Share) is not explicitly named in the ticket, so clarification is needed.\"\n}",
+      "schema_valid": true,
+      "schema_error_count": null,
+      "done": true,
+      "done_reason": "stop",
+      "timings": {
+        "total_duration": 9471592834,
+        "total_duration_ms": 9471.6,
+        "load_duration": 9711417,
+        "load_duration_ms": 9.7,
+        "prompt_eval_count": 1230,
+        "prompt_eval_duration": 1214458000,
+        "prompt_eval_duration_ms": 1214.5,
+        "eval_count": 249,
+        "eval_duration": 8222736000,
+        "eval_duration_ms": 8222.7
+      }
+    },
+    {
+      "ticket_id": "FU-02",
+      "repeat": 1,
+      "user_message_sha256": "9e0dccbe78a25023bb2bb9e6850b58e234926e30b0811b5d10af64d8e86c4bd5",
+      "ok": true,
+      "wall_s": 7.019,
+      "content": "{\n  \"draft\": \"Hi Omar, thanks for reaching out. You're able to sign in to the file server and see the list of files in the Press/Contracts/2026 folder, but when you try to open a file, you get an 'Access denied' message. You need to read the Vale contract today. Could you please confirm what specific file or resource you're trying to access within the folder? This will help us verify permissions and resolve the issue quickly. Thanks, Ashmere Press IT\",\n  \"followUps\": [\n    \"What specific file or resource in the Press/Contracts/2026 folder are you trying to open?\",\n    \"Is the access needed for reading only, or do you also need to edit or download the file?\"\n  ],\n  \"suggestedCategory\": \"Access\",\n  \"summary\": \"Omar Vidal from Legal reports access denied when trying to open a file in the Press/Contracts/20\"\n}",
+      "schema_valid": true,
+      "schema_error_count": null,
+      "done": true,
+      "done_reason": "stop",
+      "timings": {
+        "total_duration": 7016307000,
+        "total_duration_ms": 7016.3,
+        "load_duration": 9075000,
+        "load_duration_ms": 9.1,
+        "prompt_eval_count": 1106,
+        "prompt_eval_duration": 595016000,
+        "prompt_eval_duration_ms": 595.0,
+        "eval_count": 200,
+        "eval_duration": 6383270000,
+        "eval_duration_ms": 6383.3
+      }
+    },
+    {
+      "ticket_id": "FU-03",
+      "repeat": 1,
+      "user_message_sha256": "6489198a83a0fff8fa783dd3a82b012fffff55b5ccb471c7451b59dae0de59a7",
+      "ok": true,
+      "wall_s": 7.304,
+      "content": "{\n  \"draft\": \"Hi Priya, thanks for reaching out. The bench scanner SC-2 is staying in sleep mode, and we've confirmed the bench PC was restarted and the USB cable was reseated. The amber power light indicates sleep, not a dead power supply. The driver hasn't been reinstalled. To move forward, could you please confirm what system or software is needed to access or control the scanner? This will help us determine the next step. Thanks!\",\n  \"followUps\": [\n    \"What system, folder, or resource is needed to access or control the scanner?\",\n    \"Is there a specific driver or software that needs to be installed or updated?\"\n  ],\n  \"suggestedCategory\": \"Software\",\n  \"summary\": \"The bench scanner SC-2 stays asleep despite a PC restart and reseated USB cable. The amber power light indicates sleep, not a power failure. The driver has not been reinstalled. The resource needed to access or control the scanner is unspecified.\"\n}",
+      "schema_valid": true,
+      "schema_error_count": null,
+      "done": true,
+      "done_reason": "stop",
+      "timings": {
+        "total_duration": 7301273459,
+        "total_duration_ms": 7301.3,
+        "load_duration": 4635292,
+        "load_duration_ms": 4.6,
+        "prompt_eval_count": 1178,
+        "prompt_eval_duration": 764421000,
+        "prompt_eval_duration_ms": 764.4,
+        "eval_count": 208,
+        "eval_duration": 6507471000,
+        "eval_duration_ms": 6507.5
+      }
+    },
+    {
+      "ticket_id": "FU-04",
+      "repeat": 1,
+      "user_message_sha256": "205e3f7603b9412efa40d7b1bfa88162a4c29e1a014d97269402af8f0935db8d",
+      "ok": true,
+      "wall_s": 4.537,
+      "content": "{\n  \"draft\": \"Hi Leah, thanks for reaching out. The echo issue on the headset at editorial desk ED-9 has been resolved — the USB headset was replaced, and a test call confirmed no echo. Let me know if you have any other concerns or need further support. Ashmere Press IT\",\n  \"followUps\": [],\n  \"suggestedCategory\": \"Hardware\",\n  \"summary\": \"The headset on editorial desk ED-9 was replaced due to echo issues. A test call confirmed no echo. The issue is resolved with no further action needed.\"\n}",
+      "schema_valid": true,
+      "schema_error_count": null,
+      "done": true,
+      "done_reason": "stop",
+      "timings": {
+        "total_duration": 4535195125,
+        "total_duration_ms": 4535.2,
+        "load_duration": 5909416,
+        "load_duration_ms": 5.9,
+        "prompt_eval_count": 1227,
+        "prompt_eval_duration": 853884000,
+        "prompt_eval_duration_ms": 853.9,
+        "eval_count": 117,
+        "eval_duration": 3649795000,
+        "eval_duration_ms": 3649.8
+      }
+    },
+    {
+      "ticket_id": "FU-05",
+      "repeat": 1,
+      "user_message_sha256": "86f5a62e63826331990dba8256d75561f7eed21c336042a9f49e42f118d09f2d",
+      "ok": true,
+      "wall_s": 6.27,
+      "content": "{\n  \"draft\": \"Hi Nia, thanks for reaching out. I see you're having an issue and need help today. Could you please clarify what system, folder, or resource is not working? This will help me assist you more effectively. Also, could you let me know what specific work is blocked and when it's needed? Ashmere Press IT\",\n  \"followUps\": [\n    \"What system, folder, or resource is not working?\",\n    \"What work is blocked and when is it needed?\"\n  ],\n  \"suggestedCategory\": \"Other\",\n  \"summary\": \"Nia Feldman from Research has opened a ticket stating something is wrong and needs help today. The resource involved is unspecified. The ticket is in 'New' status with medium priority. No details about the issue or required access are provided in the description or fields. Clarification is needed on the resource and the blocked work.\"\n}",
+      "schema_valid": true,
+      "schema_error_count": null,
+      "done": true,
+      "done_reason": "stop",
+      "timings": {
+        "total_duration": 6268310875,
+        "total_duration_ms": 6268.3,
+        "load_duration": 5122500,
+        "load_duration_ms": 5.1,
+        "prompt_eval_count": 1063,
+        "prompt_eval_duration": 419739000,
+        "prompt_eval_duration_ms": 419.7,
+        "eval_count": 188,
+        "eval_duration": 5817908000,
+        "eval_duration_ms": 5817.9
+      }
+    }
+  ],
+  "loaded_after_stop": "NAME    ID    SIZE    PROCESSOR    CONTEXT    UNTIL \n"
+}

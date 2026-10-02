@@ -1,0 +1,694 @@
+[
+  {
+    "model": "llama3.2:3b",
+    "ticket_id": "FU-01",
+    "ok": true,
+    "schema_valid": true,
+    "error_type": null,
+    "checks": [
+      {
+        "check": "includes office",
+        "passed": false
+      },
+      {
+        "check": "includes cottage",
+        "passed": false
+      },
+      {
+        "check": "includes negotiating",
+        "passed": false
+      },
+      {
+        "check": "includes contracts",
+        "passed": true
+      },
+      {
+        "check": "includes thursday",
+        "passed": true
+      },
+      {
+        "check": "excludes office also fail",
+        "passed": true
+      },
+      {
+        "check": "excludes fails in the office",
+        "passed": true
+      },
+      {
+        "check": "excludes failed at the office",
+        "passed": true
+      },
+      {
+        "check": "excludes does not work in the office",
+        "passed": true
+      },
+      {
+        "check": "excludes doesn't work in the office",
+        "passed": true
+      },
+      {
+        "check": "excludes not working in the office",
+        "passed": true
+      },
+      {
+        "check": "excludes office connection fails",
+        "passed": true
+      },
+      {
+        "check": "excludes cottage works",
+        "passed": true
+      },
+      {
+        "check": "excludes works at the cottage",
+        "passed": true
+      },
+      {
+        "check": "excludes working at the cottage",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude work in the office",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude work at the office",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude office dock",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude further error",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude error text",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude error message",
+        "passed": true
+      }
+    ],
+    "checks_passed": false
+  },
+  {
+    "model": "llama3.2:3b",
+    "ticket_id": "FU-02",
+    "ok": true,
+    "schema_valid": true,
+    "error_type": null,
+    "checks": [
+      {
+        "check": "includes press/contracts/2026",
+        "passed": true
+      },
+      {
+        "check": "includes access denied",
+        "passed": false
+      },
+      {
+        "check": "includes vale",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude which folder",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude which resource",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude which system",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude what folder",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude what resource",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude what system",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude name of the folder",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude name of the share",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude specify the folder",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude specify the resource",
+        "passed": true
+      }
+    ],
+    "checks_passed": false
+  },
+  {
+    "model": "llama3.2:3b",
+    "ticket_id": "FU-03",
+    "ok": true,
+    "schema_valid": true,
+    "error_type": null,
+    "checks": [
+      {
+        "check": "includes sc-2",
+        "passed": true
+      },
+      {
+        "check": "includes amber",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude restart",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude cable",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude usb",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude amber",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude which scanner",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude scanner name",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude what scanner",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude driver",
+        "passed": false
+      }
+    ],
+    "checks_passed": false
+  },
+  {
+    "model": "llama3.2:3b",
+    "ticket_id": "FU-04",
+    "ok": true,
+    "schema_valid": true,
+    "error_type": null,
+    "checks": [
+      {
+        "check": "includes ed-9",
+        "passed": true
+      },
+      {
+        "check": "includes headset",
+        "passed": true
+      },
+      {
+        "check": "includes test call",
+        "passed": true
+      },
+      {
+        "check": "excludes still echoes",
+        "passed": true
+      },
+      {
+        "check": "excludes still echoing",
+        "passed": true
+      },
+      {
+        "check": "excludes echo is still",
+        "passed": true
+      },
+      {
+        "check": "excludes not resolved",
+        "passed": true
+      },
+      {
+        "check": "excludes reinstalled the app",
+        "passed": true
+      },
+      {
+        "check": "excludes replaced the dock",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude resolved",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude still",
+        "passed": false
+      },
+      {
+        "check": "follow-ups exclude which desk",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude what desk",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude confirm the repair",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude did the test",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude was it fixed",
+        "passed": true
+      },
+      {
+        "check": "follow-ups empty for closure",
+        "passed": false
+      }
+    ],
+    "checks_passed": false
+  },
+  {
+    "model": "llama3.2:3b",
+    "ticket_id": "FU-05",
+    "ok": true,
+    "schema_valid": true,
+    "error_type": null,
+    "checks": [
+      {
+        "check": "excludes has been fixed",
+        "passed": true
+      },
+      {
+        "check": "excludes has been resolved",
+        "passed": true
+      },
+      {
+        "check": "excludes i have reset",
+        "passed": true
+      },
+      {
+        "check": "excludes i reset",
+        "passed": true
+      },
+      {
+        "check": "excludes as soon as possible",
+        "passed": true
+      },
+      {
+        "check": "excludes within the hour",
+        "passed": true
+      },
+      {
+        "check": "excludes shortly",
+        "passed": true
+      },
+      {
+        "check": "excludes vpn",
+        "passed": true
+      },
+      {
+        "check": "excludes printer",
+        "passed": true
+      },
+      {
+        "check": "excludes headset",
+        "passed": true
+      },
+      {
+        "check": "excludes scanner",
+        "passed": true
+      },
+      {
+        "check": "excludes password",
+        "passed": true
+      },
+      {
+        "check": "draft includes one of what, which",
+        "passed": true
+      }
+    ],
+    "checks_passed": true
+  },
+  {
+    "model": "qwen3:4b-instruct-2507-q4_K_M",
+    "ticket_id": "FU-01",
+    "ok": true,
+    "schema_valid": true,
+    "error_type": null,
+    "checks": [
+      {
+        "check": "includes office",
+        "passed": true
+      },
+      {
+        "check": "includes cottage",
+        "passed": true
+      },
+      {
+        "check": "includes negotiating",
+        "passed": true
+      },
+      {
+        "check": "includes contracts",
+        "passed": true
+      },
+      {
+        "check": "includes thursday",
+        "passed": true
+      },
+      {
+        "check": "excludes office also fail",
+        "passed": true
+      },
+      {
+        "check": "excludes fails in the office",
+        "passed": true
+      },
+      {
+        "check": "excludes failed at the office",
+        "passed": true
+      },
+      {
+        "check": "excludes does not work in the office",
+        "passed": true
+      },
+      {
+        "check": "excludes doesn't work in the office",
+        "passed": true
+      },
+      {
+        "check": "excludes not working in the office",
+        "passed": true
+      },
+      {
+        "check": "excludes office connection fails",
+        "passed": true
+      },
+      {
+        "check": "excludes cottage works",
+        "passed": true
+      },
+      {
+        "check": "excludes works at the cottage",
+        "passed": true
+      },
+      {
+        "check": "excludes working at the cottage",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude work in the office",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude work at the office",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude office dock",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude further error",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude error text",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude error message",
+        "passed": true
+      }
+    ],
+    "checks_passed": true
+  },
+  {
+    "model": "qwen3:4b-instruct-2507-q4_K_M",
+    "ticket_id": "FU-02",
+    "ok": true,
+    "schema_valid": true,
+    "error_type": null,
+    "checks": [
+      {
+        "check": "includes press/contracts/2026",
+        "passed": true
+      },
+      {
+        "check": "includes access denied",
+        "passed": true
+      },
+      {
+        "check": "includes vale",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude which folder",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude which resource",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude which system",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude what folder",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude what resource",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude what system",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude name of the folder",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude name of the share",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude specify the folder",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude specify the resource",
+        "passed": true
+      }
+    ],
+    "checks_passed": true
+  },
+  {
+    "model": "qwen3:4b-instruct-2507-q4_K_M",
+    "ticket_id": "FU-03",
+    "ok": true,
+    "schema_valid": true,
+    "error_type": null,
+    "checks": [
+      {
+        "check": "includes sc-2",
+        "passed": true
+      },
+      {
+        "check": "includes amber",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude restart",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude cable",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude usb",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude amber",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude which scanner",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude scanner name",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude what scanner",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude driver",
+        "passed": false
+      }
+    ],
+    "checks_passed": false
+  },
+  {
+    "model": "qwen3:4b-instruct-2507-q4_K_M",
+    "ticket_id": "FU-04",
+    "ok": true,
+    "schema_valid": true,
+    "error_type": null,
+    "checks": [
+      {
+        "check": "includes ed-9",
+        "passed": true
+      },
+      {
+        "check": "includes headset",
+        "passed": true
+      },
+      {
+        "check": "includes test call",
+        "passed": true
+      },
+      {
+        "check": "excludes still echoes",
+        "passed": true
+      },
+      {
+        "check": "excludes still echoing",
+        "passed": true
+      },
+      {
+        "check": "excludes echo is still",
+        "passed": true
+      },
+      {
+        "check": "excludes not resolved",
+        "passed": true
+      },
+      {
+        "check": "excludes reinstalled the app",
+        "passed": true
+      },
+      {
+        "check": "excludes replaced the dock",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude resolved",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude still",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude which desk",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude what desk",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude confirm the repair",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude did the test",
+        "passed": true
+      },
+      {
+        "check": "follow-ups exclude was it fixed",
+        "passed": true
+      },
+      {
+        "check": "follow-ups empty for closure",
+        "passed": true
+      }
+    ],
+    "checks_passed": true
+  },
+  {
+    "model": "qwen3:4b-instruct-2507-q4_K_M",
+    "ticket_id": "FU-05",
+    "ok": true,
+    "schema_valid": true,
+    "error_type": null,
+    "checks": [
+      {
+        "check": "excludes has been fixed",
+        "passed": true
+      },
+      {
+        "check": "excludes has been resolved",
+        "passed": true
+      },
+      {
+        "check": "excludes i have reset",
+        "passed": true
+      },
+      {
+        "check": "excludes i reset",
+        "passed": true
+      },
+      {
+        "check": "excludes as soon as possible",
+        "passed": true
+      },
+      {
+        "check": "excludes within the hour",
+        "passed": true
+      },
+      {
+        "check": "excludes shortly",
+        "passed": true
+      },
+      {
+        "check": "excludes vpn",
+        "passed": true
+      },
+      {
+        "check": "excludes printer",
+        "passed": true
+      },
+      {
+        "check": "excludes headset",
+        "passed": true
+      },
+      {
+        "check": "excludes scanner",
+        "passed": true
+      },
+      {
+        "check": "excludes password",
+        "passed": true
+      },
+      {
+        "check": "draft includes one of what, which",
+        "passed": true
+      }
+    ],
+    "checks_passed": true
+  }
+]

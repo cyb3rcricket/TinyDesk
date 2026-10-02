@@ -7,7 +7,7 @@ def test_defaults(monkeypatch):
     monkeypatch.delenv("OLLAMA_TIMEOUT_SECONDS", raising=False)
     settings = load_settings()
     assert settings.base_url == "http://127.0.0.1:11434"
-    assert settings.model == "llama3.2:3b"
+    assert settings.model == "qwen3:4b-instruct-2507-q4_K_M"
     assert settings.timeout_seconds == 120
 
 

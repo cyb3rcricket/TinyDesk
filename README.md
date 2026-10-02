@@ -8,7 +8,13 @@ Ashmere Press, and everyone in the sample queue, is fictional.
 
 TinyDesk needs Python 3.12 and a local Ollama server. On this Mac, `python3` is older than 3.12, so the virtualenv command uses `python3.12`.
 
-Ollama must already be running. The default model is `llama3.2:3b`.
+Ollama must already be running. The default model is `qwen3:4b-instruct-2507-q4_K_M`. On a small set of fictional tickets it handled activity history and verified resolutions better than `llama3.2:3b`. It also takes longer, and it can still ask a redundant question or state a fact that is not in the ticket. Review every suggestion before you apply it. TinyDesk does not fall back to another model if Qwen fails.
+
+`llama3.2:3b` and `phi4-mini:latest` can stay installed. To use Llama for one server session:
+
+```bash
+OLLAMA_MODEL=llama3.2:3b python -m backend
+```
 
 ```bash
 git clone https://github.com/cyb3rcricket/TinyDesk.git
@@ -16,7 +22,7 @@ cd TinyDesk
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-ollama pull llama3.2:3b
+ollama pull qwen3:4b-instruct-2507-q4_K_M
 ```
 
 ## Run
@@ -45,19 +51,21 @@ Set these in the environment before starting the server. Each request reads them
 | Variable | Default | Meaning |
 | --- | --- | --- |
 | `OLLAMA_BASE_URL` | `http://127.0.0.1:11434` | Ollama server. A trailing slash is removed. |
-| `OLLAMA_MODEL` | `llama3.2:3b` | Model name passed to Ollama. |
+| `OLLAMA_MODEL` | `qwen3:4b-instruct-2507-q4_K_M` | Model name passed to Ollama. |
 | `OLLAMA_TIMEOUT_SECONDS` | `120` | How long to wait for the model to finish. Values outside `0` to `600`, or values that are not numbers, use `120`. |
 
 Example:
 
 ```bash
 export OLLAMA_BASE_URL=http://127.0.0.1:11434
-export OLLAMA_MODEL=llama3.2:3b
+export OLLAMA_MODEL=qwen3:4b-instruct-2507-q4_K_M
 export OLLAMA_TIMEOUT_SECONDS=120
 python -m backend
 ```
 
-The connection follows TinyTalk's local Ollama setup: host `127.0.0.1:11434` and model `llama3.2:3b`. TinyDesk calls Ollama's Python client and sends a JSON schema in the `/api/chat` `format` field, which is Ollama's documented structured-output mechanism (https://docs.ollama.com/capabilities/structured-outputs). Temperature is `0`. TinyTalk's `SOUL.md`, MemPalace memories, conversation history, and knowledge graph are not loaded. TinyTalk itself is not modified.
+Leave `OLLAMA_MODEL` unset to use the Qwen default. A set value replaces that default for the server process. There is no second model behind it.
+
+TinyDesk calls Ollama's Python client at `http://127.0.0.1:11434` and sends a JSON schema in the `/api/chat` `format` field, which is Ollama's documented structured-output mechanism (https://docs.ollama.com/capabilities/structured-outputs). Temperature is `0`. TinyTalk's `SOUL.md`, MemPalace memories, conversation history, and knowledge graph are not loaded. TinyTalk itself is not modified.
 
 ## Request flow
 
@@ -98,7 +106,7 @@ On a wide window the queue is a table and the assistant sits beside the ticket. 
 - Each analysis is independent. Switching tickets clears the panel. A response that arrives after you leave, or after a newer request, is not shown. The browser cancel does not stop an Ollama call that has already started.
 - The model sees at most the latest 10 activity entries. A request may include up to 30. Subject is limited to 200 characters, description to 5000, and each activity body to 4000. A body over 200,000 bytes is rejected.
 - At most six follow-up questions are shown.
-- `llama3.2:3b` can still ask a question the ticket already answers, or phrase a follow-up loosely. That is why the panel says the suggestion needs review. Invalid JSON is shown as a failure, not repaired into a sample answer.
+- The default Qwen model can still ask a question the ticket already answers, or state a fact that is not in the ticket. That is why the panel says the suggestion needs review. Invalid JSON is shown as a failure. TinyDesk does not substitute another model or a sample answer.
 - User-entered text is rendered as text.
 
 ## Tests
@@ -114,7 +122,7 @@ On 1 October 2026 that command passed 32 tests. They cover request validation, t
 
 ## Live model check
 
-These checks used the local `llama3.2:3b` model through the running TinyDesk server. They are separate from the mocked tests. Port 8080 was already taken by `python3 -m http.server`, so the browser used http://127.0.0.1:8081. The unavailable check used a second server on port 8082 with `OLLAMA_BASE_URL=http://127.0.0.1:9`.
+These checks used `llama3.2:3b`, which was the default at the time. The default is now `qwen3:4b-instruct-2507-q4_K_M`. They are separate from the mocked tests. Port 8080 was already taken by `python3 -m http.server`, so the browser used http://127.0.0.1:8081. The unavailable check used a second server on port 8082 with `OLLAMA_BASE_URL=http://127.0.0.1:9`.
 
 - Seeded VPN ticket TD-2401 returned a Network suggestion, a summary about the home VPN, a follow-up for the error text, and a draft addressed to Mara. The panel labeled it a local AI suggestion. Apply category changed the form and said to save it. The saved category, activity, and updated time did not change. Use draft filled the composer, switched it to a reply, and said no email was sent. Using draft again opened the replacement confirmation. Cancel left the text. The draft could be edited, and that edit was not written into activity.
 - Newly created ticket TD-2411, "Second monitor stays black," returned a Hardware suggestion and a draft for Lena. It was not the old placeholder. The activity stayed the single "Ticket created" entry, and the composer stayed empty.
