@@ -39,6 +39,8 @@ let selectedId = "";
 let currentTicketId = "";
 let booted = false;
 let keepBanner = false;
+let analysisSeq = 0;
+let analysisAbort = null;
 
 function must(id) {
   const node = document.getElementById(id);
@@ -337,6 +339,7 @@ function renderTicket(id) {
   els["ticket-missing"].hidden = found;
   els["ticket-workspace"].hidden = !found;
   els["analysis-output"].replaceChildren();
+  els["analysis-output"].removeAttribute("aria-busy");
   if (!found) {
     document.title = "Ticket not found · TinyDesk";
     return els["missing-heading"];
@@ -418,6 +421,8 @@ function syncComposerMode() {
 function renderRoute() {
   if (keepBanner) keepBanner = false;
   else if (booted) showBanner("");
+
+  cancelAnalysisRequest();
 
   const route = parseRoute();
   els["view-queue"].hidden = route.name !== "queue";
@@ -552,8 +557,42 @@ function onAddUpdate(event) {
   noteStorage();
 }
 
+function resetAnalyzeButton() {
+  const button = els["analyze-btn"];
+  button.disabled = false;
+  button.textContent = "Analyze ticket";
+  button.removeAttribute("aria-busy");
+}
+
+function cancelAnalysisRequest() {
+  analysisSeq += 1;
+  if (analysisAbort) {
+    analysisAbort.abort();
+    analysisAbort = null;
+  }
+  if (els["analyze-btn"]) resetAnalyzeButton();
+  if (els["analysis-output"]) els["analysis-output"].removeAttribute("aria-busy");
+}
+
+function analysisIsCurrent(seq, ticketId) {
+  return seq === analysisSeq && ticketId === currentTicketId && parseRoute().name === "ticket";
+}
+
+function renderAnalysisPending() {
+  const output = els["analysis-output"];
+  output.setAttribute("aria-busy", "true");
+  output.replaceChildren();
+  const box = document.createElement("div");
+  box.className = "placeholder-note";
+  const paragraph = document.createElement("p");
+  paragraph.textContent = "Analyzing this ticket with the local model. This can take a little while.";
+  box.append(paragraph);
+  output.append(box);
+}
+
 function renderAnalysis(result) {
   const output = els["analysis-output"];
+  output.removeAttribute("aria-busy");
   output.replaceChildren();
   if (!result || result.available !== true) {
     const box = document.createElement("div");
@@ -563,13 +602,23 @@ function renderAnalysis(result) {
       ? result.message
       : "Analysis did not return a suggestion.";
     box.append(paragraph);
+    if (result && result.retry) {
+      const retry = document.createElement("button");
+      retry.type = "button";
+      retry.className = "btn";
+      retry.textContent = "Try again";
+      retry.addEventListener("click", () => {
+        onAnalyze();
+      });
+      box.append(retry);
+    }
     output.append(box);
     return;
   }
 
   const note = document.createElement("p");
-  note.className = "sample-note";
-  note.textContent = "Prepared sample for this demo ticket. Not a live model response.";
+  note.className = "review-note";
+  note.textContent = "Local AI suggestion. Review it before you apply the category or use the draft. Nothing is saved or sent until you do that yourself.";
   output.append(note);
   addAnalysisBlock(output, "Issue summary", result.summary);
   addAnalysisBlock(output, "Suggested category", result.suggestedCategory);
@@ -580,7 +629,7 @@ function renderAnalysis(result) {
   const followUps = Array.isArray(result.followUps) ? result.followUps : [];
   if (!followUps.length) {
     const none = document.createElement("p");
-    none.textContent = "No follow-up questions for this sample.";
+    none.textContent = "No follow-up questions.";
     output.append(none);
   } else {
     const list = document.createElement("ul");
@@ -650,16 +699,36 @@ async function useDraftResponse(draft) {
 }
 
 async function onAnalyze() {
-  const ticket = getTicket(currentTicketId);
-  if (!ticket) return;
+  const ticketId = currentTicketId;
+  const ticket = getTicket(ticketId);
+  if (!ticket || els["analyze-btn"].disabled) return;
+
+  const seq = ++analysisSeq;
+  if (analysisAbort) analysisAbort.abort();
+  const controller = new AbortController();
+  analysisAbort = controller;
+  els["analyze-btn"].disabled = true;
+  els["analyze-btn"].textContent = "Analyzing...";
+  els["analyze-btn"].setAttribute("aria-busy", "true");
+  renderAnalysisPending();
+
   try {
-    const result = await analyzeTicket(ticket);
+    const result = await analyzeTicket(ticket, { signal: controller.signal });
+    if (!analysisIsCurrent(seq, ticketId)) return;
     renderAnalysis(result);
-  } catch {
+  } catch (error) {
+    if (error && error.name === "AbortError") return;
+    if (!analysisIsCurrent(seq, ticketId)) return;
     renderAnalysis({
       available: false,
-      message: "Analysis could not be completed. Nothing here is model output."
+      message: "Analysis could not be completed. Try again.",
+      retry: true
     });
+  } finally {
+    if (analysisIsCurrent(seq, ticketId)) {
+      resetAnalyzeButton();
+      if (analysisAbort === controller) analysisAbort = null;
+    }
   }
 }
 
