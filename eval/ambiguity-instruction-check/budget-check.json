@@ -1,0 +1,96 @@
+{
+  "prompt_token_budget": 2896,
+  "old_system_sha256": "57bb8b860747c14429cad61e0da682ebc8f8fff3fb7f96d6af8159a8800e1f93",
+  "new_system_sha256": "766668cca13792900fe81b0bc8322b1d9ced3f2aa66f0744b7e8a65d9d4f151a",
+  "new_system_estimated_tokens": 1131,
+  "old_system_estimated_tokens": 1102,
+  "system_text_included_in_combined_estimate": true,
+  "ordinary_ten_note_history_tokens": 2894,
+  "ordinary_ten_note_history_shortened": false,
+  "cases": [
+    {
+      "id": "QE-01",
+      "combined_tokens": 1586,
+      "within_budget": true,
+      "omitted": 0,
+      "payload_shortened": false
+    },
+    {
+      "id": "QE-02",
+      "combined_tokens": 1583,
+      "within_budget": true,
+      "omitted": 0,
+      "payload_shortened": false
+    },
+    {
+      "id": "QE-03",
+      "combined_tokens": 1552,
+      "within_budget": true,
+      "omitted": 0,
+      "payload_shortened": false
+    },
+    {
+      "id": "QE-04",
+      "combined_tokens": 1577,
+      "within_budget": true,
+      "omitted": 0,
+      "payload_shortened": false
+    },
+    {
+      "id": "QE-05",
+      "combined_tokens": 1632,
+      "within_budget": true,
+      "omitted": 0,
+      "payload_shortened": false
+    },
+    {
+      "id": "QE-06",
+      "combined_tokens": 1441,
+      "within_budget": true,
+      "omitted": 0,
+      "payload_shortened": false
+    },
+    {
+      "id": "QE-07",
+      "combined_tokens": 1506,
+      "within_budget": true,
+      "omitted": 0,
+      "payload_shortened": false
+    },
+    {
+      "id": "QE-08",
+      "combined_tokens": 1557,
+      "within_budget": true,
+      "omitted": 0,
+      "payload_shortened": false
+    },
+    {
+      "id": "QF-A",
+      "combined_tokens": 1497,
+      "within_budget": true,
+      "omitted": 0,
+      "payload_shortened": false
+    },
+    {
+      "id": "QF-B",
+      "combined_tokens": 1450,
+      "within_budget": true,
+      "omitted": 0,
+      "payload_shortened": false
+    },
+    {
+      "id": "QF-C",
+      "combined_tokens": 1534,
+      "within_budget": true,
+      "omitted": 0,
+      "payload_shortened": false
+    },
+    {
+      "id": "QF-D",
+      "combined_tokens": 1581,
+      "within_budget": true,
+      "omitted": 0,
+      "payload_shortened": false
+    }
+  ]
+}

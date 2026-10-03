@@ -226,6 +226,27 @@ def test_backend_failures_are_visible(client, caplog, reason, snippet):
     assert reason in caplog.text
 
 
+def test_capped_xai_response_is_an_error_without_partial_fields(client, monkeypatch):
+    monkeypatch.setenv("TINYDESK_AI_PROVIDER", "xai")
+    monkeypatch.delenv("XAI_REASONING_EFFORT", raising=False)
+    monkeypatch.delenv("XAI_MAX_COMPLETION_TOKENS", raising=False)
+    fake = FakeModel([ModelCallError("output_capped", "LengthFinish", 200)])
+    use_model(fake)
+    response = client.post("/api/analyze-ticket", json=ticket(description=SECRET))
+    body = response.json()
+    assert response.status_code == 200
+    assert body["available"] is False
+    assert body["message"] == (
+        "The xAI response was cut off before the analysis finished. "
+        "TinyDesk did not show a partial result."
+    )
+    assert "summary" not in body
+    assert "suggestedCategory" not in body
+    assert "followUps" not in body
+    assert "draft" not in body
+    assert SECRET not in response.text
+
+
 def test_unexpected_model_error_does_not_echo_ticket_text(client, caplog):
     fake = FakeModel([RuntimeError(SECRET)])
     use_model(fake)
@@ -308,6 +329,48 @@ def test_configured_model_is_used(client, monkeypatch):
     assert fake.calls[0]["timeout"] == 33
 
 
+def test_assistant_metadata_names_local_ollama_without_secrets(client, monkeypatch):
+    monkeypatch.delenv("TINYDESK_AI_PROVIDER", raising=False)
+    monkeypatch.setenv("XAI_API_KEY", "test-key")
+    response = client.get("/api/assistant")
+    assert response.status_code == 200
+    assert response.json() == {
+        "provider": "ollama",
+        "placement": "local",
+        "product": "Ollama",
+        "sendsTicketToProvider": False,
+    }
+    assert "test-key" not in response.text
+    assert "Authorization" not in response.text
+
+
+def test_assistant_metadata_names_cloud_xai_without_secrets(client, monkeypatch):
+    monkeypatch.setenv("TINYDESK_AI_PROVIDER", "xai")
+    monkeypatch.setenv("XAI_API_KEY", "test-key")
+    monkeypatch.setenv("XAI_MODEL", "grok-4.7")
+    response = client.get("/api/assistant")
+    body = response.json()
+    assert body == {
+        "provider": "xai",
+        "placement": "cloud",
+        "product": "xAI Grok",
+        "sendsTicketToProvider": True,
+    }
+    assert set(body) == {"provider", "placement", "product", "sendsTicketToProvider"}
+    assert "test-key" not in response.text
+    assert "grok-4.7" not in response.text
+
+
+def test_unrecognized_provider_is_not_described_as_local(client, monkeypatch):
+    monkeypatch.setenv("TINYDESK_AI_PROVIDER", "other")
+    body = client.get("/api/assistant").json()
+    assert body["provider"] == "unrecognized"
+    assert body["placement"] == "unknown"
+    assert body["product"] == ""
+    assert body["sendsTicketToProvider"] is False
+    assert "other" not in json.dumps(body)
+
+
 def test_categories_match_the_frontend_store():
     text = (ROOT / "js" / "store.js").read_text(encoding="utf-8")
 
@@ -325,8 +388,14 @@ def test_frontend_is_served_and_backend_files_are_not(client):
     index = client.get("/")
     assert index.status_code == 200
     assert "text/html" in index.headers["content-type"]
-    assert "Local AI" in index.text
+    assert 'id="assist-provider"' in index.text
+    assert "local model on this computer" not in index.text
     assert "Prepared sample" not in index.text
+    app_js = client.get("/js/app.js")
+    assert app_js.status_code == 200
+    assert "Local Ollama" in app_js.text
+    assert "Cloud xAI Grok" in app_js.text
+    assert "sends this ticket's information to xAI" in app_js.text
 
     script = client.get("/js/analysis.js")
     assert script.status_code == 200
@@ -340,6 +409,26 @@ def test_frontend_is_served_and_backend_files_are_not(client):
     assert client.get("/.env").status_code == 404
     assert client.get("/docs").status_code == 404
     assert client.get("/js/../requirements.txt").status_code == 404
+
+
+def test_local_config_file_is_not_served(client):
+    from backend.app import request_targets_local_config
+
+    assert request_targets_local_config("/.env")
+    assert request_targets_local_config("/.env/")
+    assert request_targets_local_config("/css/../.env")
+    assert request_targets_local_config("/js/../.env")
+    assert request_targets_local_config("/%2eenv")
+    assert request_targets_local_config("/css/%2e%2e/.env")
+    assert not request_targets_local_config("/")
+    assert not request_targets_local_config("/css/styles.css")
+    assert not request_targets_local_config("/js/app.js")
+
+    for path in ("/.env", "/.env/", "/css/../.env", "/js/../.env", "/%2eenv"):
+        response = client.get(path)
+        assert response.status_code == 404
+        assert "XAI_API_KEY" not in response.text
+        assert response.json() == {"detail": "Not Found"}
 
 
 def sent_payload(fake):

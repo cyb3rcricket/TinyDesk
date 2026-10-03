@@ -1,0 +1,6 @@
+sha256 recorded before revised-prompt POST /api/analyze-ticket
+d2faa6328d38f2c8866da47af694725e7376b1d7519568a01d846df98464cecc  fresh-fixtures.json
+b2d8698ba519226fe15b542980e463e244b951220c66ece619f71ec996fa31a8  fresh-expectations.json
+original eight still match their pre-run hashes
+8157160c650f36180a07526915ae570a6b20a81f8eb952d06f7b9228b3b7ec7d  qwen-quality-eight/fixtures.json  match=True
+33fb8b9aaabb9acc3937676fbd33ce19d8d7103f7b6b68c694e8a5e5756eda01  qwen-quality-eight/expectations.json  match=True
