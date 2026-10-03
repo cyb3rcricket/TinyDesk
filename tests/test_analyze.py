@@ -226,6 +226,27 @@ def test_backend_failures_are_visible(client, caplog, reason, snippet):
     assert reason in caplog.text
 
 
+def test_capped_xai_response_is_an_error_without_partial_fields(client, monkeypatch):
+    monkeypatch.setenv("TINYDESK_AI_PROVIDER", "xai")
+    monkeypatch.delenv("XAI_REASONING_EFFORT", raising=False)
+    monkeypatch.delenv("XAI_MAX_COMPLETION_TOKENS", raising=False)
+    fake = FakeModel([ModelCallError("output_capped", "LengthFinish", 200)])
+    use_model(fake)
+    response = client.post("/api/analyze-ticket", json=ticket(description=SECRET))
+    body = response.json()
+    assert response.status_code == 200
+    assert body["available"] is False
+    assert body["message"] == (
+        "The xAI response was cut off before the analysis finished. "
+        "TinyDesk did not show a partial result."
+    )
+    assert "summary" not in body
+    assert "suggestedCategory" not in body
+    assert "followUps" not in body
+    assert "draft" not in body
+    assert SECRET not in response.text
+
+
 def test_unexpected_model_error_does_not_echo_ticket_text(client, caplog):
     fake = FakeModel([RuntimeError(SECRET)])
     use_model(fake)
@@ -340,6 +361,26 @@ def test_frontend_is_served_and_backend_files_are_not(client):
     assert client.get("/.env").status_code == 404
     assert client.get("/docs").status_code == 404
     assert client.get("/js/../requirements.txt").status_code == 404
+
+
+def test_local_config_file_is_not_served(client):
+    from backend.app import request_targets_local_config
+
+    assert request_targets_local_config("/.env")
+    assert request_targets_local_config("/.env/")
+    assert request_targets_local_config("/css/../.env")
+    assert request_targets_local_config("/js/../.env")
+    assert request_targets_local_config("/%2eenv")
+    assert request_targets_local_config("/css/%2e%2e/.env")
+    assert not request_targets_local_config("/")
+    assert not request_targets_local_config("/css/styles.css")
+    assert not request_targets_local_config("/js/app.js")
+
+    for path in ("/.env", "/.env/", "/css/../.env", "/js/../.env", "/%2eenv"):
+        response = client.get(path)
+        assert response.status_code == 404
+        assert "XAI_API_KEY" not in response.text
+        assert response.json() == {"detail": "Not Found"}
 
 
 def sent_payload(fake):

@@ -1,3 +1,8 @@
+import os
+
+# Keep the developer's local .env, which may hold an API key, out of tests.
+os.environ["TINYDESK_LOAD_DOTENV"] = "0"
+
 import pytest
 from fastapi.testclient import TestClient
 

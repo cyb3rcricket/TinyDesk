@@ -1,5 +1,6 @@
 import logging
-from pathlib import Path
+from pathlib import Path, PurePosixPath
+from urllib.parse import unquote
 
 from fastapi import Depends, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
@@ -8,13 +9,15 @@ from fastapi.staticfiles import StaticFiles
 
 from backend.analysis import TicketAnalyzer
 from backend.config import load_settings
-from backend.ollama_client import OllamaModelClient
+from backend.ollama_client import ModelCallError, OllamaModelClient
+from backend.xai_client import XaiModelClient
 from backend.schemas import AnalysisResponse, TicketRequest
 
 logger = logging.getLogger("tinydesk")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 
 ROOT = Path(__file__).resolve().parents[1]
+LOCAL_CONFIG_FILE = ROOT / ".env"
 MAX_REQUEST_BYTES = 200_000
 
 FIELD_LABELS = {
@@ -33,8 +36,37 @@ FIELD_LABELS = {
 app = FastAPI(title="TinyDesk", docs_url=None, redoc_url=None, openapi_url=None)
 
 
-def get_model_client() -> OllamaModelClient:
-    return OllamaModelClient(load_settings())
+class RejectingModelClient:
+    """Used when TINYDESK_AI_PROVIDER is set to a name this server does not know."""
+
+    def complete(self, *, model: str, messages: list[dict], schema: dict, timeout: float) -> str:
+        raise ModelCallError("bad_config", "UnknownProvider")
+
+
+def get_model_client() -> OllamaModelClient | XaiModelClient | RejectingModelClient:
+    settings = load_settings()
+    if settings.provider == "xai" and settings.config_error:
+        logger.info(
+            "analysis provider=%s model=%s config_error=%s",
+            settings.provider,
+            settings.model,
+            settings.config_error,
+        )
+    elif settings.provider == "xai":
+        logger.info(
+            "analysis provider=%s model=%s reasoning_effort=%s max_completion_tokens=%s",
+            settings.provider,
+            settings.model,
+            settings.reasoning_effort,
+            settings.max_completion_tokens,
+        )
+    else:
+        logger.info("analysis provider=%s model=%s", settings.provider, settings.model)
+    if settings.provider == "xai":
+        return XaiModelClient(settings)
+    if settings.provider == "ollama":
+        return OllamaModelClient(settings)
+    return RejectingModelClient()
 
 
 def validation_message(exc: RequestValidationError) -> str:
@@ -68,6 +100,38 @@ async def reject_invalid_ticket(request: Request, exc: RequestValidationError) -
         ",".join(labels),
     )
     return JSONResponse(status_code=422, content={"available": False, "message": message})
+
+
+def request_targets_local_config(path: str) -> bool:
+    """True when a URL path points at the git-ignored local config file."""
+    if not path:
+        return False
+    config = LOCAL_CONFIG_FILE.resolve()
+    candidates = [path]
+    decoded = unquote(path)
+    if decoded != path:
+        candidates.append(decoded)
+    for candidate in candidates:
+        if ".env" in PurePosixPath(candidate).parts:
+            return True
+        relative = candidate.lstrip("/")
+        if not relative or "\x00" in relative or relative.startswith(("/", "\\")):
+            continue
+        try:
+            resolved = (ROOT / relative).resolve()
+        except (OSError, ValueError):
+            continue
+        if resolved == config:
+            return True
+    return False
+
+
+@app.middleware("http")
+async def hide_local_config(request: Request, call_next):
+    raw_path = request.scope.get("path", "")
+    if request_targets_local_config(raw_path) or request_targets_local_config(request.url.path):
+        return JSONResponse(status_code=404, content={"detail": "Not Found"})
+    return await call_next(request)
 
 
 @app.middleware("http")
