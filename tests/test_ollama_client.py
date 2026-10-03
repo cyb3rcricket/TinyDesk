@@ -1,5 +1,7 @@
 from types import SimpleNamespace
 
+import json
+
 import httpx
 import pytest
 from ollama import ResponseError
@@ -82,6 +84,55 @@ def test_build_client_sets_host_and_read_timeout(monkeypatch):
         (ConnectionError("down"), "unavailable", None),
         (ResponseError("model 'llama3.2:3b' not found", 404), "model_missing", 404),
         (ResponseError("server error", 500), "bad_response", 500),
+        (ResponseError("invalid model format", 400), "bad_response", 400),
+        (
+            ResponseError(
+                "request (10 tokens) exceeds the available context size (4096 tokens)",
+                400,
+            ),
+            "context_limit",
+            400,
+        ),
+        (
+            ResponseError(
+                json.dumps(
+                    {
+                        "error": {
+                            "type": "exceed_context_size_error",
+                            "message": "request (12 tokens) exceeds the available context size (4096 tokens)",
+                        }
+                    }
+                ),
+                400,
+            ),
+            "context_limit",
+            400,
+        ),
+        (
+            ResponseError(
+                json.dumps(
+                    {
+                        "error": json.dumps(
+                            {
+                                "error": {
+                                    "code": 400,
+                                    "message": (
+                                        "request (4108 tokens) exceeds the available context size "
+                                        "(4096 tokens), try increasing it"
+                                    ),
+                                    "type": "exceed_context_size_error",
+                                    "n_prompt_tokens": 4108,
+                                    "n_ctx": 4096,
+                                }
+                            }
+                        )
+                    }
+                ),
+                400,
+            ),
+            "context_limit",
+            400,
+        ),
     ],
 )
 def test_ollama_errors_map_to_reasons(error, reason, status):

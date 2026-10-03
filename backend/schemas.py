@@ -4,6 +4,11 @@ CATEGORIES = ("Access", "Network", "Hardware", "Software", "Email", "Other")
 PRIORITIES = ("Low", "Medium", "High")
 STATUSES = ("New", "In Progress", "Waiting on User", "Resolved")
 RECENT_ACTIVITY_LIMIT = 10
+MODEL_TEXT_LIMIT = 4000
+# Saved notes can be longer than the model input. Reject only a payload the
+# byte cap would not already stop, and bound a copy for the model.
+REQUEST_ACTIVITY_LIMIT = 5000
+REQUEST_TEXT_LIMIT = 200_000
 
 ANALYSIS_SCHEMA = {
     "type": "object",
@@ -21,7 +26,7 @@ class ActivityItem(BaseModel):
     model_config = ConfigDict(extra="ignore", str_strip_whitespace=True)
 
     kind: str = Field(default="", max_length=32)
-    body: str = Field(default="", max_length=4000)
+    body: str = Field(default="", max_length=REQUEST_TEXT_LIMIT)
     at: str = Field(default="", max_length=64)
 
 
@@ -36,8 +41,8 @@ class TicketRequest(BaseModel):
     category: str = Field(min_length=1, max_length=40)
     priority: str = Field(min_length=1, max_length=40)
     status: str = Field(min_length=1, max_length=40)
-    resolutionNote: str = Field(default="", max_length=4000)
-    activity: list[ActivityItem] = Field(default_factory=list, max_length=30)
+    resolutionNote: str = Field(default="", max_length=REQUEST_TEXT_LIMIT)
+    activity: list[ActivityItem] = Field(default_factory=list, max_length=REQUEST_ACTIVITY_LIMIT)
 
     @field_validator("category")
     @classmethod
