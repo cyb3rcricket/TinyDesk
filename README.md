@@ -73,10 +73,10 @@ TinyDesk calls Ollama's Python client at `http://127.0.0.1:11434` and sends a JS
 2. The browser sends the saved subject, description, requester, department, category, priority, status, resolution note, and activity to `POST /api/analyze-ticket`. Unsaved composer text and unsaved field edits are not sent.
 3. FastAPI checks the body. A missing or invalid field returns `available: false` and a message that names the field, not the ticket text.
 4. The server builds one new system message and one new user message. It does not keep those messages for the next ticket.
-5. The user message includes the current fields and the latest 10 activity entries. Older entries are counted, not copied. Ticket text is sent as data, with instructions to ignore any commands inside it.
+5. The user message includes the current fields and recent activity. TinyDesk builds that text as a copy, and the saved ticket stays complete. The copy is an estimate sized for the default Qwen context window, including the system instructions and room for the reply. Older activity entries are counted, not copied. Text that does not fit keeps its beginning and ends with `[shortened]`. `omittedEarlierActivityCount` is the number of older entries left out. A saved resolution stays in `currentFields`. Ticket text is sent as data, with instructions to ignore any commands inside it.
 6. Ollama returns JSON constrained by the schema. TinyDesk checks that JSON again. `suggestedCategory` must be Access, Network, Hardware, Software, Email, or Other.
 7. A usable result is `available: true` with `summary`, `suggestedCategory`, `followUps`, and `draft`. The panel calls it a local AI suggestion that still needs review.
-8. If Ollama is down, the model is missing, the request times too long, or the JSON is not usable, the panel shows `message` and Try again. TinyDesk does not substitute a sample suggestion.
+8. If Ollama is down, the model is missing, the request takes too long, the input exceeds the context window, or the JSON is not usable, the panel shows `message` and Try again. TinyDesk does not substitute a sample suggestion or another model.
 9. Apply category only changes the category menu. Use draft only fills the reply composer, and asks before replacing text that is already there. Save changes and Save reply are separate.
 
 Saved tickets remain in `localStorage` under `tinydesk.tickets.v1`.
@@ -104,7 +104,9 @@ On a wide window the queue is a table and the assistant sits beside the ticket. 
 - There is no sign-in, no attachments, and no SLA clock.
 - There is no retrieval index, long-term memory, database, cloud model, or extra workflow service.
 - Each analysis is independent. Switching tickets clears the panel. A response that arrives after you leave, or after a newer request, is not shown. The browser cancel does not stop an Ollama call that has already started.
-- The model sees at most the latest 10 activity entries. A request may include up to 30. Subject is limited to 200 characters, description to 5000, and each activity body to 4000. A body over 200,000 bytes is rejected.
+- Saved tickets stay complete in the browser. Analyze builds a separate copy for the model, and only that copy is shortened. A shortened field keeps its beginning and ends with `[shortened]`. `omittedEarlierActivityCount` counts older activity left out of the copy. The copy keeps the current ticket fields and the resolution note ahead of older activity.
+- The size of that copy is a token estimate calibrated for the default model, `qwen3:4b-instruct-2507-q4_K_M`, at a 4096-token runtime context when `num_ctx` is unset. The estimate leaves 1200 tokens for the reply. It does not guarantee that every input fits. Another model, or a different Ollama context setting, can still reject the request. TinyDesk then says the input exceeds the context window and does not switch models.
+- The request may still include up to 5000 activity entries and up to 200,000 characters in one activity body or resolution note. Subject is limited to 200 characters and description to 5000. A body over 200,000 bytes is rejected.
 - At most six follow-up questions are shown.
 - The default Qwen model can still ask a question the ticket already answers, or state a fact that is not in the ticket. That is why the panel says the suggestion needs review. Invalid JSON is shown as a failure. TinyDesk does not substitute another model or a sample answer.
 - User-entered text is rendered as text.
@@ -120,6 +122,8 @@ python -m pytest
 
 On 1 October 2026 that command passed 32 tests. They cover request validation, the allowed categories, a valid model result, invalid JSON and a disallowed category, connection failures, timeouts, a missing model, unexpected errors, and logs that record the ticket id and reason without the ticket text. They also check that backend files such as `requirements.txt` and `backend/app.py` are not served.
 
+On 2 October 2026 the same command passed 44 tests. The 12 added tests are mocked. They cover more than 30 activity entries, an activity note longer than 4000 characters, a 4000-character resolution whose `Resolution: ` activity line is longer than the model copy, a saved ticket that stays unchanged while the copy is built, a combined input estimate inside the default Qwen budget, and a confirmed context-limit error. They do not call Ollama, and they do not prove that every ticket fits the context window.
+
 ## Live model check
 
 These checks used `llama3.2:3b`, which was the default at the time. The default is now `qwen3:4b-instruct-2507-q4_K_M`. They are separate from the mocked tests. Port 8080 was already taken by `python3 -m http.server`, so the browser used http://127.0.0.1:8081. The unavailable check used a second server on port 8082 with `OLLAMA_BASE_URL=http://127.0.0.1:9`.
@@ -131,3 +135,14 @@ These checks used `llama3.2:3b`, which was the default at the time. The default 
 - Analysis was started on TD-2402 and the view was switched to TD-2406 while the button still said Analyzing. Eight seconds later TD-2406 had an empty assistant panel and an enabled Analyze button. Returning to TD-2402 also showed an empty panel, so the late result did not appear.
 
 The `llama3.2:3b` replies were usable JSON, and they did not claim the VPN or password issue was fixed. They were not perfect. On the VPN ticket the model also asked whether the profile had been updated, although an internal note already said the client was installed. On the password ticket one follow-up asked about a "password reset status" the ticket never mentioned. Those are reasons to review the draft before saving it.
+
+## History-limit check
+
+These checks are separate from the mocked tests and from the `llama3.2:3b` checks above. On 2 October 2026 they used the default `qwen3:4b-instruct-2507-q4_K_M` with `OLLAMA_MODEL` unset. `ollama ps` showed that model alone at a 4096-token context. The comparisons under `eval/` were not rerun.
+
+- A normal VPN-shaped ticket returned a Network suggestion. Its measured prompt was 1178 tokens.
+- A ticket with 40 ordinary English notes returned a Network suggestion. Its measured prompt was 2016 tokens.
+- A resolved ticket with a 4000-character repeated-character resolution, that same text copied into the status activity line, and a 2000-character repeated description returned a suggestion. Its measured prompt was 2597 tokens. Before this bound, that shape was 5551 prompt tokens, and Ollama rejected it with `exceed_context_size_error`.
+- In the browser, seeded ticket TD-2401 showed a local AI suggestion. Saved activity stayed at 4 entries, and the stored category stayed Network. At a 390 by 844 window the Analyze button was visible and the assistant sat below the ticket. A stored ticket with 32 activity entries and a 4000-character resolution note also showed a suggestion. After analysis it still had 32 entries and the full resolution note.
+
+The repeated-character ticket was categorized Network, and the summary described the note as truncated. That suggestion still needs review. The token estimate for these three prompts was under the 2896-token budget and above the measured prompt size. Other tickets, models, or context settings can still exceed the window.

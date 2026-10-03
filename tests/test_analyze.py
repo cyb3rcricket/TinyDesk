@@ -5,9 +5,24 @@ from pathlib import Path
 
 import pytest
 
+from backend.analysis import (
+    PROMPT_TOKEN_BUDGET,
+    SHORTENED_MARK,
+    build_model_payload,
+    estimate_tokens,
+    system_prompt,
+    user_message,
+)
 from backend.app import app, get_model_client
 from backend.ollama_client import ModelCallError
-from backend.schemas import CATEGORIES, PRIORITIES, STATUSES
+from backend.schemas import (
+    CATEGORIES,
+    MODEL_TEXT_LIMIT,
+    PRIORITIES,
+    RECENT_ACTIVITY_LIMIT,
+    STATUSES,
+    TicketRequest,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 SECRET = "SECRET_TICKET_BODY_9f3a"
@@ -194,6 +209,7 @@ def test_empty_followups_are_allowed(client):
         ("timeout", "took too long"),
         ("model_missing", "model is not available"),
         ("bad_response", "unexpected response"),
+        ("context_limit", "exceeds its context window"),
     ],
 )
 def test_backend_failures_are_visible(client, caplog, reason, snippet):
@@ -266,6 +282,22 @@ def test_get_is_not_allowed(client):
     assert response.status_code == 405
 
 
+def test_context_limit_failure_keeps_the_configured_model(client, monkeypatch):
+    monkeypatch.delenv("OLLAMA_MODEL", raising=False)
+    fake = FakeModel([ModelCallError("context_limit", "ResponseError", 400)])
+    use_model(fake)
+    response = client.post("/api/analyze-ticket", json=ticket(description=SECRET))
+    body = response.json()
+    assert response.status_code == 200
+    assert body["available"] is False
+    assert "context window" in body["message"]
+    assert "unexpected response" not in body["message"]
+    assert "switch models" in body["message"]
+    assert SECRET not in response.text
+    assert len(fake.calls) == 1
+    assert fake.calls[0]["model"] == "qwen3:4b-instruct-2507-q4_K_M"
+
+
 def test_configured_model_is_used(client, monkeypatch):
     monkeypatch.setenv("OLLAMA_MODEL", "custom-model")
     monkeypatch.setenv("OLLAMA_TIMEOUT_SECONDS", "33")
@@ -308,3 +340,199 @@ def test_frontend_is_served_and_backend_files_are_not(client):
     assert client.get("/.env").status_code == 404
     assert client.get("/docs").status_code == 404
     assert client.get("/js/../requirements.txt").status_code == 404
+
+
+def sent_payload(fake):
+    user = fake.calls[0]["messages"][1]["content"]
+    return json.loads(user.split("\n\n", 1)[1]), user
+
+
+def test_more_than_30_activity_entries_stay_analyzable(client):
+    activity = [
+        {"kind": "internal", "body": f"history-{index}", "at": "2026-10-01T00:00:00.000Z"}
+        for index in range(31)
+    ]
+    fake = FakeModel([json.dumps(VALID_MODEL)])
+    use_model(fake)
+    response = client.post("/api/analyze-ticket", json=ticket(activity=activity))
+    assert response.status_code == 200
+    assert response.json()["available"] is True
+    data, user = sent_payload(fake)
+    assert data["omittedEarlierActivityCount"] == 31 - RECENT_ACTIVITY_LIMIT
+    assert [item["body"] for item in data["activity"]] == [
+        f"history-{index}" for index in range(31 - RECENT_ACTIVITY_LIMIT, 31)
+    ]
+    assert "history-0" not in user
+    assert "history-30" in user
+
+
+def test_activity_note_longer_than_4000_characters_is_shortened(client):
+    body = "A" * (MODEL_TEXT_LIMIT + 1)
+    fake = FakeModel([json.dumps(VALID_MODEL)])
+    use_model(fake)
+    response = client.post(
+        "/api/analyze-ticket",
+        json=ticket(
+            activity=[{"kind": "internal", "body": body, "at": "2026-10-01T00:00:00.000Z"}]
+        ),
+    )
+    assert response.status_code == 200
+    assert response.json()["available"] is True
+    data, user = sent_payload(fake)
+    sent_body = data["activity"][0]["body"]
+    assert sent_body.endswith(SHORTENED_MARK)
+    assert len(sent_body) <= MODEL_TEXT_LIMIT
+    assert body not in user
+    assert sent_body[:20] == body[:20]
+
+
+def test_prefixed_resolution_activity_keeps_the_resolution_note(client):
+    note = "R" * MODEL_TEXT_LIMIT
+    prefix = "Status changed from In Progress to Resolved. Resolution: "
+    body = prefix + note
+    assert len(note) == MODEL_TEXT_LIMIT
+    assert len(body) > MODEL_TEXT_LIMIT
+    fake = FakeModel([json.dumps(VALID_MODEL)])
+    use_model(fake)
+    response = client.post(
+        "/api/analyze-ticket",
+        json=ticket(
+            status="Resolved",
+            resolutionNote=note,
+            activity=[
+                {"kind": "status", "body": body, "at": "2026-10-01T00:00:00.000Z"}
+            ],
+        ),
+    )
+    assert response.status_code == 200
+    assert response.json()["available"] is True
+    data, user = sent_payload(fake)
+    sent_body = data["activity"][0]["body"]
+    sent_note = data["currentFields"]["resolutionNote"]
+    assert sent_note.startswith(note[:20])
+    assert sent_note.endswith(SHORTENED_MARK)
+    assert sent_note != note
+    assert sent_body.startswith(prefix)
+    assert sent_body.endswith(SHORTENED_MARK)
+    assert len(sent_body) <= MODEL_TEXT_LIMIT
+    assert body not in user
+    assert note not in user
+    assert sent_note in user
+    assert estimate_tokens(system_prompt() + "\n" + user) <= PROMPT_TOKEN_BUDGET
+
+
+def test_analysis_preparation_does_not_change_the_saved_ticket():
+    note = "R" * MODEL_TEXT_LIMIT
+    long_note = "L" * (MODEL_TEXT_LIMIT + 50)
+    prefix = "Status changed from Waiting on User to Resolved. Resolution: "
+    activity = [
+        {"kind": "internal", "body": f"history-{index}", "at": "2026-10-01T00:00:00.000Z"}
+        for index in range(31)
+    ]
+    activity.append(
+        {
+            "kind": "internal",
+            "body": long_note,
+            "at": "2026-10-01T00:00:01.000Z",
+        }
+    )
+    activity.append(
+        {
+            "kind": "status",
+            "body": prefix + note,
+            "at": "2026-10-01T00:00:02.000Z",
+        }
+    )
+    saved = ticket(status="Resolved", resolutionNote=note, activity=activity)
+    model = TicketRequest.model_validate(saved)
+    before = model.model_dump()
+    prepared = build_model_payload(model)
+    message = user_message(model)
+    assert model.model_dump() == before
+    assert model.resolutionNote == note
+    assert model.activity[-1].body == prefix + note
+    assert model.activity[-2].body == long_note
+    assert len(model.activity) == 33
+    sent_note = prepared["currentFields"]["resolutionNote"]
+    assert sent_note.startswith(note[:20])
+    assert sent_note.endswith(SHORTENED_MARK)
+    assert prepared["activity"][-1]["body"].startswith(prefix)
+    assert prepared["activity"][-1]["body"].endswith(SHORTENED_MARK)
+    assert prepared["activity"][-2]["body"].endswith(SHORTENED_MARK)
+    assert prepared["omittedEarlierActivityCount"] >= 33 - RECENT_ACTIVITY_LIMIT
+    assert prefix + note not in message
+    assert note not in message
+    assert sent_note in message
+    assert estimate_tokens(system_prompt() + "\n" + message) <= PROMPT_TOKEN_BUDGET
+
+
+def test_ordinary_history_fits_without_shortening():
+    sentence = "The VPN client stops at the gateway after the laptop wakes. "
+    note = (sentence * 20)[:400]
+    description = (sentence * 40)[:1500]
+    activity = [
+        {"kind": "internal", "body": note, "at": "2026-10-01T00:00:00.000Z"}
+        for _ in range(10)
+    ]
+    model = TicketRequest.model_validate(
+        ticket(description=description, activity=activity)
+    )
+    before = model.model_dump()
+    prepared = build_model_payload(model)
+    message = user_message(model)
+    assert model.model_dump() == before
+    assert prepared["description"] == model.description
+    assert [item["body"] for item in prepared["activity"]] == [item.body for item in model.activity]
+    assert len(prepared["activity"]) == 10
+    assert prepared["omittedEarlierActivityCount"] == 0
+    assert SHORTENED_MARK not in message.split("\n\n", 1)[1]
+    assert estimate_tokens(system_prompt() + "\n" + message) <= PROMPT_TOKEN_BUDGET
+
+
+def test_token_dense_input_stays_inside_the_combined_budget():
+    note = "R" * MODEL_TEXT_LIMIT
+    description = "R" * 5000
+    prefix = "Status changed from In Progress to Resolved. Resolution: "
+    activity = [
+        {"kind": "internal", "body": f"history-{index}", "at": "2026-10-01T00:00:00.000Z"}
+        for index in range(30)
+    ]
+    activity.extend(
+        {
+            "kind": "internal",
+            "body": "R" * MODEL_TEXT_LIMIT,
+            "at": "2026-10-01T00:01:00.000Z",
+        }
+        for _ in range(9)
+    )
+    activity.append(
+        {"kind": "status", "body": prefix + note, "at": "2026-10-01T00:02:00.000Z"}
+    )
+    saved = ticket(
+        subject="Token dense ticket",
+        description=description,
+        status="Resolved",
+        resolutionNote=note,
+        activity=activity,
+    )
+    model = TicketRequest.model_validate(saved)
+    before = model.model_dump()
+    prepared = build_model_payload(model)
+    message = user_message(model)
+    assert model.model_dump() == before
+    assert model.resolutionNote == note
+    assert len(model.activity) == len(activity)
+    assert prepared["subject"] == "Token dense ticket"
+    assert prepared["currentFields"]["status"] == "Resolved"
+    assert prepared["currentFields"]["category"] == "Network"
+    sent_note = prepared["currentFields"]["resolutionNote"]
+    assert sent_note.startswith("RRRR")
+    assert sent_note.endswith(SHORTENED_MARK)
+    assert description not in message
+    assert note not in message
+    assert "omittedEarlierActivityCount" in message
+    assert prepared["omittedEarlierActivityCount"] >= len(activity) - RECENT_ACTIVITY_LIMIT
+    assert estimate_tokens(system_prompt() + "\n" + message) <= PROMPT_TOKEN_BUDGET
+    if prepared["activity"]:
+        assert prepared["activity"][-1]["body"].startswith(prefix)
+        assert prepared["activity"][-1]["body"].endswith(SHORTENED_MARK)

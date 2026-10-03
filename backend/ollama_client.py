@@ -7,12 +7,18 @@ schema documented for `/api/chat` `format`. Each call is a new request.
 TinyTalk's identity file, memories, and conversation history are not used.
 """
 
+import json
+
 import httpx
 from ollama import Client, ResponseError
 
 from backend.config import Settings
 
-CHAT_OPTIONS = {"temperature": 0, "num_predict": 1200}
+# Room reserved for the reply inside the runtime context window.
+# num_ctx is left unset: Ollama then uses its 4096-token default.
+# The model card's 262144 context length is not the window this server uses.
+RESPONSE_TOKEN_RESERVE = 1200
+CHAT_OPTIONS = {"temperature": 0, "num_predict": RESPONSE_TOKEN_RESERVE}
 
 
 class ModelCallError(Exception):
@@ -21,6 +27,22 @@ class ModelCallError(Exception):
         self.reason = reason
         self.error_type = error_type
         self.status_code = status_code
+
+
+def _is_context_limit(exc: ResponseError) -> bool:
+    """True only for Ollama's confirmed context-window rejection.
+
+    The HTTP body is {"error": "<json>"} and the client keeps that inner
+    string. A direct JSON object with type exceed_context_size_error is
+    accepted as well. Other 400 responses stay generic model errors.
+    """
+    detail = exc.error
+    if not isinstance(detail, str):
+        detail = json.dumps(detail)
+    return (
+        "exceed_context_size_error" in detail
+        or "exceeds the available context size" in detail
+    )
 
 
 def build_client(settings: Settings, timeout: float) -> Client:
@@ -63,7 +85,12 @@ class OllamaModelClient:
         except httpx.TimeoutException as exc:
             raise ModelCallError("timeout", type(exc).__name__) from None
         except ResponseError as exc:
-            reason = "model_missing" if exc.status_code == 404 else "bad_response"
+            if exc.status_code == 404:
+                reason = "model_missing"
+            elif _is_context_limit(exc):
+                reason = "context_limit"
+            else:
+                reason = "bad_response"
             raise ModelCallError(reason, type(exc).__name__, exc.status_code) from None
         except ConnectionError as exc:
             raise ModelCallError("unavailable", type(exc).__name__) from None
