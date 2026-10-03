@@ -1,0 +1,19 @@
+{
+  "endpoint": "http://127.0.0.1:8080/api/analyze-ticket",
+  "repeats": 3,
+  "note": "All three repeats of each case returned the same summary, category, follow-ups, and draft. Temperature is 0, so these are repeated calls, not independent samples.",
+  "calls": [
+    {"id": "QE-01", "elapsed_s": [14.218, 7.627, 7.374]},
+    {"id": "QE-02", "elapsed_s": [9.403, 8.501, 8.439]},
+    {"id": "QE-03", "elapsed_s": [9.553, 8.97, 8.685]},
+    {"id": "QE-04", "elapsed_s": [5.938, 4.764, 4.782]},
+    {"id": "QE-05", "elapsed_s": [7.653, 6.333, 6.322]},
+    {"id": "QE-06", "elapsed_s": [5.24, 4.859, 4.771]},
+    {"id": "QE-07", "elapsed_s": [9.039, 8.044, 8.097]},
+    {"id": "QE-08", "elapsed_s": [8.649, 7.782, 7.907]},
+    {"id": "QF-A", "elapsed_s": [7.188, 6.46, 6.466]},
+    {"id": "QF-B", "elapsed_s": [5.107, 4.706, 4.67]},
+    {"id": "QF-C", "elapsed_s": [6.954, 6.104, 6.104]},
+    {"id": "QF-D", "elapsed_s": [5.764, 4.965, 4.846]}
+  ]
+}

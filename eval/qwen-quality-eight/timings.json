@@ -1,0 +1,14 @@
+{
+  "endpoint": "http://127.0.0.1:8080/api/analyze-ticket",
+  "one_call_each": true,
+  "calls": [
+    {"id": "QE-01", "elapsed_s": 12.551, "http_status": 200, "available": true},
+    {"id": "QE-02", "elapsed_s": 10.812, "http_status": 200, "available": true},
+    {"id": "QE-03", "elapsed_s": 11.19, "http_status": 200, "available": true},
+    {"id": "QE-04", "elapsed_s": 6.07, "http_status": 200, "available": true},
+    {"id": "QE-05", "elapsed_s": 8.742, "http_status": 200, "available": true},
+    {"id": "QE-06", "elapsed_s": 5.355, "http_status": 200, "available": true},
+    {"id": "QE-07", "elapsed_s": 9.829, "http_status": 200, "available": true},
+    {"id": "QE-08", "elapsed_s": 8.122, "http_status": 200, "available": true}
+  ]
+}

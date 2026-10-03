@@ -1,0 +1,130 @@
+{
+  "baseline": "eval/xai-grok-4.7-once",
+  "compared_to": "The twelve frozen cases in the preserved high-reasoning run, excluding the earlier smoke call.",
+  "prompt_sha256": "766668cca13792900fe81b0bc8322b1d9ced3f2aa66f0744b7e8a65d9d4f151a",
+  "prompt_changed": false,
+  "endpoint": "https://api.x.ai/v1/chat/completions",
+  "request_settings": {
+    "reasoning_effort": "low",
+    "max_completion_tokens": 1200,
+    "temperature": 0,
+    "stream": false,
+    "prompt_cache_key": "tinydesk-analyze-ticket",
+    "response_format": "json_schema"
+  },
+  "cap_includes_reasoning_tokens": false,
+  "cap_note": "Chat Completions max_completion_tokens limits visible output tokens only. It does not include reasoning tokens. Visible completions in this run were 108 to 215 tokens. Reasoning tokens were 62 to 1473 and were not cut by the cap. Every finish_reason was stop.",
+  "calls": 12,
+  "retries": 0,
+  "completion_status": "complete",
+  "finish_reason": "stop",
+  "returned_model": "grok-4.7",
+  "latency_http_s": {
+    "median": 12.9645,
+    "min": 2.758,
+    "max": 17.519
+  },
+  "high_baseline_latency_http_s": {
+    "median": 31.339,
+    "min": 15.133,
+    "max": 68.927
+  },
+  "total_cost_usd": 0.108856,
+  "high_baseline_twelve_case_cost_usd": 0.210136,
+  "threshold": {
+    "usable_drafts_required": 10,
+    "usable_drafts": 10,
+    "needs_editing": 2,
+    "rejected": 0,
+    "critical_factual_errors": 0,
+    "unsupported_repair_promises": 0,
+    "necessary_clarification_qf_a_b_c": true,
+    "met": true
+  },
+  "cases": [
+    {
+      "id": "QE-01",
+      "category": "Network",
+      "draft_verdict": "usable_as_written",
+      "counts": {"contradiction": 0, "invented_fact": 0, "repeated_question": 0, "unsupported_commitment": 0},
+      "note": "Office success, home stop at contacting gateway, photo archive, Friday night close, and no other error text stay distinct. The follow-up asks whether other home internet works, which is not recorded."
+    },
+    {
+      "id": "QE-02",
+      "category": "Access",
+      "draft_verdict": "usable_as_written",
+      "counts": {"contradiction": 0, "invented_fact": 0, "repeated_question": 0, "unsupported_commitment": 0},
+      "note": "Names Press/Legal/Hold/2026 and the read-only Pell waiver. Says the review does not mean access has been granted."
+    },
+    {
+      "id": "QE-03",
+      "category": "Hardware",
+      "draft_verdict": "needs_editing",
+      "counts": {"contradiction": 0, "invented_fact": 0, "repeated_question": 0, "unsupported_commitment": 0},
+      "note": "The summary keeps the reseated cable and the empty paper path. The draft omits both and asks what work is blocked. The printer is still failing, and no repair is claimed. Omission is not a reversal."
+    },
+    {
+      "id": "QE-04",
+      "category": "Hardware",
+      "draft_verdict": "usable_as_written",
+      "counts": {"contradiction": 0, "invented_fact": 0, "repeated_question": 0, "unsupported_commitment": 0},
+      "note": "Closing draft. MN-44 ran the cover layout for 20 minutes with no flicker. No follow-up."
+    },
+    {
+      "id": "QE-05",
+      "category": "Hardware",
+      "draft_verdict": "usable_as_written",
+      "counts": {"contradiction": 0, "invented_fact": 0, "repeated_question": 0, "unsupported_commitment": 0},
+      "note": "Acknowledges the space bar on LP-22 is sticking again after Monday's replacement worked. Status stays in progress, with no new repair recorded."
+    },
+    {
+      "id": "QE-06",
+      "category": "Access",
+      "draft_verdict": "usable_as_written",
+      "counts": {"contradiction": 0, "invented_fact": 0, "repeated_question": 0, "unsupported_commitment": 0},
+      "note": "Asks which resource is needed. Does not treat tomorrow's training as the resource or ask when it is needed."
+    },
+    {
+      "id": "QE-07",
+      "category": "Software",
+      "draft_verdict": "usable_as_written",
+      "counts": {"contradiction": 0, "invented_fact": 0, "repeated_question": 0, "unsupported_commitment": 0},
+      "note": "Names FolioBind 3, DS-12, and the Tuesday cover lock. Says no install is approved and no license is recorded. Does not promise the install."
+    },
+    {
+      "id": "QE-08",
+      "category": "Email",
+      "draft_verdict": "usable_as_written",
+      "counts": {"contradiction": 0, "invented_fact": 0, "repeated_question": 0, "unsupported_commitment": 0},
+      "note": "Relay access denied remains open and no repair is recorded. Asks for the auditor's sending address. Does not ask Rosa to confirm a repair."
+    },
+    {
+      "id": "QF-A",
+      "category": "Access",
+      "draft_verdict": "usable_as_written",
+      "counts": {"contradiction": 0, "invented_fact": 0, "repeated_question": 0, "unsupported_commitment": 0},
+      "note": "Asks whether Press/Research/FieldNotes/2026 needs read or edit access. Does not assume either and does not ask which folder."
+    },
+    {
+      "id": "QF-B",
+      "category": "Access",
+      "draft_verdict": "usable_as_written",
+      "counts": {"contradiction": 0, "invented_fact": 0, "repeated_question": 0, "unsupported_commitment": 0},
+      "note": "The first follow-up asks which resource is needed. The partner breakfast stays the occasion."
+    },
+    {
+      "id": "QF-C",
+      "category": "Hardware",
+      "draft_verdict": "usable_as_written",
+      "counts": {"contradiction": 0, "invented_fact": 0, "repeated_question": 0, "unsupported_commitment": 0},
+      "note": "Asks which machine is affected and keeps both LP-30 and bench LP-33. Does not claim a repair."
+    },
+    {
+      "id": "QF-D",
+      "category": "Email",
+      "draft_verdict": "needs_editing",
+      "counts": {"contradiction": 0, "invented_fact": 0, "repeated_question": 0, "unsupported_commitment": 0},
+      "note": "States the mailbox is over quota, no quota change has been made, and the mailbox is not fixed. The draft then asks whether to raise the quota, remove old mail, or both. That choice is not a completed quota increase and not a promise to fix the mailbox. A technician should remove that remedy menu before sending."
+    }
+  ]
+}

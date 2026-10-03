@@ -1,0 +1,76 @@
+{
+  "calls": 12,
+  "retries": 0,
+  "stopped_early": null,
+  "reasoning_effort": "low",
+  "max_completion_tokens": 1200,
+  "endpoint": "https://api.x.ai/v1/chat/completions",
+  "cap_includes_reasoning_tokens": false,
+  "elapsed_s": [
+    14.249,
+    8.698,
+    14.372,
+    2.758,
+    17.0,
+    6.902,
+    14.022,
+    13.758,
+    7.794,
+    12.171,
+    17.519,
+    11.441
+  ],
+  "median_elapsed_s": 12.9645,
+  "min_elapsed_s": 2.758,
+  "max_elapsed_s": 17.519,
+  "total_cost_usd": 0.108856,
+  "store_js_sha256_before": "c4af6f3bd25640e1ed0bae69c7e535a19e4004b105747503e9c90621f46cd1d0",
+  "store_js_sha256_after": "c4af6f3bd25640e1ed0bae69c7e535a19e4004b105747503e9c90621f46cd1d0",
+  "store_js_unchanged": true,
+  "frozen_hashes_before": {
+    "qwen-fixtures": "8157160c650f36180a07526915ae570a6b20a81f8eb952d06f7b9228b3b7ec7d",
+    "qwen-expectations": "33fb8b9aaabb9acc3937676fbd33ce19d8d7103f7b6b68c694e8a5e5756eda01",
+    "fresh-fixtures": "d2faa6328d38f2c8866da47af694725e7376b1d7519568a01d846df98464cecc",
+    "fresh-expectations": "b2d8698ba519226fe15b542980e463e244b951220c66ece619f71ec996fa31a8"
+  },
+  "frozen_hashes_after": {
+    "qwen-fixtures": "8157160c650f36180a07526915ae570a6b20a81f8eb952d06f7b9228b3b7ec7d",
+    "qwen-expectations": "33fb8b9aaabb9acc3937676fbd33ce19d8d7103f7b6b68c694e8a5e5756eda01",
+    "fresh-fixtures": "d2faa6328d38f2c8866da47af694725e7376b1d7519568a01d846df98464cecc",
+    "fresh-expectations": "b2d8698ba519226fe15b542980e463e244b951220c66ece619f71ec996fa31a8"
+  },
+  "high_baseline_before": {
+    "raw-results.json": "2fdcb517c161f3ad4577268afeb0ad2258a62dc6f7de9660e20e25e65a84cc66",
+    "run-meta.json": "ee07f560a7764f4e54df6b22f202529c3814deca20d53b365614dcb991c24711",
+    "smoke-request.json": "4859aec522c56df4d79c4c5661fbc1cad8a5950735701c4ac7ae855ec85f5691",
+    "smoke-response.json": "ba3620fd5a5dd227494fce798b66ce4d6c44f91a3fc7c283f51b1695077196a4",
+    "submitted-messages.json": "d7be5115b98ff407ad194b927214f3754b64fb49220a87f0ee1339a839773093",
+    "trace.jsonl": "1fd80e562f3f9bd801e80f10d6e8d1dbdfd25d0094c91fb7fe42fbf13fd39e85"
+  },
+  "high_baseline_after": {
+    "raw-results.json": "2fdcb517c161f3ad4577268afeb0ad2258a62dc6f7de9660e20e25e65a84cc66",
+    "run-meta.json": "ee07f560a7764f4e54df6b22f202529c3814deca20d53b365614dcb991c24711",
+    "smoke-request.json": "4859aec522c56df4d79c4c5661fbc1cad8a5950735701c4ac7ae855ec85f5691",
+    "smoke-response.json": "ba3620fd5a5dd227494fce798b66ce4d6c44f91a3fc7c283f51b1695077196a4",
+    "submitted-messages.json": "d7be5115b98ff407ad194b927214f3754b64fb49220a87f0ee1339a839773093",
+    "trace.jsonl": "1fd80e562f3f9bd801e80f10d6e8d1dbdfd25d0094c91fb7fe42fbf13fd39e85"
+  },
+  "provider_log_lines": [
+    "2026-10-02 22:29:43,293 INFO tinydesk analysis provider=xai model=grok-4.7 reasoning_effort=low max_completion_tokens=1200",
+    "2026-10-02 22:29:57,536 INFO tinydesk analysis provider=xai model=grok-4.7 reasoning_effort=low max_completion_tokens=1200",
+    "2026-10-02 22:30:06,242 INFO tinydesk analysis provider=xai model=grok-4.7 reasoning_effort=low max_completion_tokens=1200",
+    "2026-10-02 22:30:20,634 INFO tinydesk analysis provider=xai model=grok-4.7 reasoning_effort=low max_completion_tokens=1200",
+    "2026-10-02 22:30:23,376 INFO tinydesk analysis provider=xai model=grok-4.7 reasoning_effort=low max_completion_tokens=1200",
+    "2026-10-02 22:30:40,381 INFO tinydesk analysis provider=xai model=grok-4.7 reasoning_effort=low max_completion_tokens=1200",
+    "2026-10-02 22:30:47,281 INFO tinydesk analysis provider=xai model=grok-4.7 reasoning_effort=low max_completion_tokens=1200",
+    "2026-10-02 22:31:01,307 INFO tinydesk analysis provider=xai model=grok-4.7 reasoning_effort=low max_completion_tokens=1200",
+    "2026-10-02 22:31:15,055 INFO tinydesk analysis provider=xai model=grok-4.7 reasoning_effort=low max_completion_tokens=1200",
+    "2026-10-02 22:31:22,864 INFO tinydesk analysis provider=xai model=grok-4.7 reasoning_effort=low max_completion_tokens=1200",
+    "2026-10-02 22:31:35,033 INFO tinydesk analysis provider=xai model=grok-4.7 reasoning_effort=low max_completion_tokens=1200",
+    "2026-10-02 22:31:52,552 INFO tinydesk analysis provider=xai model=grok-4.7 reasoning_effort=low max_completion_tokens=1200"
+  ],
+  "credential_leak": false,
+  "trace_count": 12,
+  "frozen_unchanged": true,
+  "high_baseline_unchanged": true
+}

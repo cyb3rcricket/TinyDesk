@@ -1,0 +1,704 @@
+{
+  "endpoint": "http://127.0.0.1:8080/api/analyze-ticket",
+  "runs": [
+    {
+      "id": "QE-01",
+      "repeat": 1,
+      "elapsed_s": 14.218,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"The Ashmere VPN works in the office and opens the photo archive, but fails at home on the same laptop, stopping at the gateway with no error text. The requester needs access to the photo archive before Friday night. The resource needed at home is unspecified. The issue is currently in progress and requires clarification on the required resource and timeline.\",\"suggestedCategory\":\"Network\",\"followUps\":[\"What specific resource do you need access to at home?\",\"Is there a particular time by Friday night when access is needed?\"],\"draft\":\"Hi Nadia, \\n\\nThanks for the ticket. I’ve confirmed that the Ashmere VPN works in the office and successfully opens the photo archive on your laptop there. At home, the same laptop fails when trying to connect to the gateway—no error message is shown. \\n\\nTo move forward, could you please confirm which specific resource you need access to at home? For example, is it the photo archive, a specific folder, or another service? \\n\\nThanks again, \\nAshmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "The Ashmere VPN works in the office and opens the photo archive, but fails at home on the same laptop, stopping at the gateway with no error text. The requester needs access to the photo archive before Friday night. The resource needed at home is unspecified. The issue is currently in progress and requires clarification on the required resource and timeline.",
+        "suggestedCategory": "Network",
+        "followUps": [
+          "What specific resource do you need access to at home?",
+          "Is there a particular time by Friday night when access is needed?"
+        ],
+        "draft": "Hi Nadia, \n\nThanks for the ticket. I’ve confirmed that the Ashmere VPN works in the office and successfully opens the photo archive on your laptop there. At home, the same laptop fails when trying to connect to the gateway—no error message is shown. \n\nTo move forward, could you please confirm which specific resource you need access to at home? For example, is it the photo archive, a specific folder, or another service? \n\nThanks again, \nAshmere Press IT"
+      }
+    },
+    {
+      "id": "QE-01",
+      "repeat": 2,
+      "elapsed_s": 7.627,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"The Ashmere VPN works in the office and opens the photo archive, but fails at home on the same laptop, stopping at the gateway with no error text. The requester needs access to the photo archive before Friday night. The resource needed at home is unspecified. The issue is currently in progress and requires clarification on the required resource and timeline.\",\"suggestedCategory\":\"Network\",\"followUps\":[\"What specific resource do you need access to at home?\",\"Is there a particular time by Friday night when access is needed?\"],\"draft\":\"Hi Nadia, \\n\\nThanks for the ticket. I’ve confirmed that the Ashmere VPN works in the office and successfully opens the photo archive on your laptop there. At home, the same laptop fails when trying to connect to the gateway—no error message is shown. \\n\\nTo move forward, could you please confirm which specific resource you need access to at home? For example, is it the photo archive, a specific folder, or another service? \\n\\nThanks again, \\nAshmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "The Ashmere VPN works in the office and opens the photo archive, but fails at home on the same laptop, stopping at the gateway with no error text. The requester needs access to the photo archive before Friday night. The resource needed at home is unspecified. The issue is currently in progress and requires clarification on the required resource and timeline.",
+        "suggestedCategory": "Network",
+        "followUps": [
+          "What specific resource do you need access to at home?",
+          "Is there a particular time by Friday night when access is needed?"
+        ],
+        "draft": "Hi Nadia, \n\nThanks for the ticket. I’ve confirmed that the Ashmere VPN works in the office and successfully opens the photo archive on your laptop there. At home, the same laptop fails when trying to connect to the gateway—no error message is shown. \n\nTo move forward, could you please confirm which specific resource you need access to at home? For example, is it the photo archive, a specific folder, or another service? \n\nThanks again, \nAshmere Press IT"
+      }
+    },
+    {
+      "id": "QE-01",
+      "repeat": 3,
+      "elapsed_s": 7.374,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"The Ashmere VPN works in the office and opens the photo archive, but fails at home on the same laptop, stopping at the gateway with no error text. The requester needs access to the photo archive before Friday night. The resource needed at home is unspecified. The issue is currently in progress and requires clarification on the required resource and timeline.\",\"suggestedCategory\":\"Network\",\"followUps\":[\"What specific resource do you need access to at home?\",\"Is there a particular time by Friday night when access is needed?\"],\"draft\":\"Hi Nadia, \\n\\nThanks for the ticket. I’ve confirmed that the Ashmere VPN works in the office and successfully opens the photo archive on your laptop there. At home, the same laptop fails when trying to connect to the gateway—no error message is shown. \\n\\nTo move forward, could you please confirm which specific resource you need access to at home? For example, is it the photo archive, a specific folder, or another service? \\n\\nThanks again, \\nAshmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "The Ashmere VPN works in the office and opens the photo archive, but fails at home on the same laptop, stopping at the gateway with no error text. The requester needs access to the photo archive before Friday night. The resource needed at home is unspecified. The issue is currently in progress and requires clarification on the required resource and timeline.",
+        "suggestedCategory": "Network",
+        "followUps": [
+          "What specific resource do you need access to at home?",
+          "Is there a particular time by Friday night when access is needed?"
+        ],
+        "draft": "Hi Nadia, \n\nThanks for the ticket. I’ve confirmed that the Ashmere VPN works in the office and successfully opens the photo archive on your laptop there. At home, the same laptop fails when trying to connect to the gateway—no error message is shown. \n\nTo move forward, could you please confirm which specific resource you need access to at home? For example, is it the photo archive, a specific folder, or another service? \n\nThanks again, \nAshmere Press IT"
+      }
+    },
+    {
+      "id": "QE-02",
+      "repeat": 1,
+      "elapsed_s": 9.403,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Idris Lang from Contracts needs read access to the Pell waiver in the folder Press/Legal/Hold/2026. He can sign in and see the folder list but receives a permission error. The request is for read-only access only, with no editing needed. The resource (specific file or document) is not named in the ticket. Access is required to allow viewing the Pell waiver today.\",\"suggestedCategory\":\"Access\",\"followUps\":[\"What specific resource do you need access to? (e.g., a file, folder, or document within Press/Legal/Hold/2026?)\"],\"draft\":\"Hi Idris, thanks for reaching out. I see you can sign in to the file server and the folder list opens, but you're getting 'You do not have permission' when trying to access Press/Legal/Hold/2026. You only need read access to the Pell waiver today, not edit permissions. Could you please confirm what specific resource you need access to? For example, is it a file, folder, or a specific document within that path? This will help us grant the correct read access quickly. \\n\\nAshmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Idris Lang from Contracts needs read access to the Pell waiver in the folder Press/Legal/Hold/2026. He can sign in and see the folder list but receives a permission error. The request is for read-only access only, with no editing needed. The resource (specific file or document) is not named in the ticket. Access is required to allow viewing the Pell waiver today.",
+        "suggestedCategory": "Access",
+        "followUps": [
+          "What specific resource do you need access to? (e.g., a file, folder, or document within Press/Legal/Hold/2026?)"
+        ],
+        "draft": "Hi Idris, thanks for reaching out. I see you can sign in to the file server and the folder list opens, but you're getting 'You do not have permission' when trying to access Press/Legal/Hold/2026. You only need read access to the Pell waiver today, not edit permissions. Could you please confirm what specific resource you need access to? For example, is it a file, folder, or a specific document within that path? This will help us grant the correct read access quickly. \n\nAshmere Press IT"
+      }
+    },
+    {
+      "id": "QE-02",
+      "repeat": 2,
+      "elapsed_s": 8.501,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Idris Lang from Contracts needs read access to the Pell waiver in the folder Press/Legal/Hold/2026. He can sign in and see the folder list but receives a permission error. The request is for read-only access only, with no editing needed. The resource (specific file or document) is not named in the ticket. Access is required to allow viewing the Pell waiver today.\",\"suggestedCategory\":\"Access\",\"followUps\":[\"What specific resource do you need access to? (e.g., a file, folder, or document within Press/Legal/Hold/2026?)\"],\"draft\":\"Hi Idris, thanks for reaching out. I see you can sign in to the file server and the folder list opens, but you're getting 'You do not have permission' when trying to access Press/Legal/Hold/2026. You only need read access to the Pell waiver today, not edit permissions. Could you please confirm what specific resource you need access to? For example, is it a file, folder, or a specific document within that path? This will help us grant the correct read access quickly. \\n\\nAshmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Idris Lang from Contracts needs read access to the Pell waiver in the folder Press/Legal/Hold/2026. He can sign in and see the folder list but receives a permission error. The request is for read-only access only, with no editing needed. The resource (specific file or document) is not named in the ticket. Access is required to allow viewing the Pell waiver today.",
+        "suggestedCategory": "Access",
+        "followUps": [
+          "What specific resource do you need access to? (e.g., a file, folder, or document within Press/Legal/Hold/2026?)"
+        ],
+        "draft": "Hi Idris, thanks for reaching out. I see you can sign in to the file server and the folder list opens, but you're getting 'You do not have permission' when trying to access Press/Legal/Hold/2026. You only need read access to the Pell waiver today, not edit permissions. Could you please confirm what specific resource you need access to? For example, is it a file, folder, or a specific document within that path? This will help us grant the correct read access quickly. \n\nAshmere Press IT"
+      }
+    },
+    {
+      "id": "QE-02",
+      "repeat": 3,
+      "elapsed_s": 8.439,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Idris Lang from Contracts needs read access to the Pell waiver in the folder Press/Legal/Hold/2026. He can sign in and see the folder list but receives a permission error. The request is for read-only access only, with no editing needed. The resource (specific file or document) is not named in the ticket. Access is required to allow viewing the Pell waiver today.\",\"suggestedCategory\":\"Access\",\"followUps\":[\"What specific resource do you need access to? (e.g., a file, folder, or document within Press/Legal/Hold/2026?)\"],\"draft\":\"Hi Idris, thanks for reaching out. I see you can sign in to the file server and the folder list opens, but you're getting 'You do not have permission' when trying to access Press/Legal/Hold/2026. You only need read access to the Pell waiver today, not edit permissions. Could you please confirm what specific resource you need access to? For example, is it a file, folder, or a specific document within that path? This will help us grant the correct read access quickly. \\n\\nAshmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Idris Lang from Contracts needs read access to the Pell waiver in the folder Press/Legal/Hold/2026. He can sign in and see the folder list but receives a permission error. The request is for read-only access only, with no editing needed. The resource (specific file or document) is not named in the ticket. Access is required to allow viewing the Pell waiver today.",
+        "suggestedCategory": "Access",
+        "followUps": [
+          "What specific resource do you need access to? (e.g., a file, folder, or document within Press/Legal/Hold/2026?)"
+        ],
+        "draft": "Hi Idris, thanks for reaching out. I see you can sign in to the file server and the folder list opens, but you're getting 'You do not have permission' when trying to access Press/Legal/Hold/2026. You only need read access to the Pell waiver today, not edit permissions. Could you please confirm what specific resource you need access to? For example, is it a file, folder, or a specific document within that path? This will help us grant the correct read access quickly. \n\nAshmere Press IT"
+      }
+    },
+    {
+      "id": "QE-03",
+      "repeat": 1,
+      "elapsed_s": 9.553,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Printer PR-4 in the bindery shows panel code 41.2 after restart. The network cable was reseated and no paper is in the path. The issue persists. Tomas has already restarted the printer. The technician has verified the physical connection and observed no paper jam. A hardware issue or sensor fault is suspected. The requester needs clarification on required access or logs to proceed.\",\"suggestedCategory\":\"Hardware\",\"followUps\":[\"What resource do you need access to in order to troubleshoot further?\",\"Does the printer have any error logs or known history of this code appearing?\"],\"draft\":\"Hi Tomas, I see you reported that printer PR-4 in the bindery shows panel code 41.2. You already restarted the printer, and I reseated the network cable at the printer—both of us checked and there's no paper in the path. The panel still shows 41.2, which suggests a sensor or hardware issue. Could you confirm if the printer has any error logs or if there's a known history of this code appearing? Also, is there a specific resource you need access to in order to troubleshoot further? Thanks, Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Printer PR-4 in the bindery shows panel code 41.2 after restart. The network cable was reseated and no paper is in the path. The issue persists. Tomas has already restarted the printer. The technician has verified the physical connection and observed no paper jam. A hardware issue or sensor fault is suspected. The requester needs clarification on required access or logs to proceed.",
+        "suggestedCategory": "Hardware",
+        "followUps": [
+          "What resource do you need access to in order to troubleshoot further?",
+          "Does the printer have any error logs or known history of this code appearing?"
+        ],
+        "draft": "Hi Tomas, I see you reported that printer PR-4 in the bindery shows panel code 41.2. You already restarted the printer, and I reseated the network cable at the printer—both of us checked and there's no paper in the path. The panel still shows 41.2, which suggests a sensor or hardware issue. Could you confirm if the printer has any error logs or if there's a known history of this code appearing? Also, is there a specific resource you need access to in order to troubleshoot further? Thanks, Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QE-03",
+      "repeat": 2,
+      "elapsed_s": 8.97,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Printer PR-4 in the bindery shows panel code 41.2 after restart. The network cable was reseated and no paper is in the path. The issue persists. Tomas has already restarted the printer. The technician has verified the physical connection and observed no paper jam. A hardware issue or sensor fault is suspected. The requester needs clarification on required access or logs to proceed.\",\"suggestedCategory\":\"Hardware\",\"followUps\":[\"What resource do you need access to in order to troubleshoot further?\",\"Does the printer have any error logs or known history of this code appearing?\"],\"draft\":\"Hi Tomas, I see you reported that printer PR-4 in the bindery shows panel code 41.2. You already restarted the printer, and I reseated the network cable at the printer—both of us checked and there's no paper in the path. The panel still shows 41.2, which suggests a sensor or hardware issue. Could you confirm if the printer has any error logs or if there's a known history of this code appearing? Also, is there a specific resource you need access to in order to troubleshoot further? Thanks, Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Printer PR-4 in the bindery shows panel code 41.2 after restart. The network cable was reseated and no paper is in the path. The issue persists. Tomas has already restarted the printer. The technician has verified the physical connection and observed no paper jam. A hardware issue or sensor fault is suspected. The requester needs clarification on required access or logs to proceed.",
+        "suggestedCategory": "Hardware",
+        "followUps": [
+          "What resource do you need access to in order to troubleshoot further?",
+          "Does the printer have any error logs or known history of this code appearing?"
+        ],
+        "draft": "Hi Tomas, I see you reported that printer PR-4 in the bindery shows panel code 41.2. You already restarted the printer, and I reseated the network cable at the printer—both of us checked and there's no paper in the path. The panel still shows 41.2, which suggests a sensor or hardware issue. Could you confirm if the printer has any error logs or if there's a known history of this code appearing? Also, is there a specific resource you need access to in order to troubleshoot further? Thanks, Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QE-03",
+      "repeat": 3,
+      "elapsed_s": 8.685,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Printer PR-4 in the bindery shows panel code 41.2 after restart. The network cable was reseated and no paper is in the path. The issue persists. Tomas has already restarted the printer. The technician has verified the physical connection and observed no paper jam. A hardware issue or sensor fault is suspected. The requester needs clarification on required access or logs to proceed.\",\"suggestedCategory\":\"Hardware\",\"followUps\":[\"What resource do you need access to in order to troubleshoot further?\",\"Does the printer have any error logs or known history of this code appearing?\"],\"draft\":\"Hi Tomas, I see you reported that printer PR-4 in the bindery shows panel code 41.2. You already restarted the printer, and I reseated the network cable at the printer—both of us checked and there's no paper in the path. The panel still shows 41.2, which suggests a sensor or hardware issue. Could you confirm if the printer has any error logs or if there's a known history of this code appearing? Also, is there a specific resource you need access to in order to troubleshoot further? Thanks, Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Printer PR-4 in the bindery shows panel code 41.2 after restart. The network cable was reseated and no paper is in the path. The issue persists. Tomas has already restarted the printer. The technician has verified the physical connection and observed no paper jam. A hardware issue or sensor fault is suspected. The requester needs clarification on required access or logs to proceed.",
+        "suggestedCategory": "Hardware",
+        "followUps": [
+          "What resource do you need access to in order to troubleshoot further?",
+          "Does the printer have any error logs or known history of this code appearing?"
+        ],
+        "draft": "Hi Tomas, I see you reported that printer PR-4 in the bindery shows panel code 41.2. You already restarted the printer, and I reseated the network cable at the printer—both of us checked and there's no paper in the path. The panel still shows 41.2, which suggests a sensor or hardware issue. Could you confirm if the printer has any error logs or if there's a known history of this code appearing? Also, is there a specific resource you need access to in order to troubleshoot further? Thanks, Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QE-04",
+      "repeat": 1,
+      "elapsed_s": 5.938,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Monitor MN-19 flickered during cover layout use, resolved by replacing it with spare MN-44. June confirmed no flicker after 20 minutes of testing. Ticket status is now Resolved.\",\"suggestedCategory\":\"Hardware\",\"followUps\":[],\"draft\":\"Ashmere Press IT\\n\\nHi June, thanks for the update. The flicker issue with monitor MN-19 has been resolved — the spare monitor MN-44 is working well during the cover layout test. I’ve noted the resolution in the ticket. Let me know if you notice any other issues with your desk equipment in the future!\\n\\nBest regards,\\nAshmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Monitor MN-19 flickered during cover layout use, resolved by replacing it with spare MN-44. June confirmed no flicker after 20 minutes of testing. Ticket status is now Resolved.",
+        "suggestedCategory": "Hardware",
+        "followUps": [],
+        "draft": "Ashmere Press IT\n\nHi June, thanks for the update. The flicker issue with monitor MN-19 has been resolved — the spare monitor MN-44 is working well during the cover layout test. I’ve noted the resolution in the ticket. Let me know if you notice any other issues with your desk equipment in the future!\n\nBest regards,\nAshmere Press IT"
+      }
+    },
+    {
+      "id": "QE-04",
+      "repeat": 2,
+      "elapsed_s": 4.764,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Monitor MN-19 flickered during cover layout use, resolved by replacing it with spare MN-44. June confirmed no flicker after 20 minutes of testing. Ticket status is now Resolved.\",\"suggestedCategory\":\"Hardware\",\"followUps\":[],\"draft\":\"Ashmere Press IT\\n\\nHi June, thanks for the update. The flicker issue with monitor MN-19 has been resolved — the spare monitor MN-44 is working well during the cover layout test. I’ve noted the resolution in the ticket. Let me know if you notice any other issues with your desk equipment in the future!\\n\\nBest regards,\\nAshmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Monitor MN-19 flickered during cover layout use, resolved by replacing it with spare MN-44. June confirmed no flicker after 20 minutes of testing. Ticket status is now Resolved.",
+        "suggestedCategory": "Hardware",
+        "followUps": [],
+        "draft": "Ashmere Press IT\n\nHi June, thanks for the update. The flicker issue with monitor MN-19 has been resolved — the spare monitor MN-44 is working well during the cover layout test. I’ve noted the resolution in the ticket. Let me know if you notice any other issues with your desk equipment in the future!\n\nBest regards,\nAshmere Press IT"
+      }
+    },
+    {
+      "id": "QE-04",
+      "repeat": 3,
+      "elapsed_s": 4.782,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Monitor MN-19 flickered during cover layout use, resolved by replacing it with spare MN-44. June confirmed no flicker after 20 minutes of testing. Ticket status is now Resolved.\",\"suggestedCategory\":\"Hardware\",\"followUps\":[],\"draft\":\"Ashmere Press IT\\n\\nHi June, thanks for the update. The flicker issue with monitor MN-19 has been resolved — the spare monitor MN-44 is working well during the cover layout test. I’ve noted the resolution in the ticket. Let me know if you notice any other issues with your desk equipment in the future!\\n\\nBest regards,\\nAshmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Monitor MN-19 flickered during cover layout use, resolved by replacing it with spare MN-44. June confirmed no flicker after 20 minutes of testing. Ticket status is now Resolved.",
+        "suggestedCategory": "Hardware",
+        "followUps": [],
+        "draft": "Ashmere Press IT\n\nHi June, thanks for the update. The flicker issue with monitor MN-19 has been resolved — the spare monitor MN-44 is working well during the cover layout test. I’ve noted the resolution in the ticket. Let me know if you notice any other issues with your desk equipment in the future!\n\nBest regards,\nAshmere Press IT"
+      }
+    },
+    {
+      "id": "QE-05",
+      "repeat": 1,
+      "elapsed_s": 7.653,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"The space bar on loaner LP-22 was replaced and initially worked, but the issue has returned. The ticket was previously resolved and then reopened. The current issue is a recurring hardware malfunction on the same device, but the specific component or cause is not yet confirmed.\",\"suggestedCategory\":\"Hardware\",\"followUps\":[\"What is the current resource that needs attention? (e.g., a specific machine, keyboard, or component)\",\"Is the issue still happening on the same loaner LP-22, or has it moved to another device?\"],\"draft\":\"Hi Paul, the space bar on loaner LP-22 was previously replaced, and the new keyboard worked fine during testing. However, the sticking issue has returned. Could you please confirm if the problem is still occurring on the same machine, or if there's a different device or condition involved? Thanks, Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "The space bar on loaner LP-22 was replaced and initially worked, but the issue has returned. The ticket was previously resolved and then reopened. The current issue is a recurring hardware malfunction on the same device, but the specific component or cause is not yet confirmed.",
+        "suggestedCategory": "Hardware",
+        "followUps": [
+          "What is the current resource that needs attention? (e.g., a specific machine, keyboard, or component)",
+          "Is the issue still happening on the same loaner LP-22, or has it moved to another device?"
+        ],
+        "draft": "Hi Paul, the space bar on loaner LP-22 was previously replaced, and the new keyboard worked fine during testing. However, the sticking issue has returned. Could you please confirm if the problem is still occurring on the same machine, or if there's a different device or condition involved? Thanks, Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QE-05",
+      "repeat": 2,
+      "elapsed_s": 6.333,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"The space bar on loaner LP-22 was replaced and initially worked, but the issue has returned. The ticket was previously resolved and then reopened. The current issue is a recurring hardware malfunction on the same device, but the specific component or cause is not yet confirmed.\",\"suggestedCategory\":\"Hardware\",\"followUps\":[\"What is the current resource that needs attention? (e.g., a specific machine, keyboard, or component)\",\"Is the issue still happening on the same loaner LP-22, or has it moved to another device?\"],\"draft\":\"Hi Paul, the space bar on loaner LP-22 was previously replaced, and the new keyboard worked fine during testing. However, the sticking issue has returned. Could you please confirm if the problem is still occurring on the same machine, or if there's a different device or condition involved? Thanks, Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "The space bar on loaner LP-22 was replaced and initially worked, but the issue has returned. The ticket was previously resolved and then reopened. The current issue is a recurring hardware malfunction on the same device, but the specific component or cause is not yet confirmed.",
+        "suggestedCategory": "Hardware",
+        "followUps": [
+          "What is the current resource that needs attention? (e.g., a specific machine, keyboard, or component)",
+          "Is the issue still happening on the same loaner LP-22, or has it moved to another device?"
+        ],
+        "draft": "Hi Paul, the space bar on loaner LP-22 was previously replaced, and the new keyboard worked fine during testing. However, the sticking issue has returned. Could you please confirm if the problem is still occurring on the same machine, or if there's a different device or condition involved? Thanks, Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QE-05",
+      "repeat": 3,
+      "elapsed_s": 6.322,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"The space bar on loaner LP-22 was replaced and initially worked, but the issue has returned. The ticket was previously resolved and then reopened. The current issue is a recurring hardware malfunction on the same device, but the specific component or cause is not yet confirmed.\",\"suggestedCategory\":\"Hardware\",\"followUps\":[\"What is the current resource that needs attention? (e.g., a specific machine, keyboard, or component)\",\"Is the issue still happening on the same loaner LP-22, or has it moved to another device?\"],\"draft\":\"Hi Paul, the space bar on loaner LP-22 was previously replaced, and the new keyboard worked fine during testing. However, the sticking issue has returned. Could you please confirm if the problem is still occurring on the same machine, or if there's a different device or condition involved? Thanks, Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "The space bar on loaner LP-22 was replaced and initially worked, but the issue has returned. The ticket was previously resolved and then reopened. The current issue is a recurring hardware malfunction on the same device, but the specific component or cause is not yet confirmed.",
+        "suggestedCategory": "Hardware",
+        "followUps": [
+          "What is the current resource that needs attention? (e.g., a specific machine, keyboard, or component)",
+          "Is the issue still happening on the same loaner LP-22, or has it moved to another device?"
+        ],
+        "draft": "Hi Paul, the space bar on loaner LP-22 was previously replaced, and the new keyboard worked fine during testing. However, the sticking issue has returned. Could you please confirm if the problem is still occurring on the same machine, or if there's a different device or condition involved? Thanks, Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QE-06",
+      "repeat": 1,
+      "elapsed_s": 5.24,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Anika Shah from Training needs access to a resource for tomorrow's training. The resource is unspecified in the ticket. The request has high priority and is currently open. The requester has not clarified what system or access is required.\",\"suggestedCategory\":\"Access\",\"followUps\":[\"What resource or system do you need access to?\",\"Is there a specific deadline or time by which access is needed?\"],\"draft\":\"Hi Anika, thanks for reaching out. You mentioned needing access to 'the thing' for tomorrow's training. Could you please clarify what specific resource or system you need access to? This will help ensure we can support your training session promptly. Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Anika Shah from Training needs access to a resource for tomorrow's training. The resource is unspecified in the ticket. The request has high priority and is currently open. The requester has not clarified what system or access is required.",
+        "suggestedCategory": "Access",
+        "followUps": [
+          "What resource or system do you need access to?",
+          "Is there a specific deadline or time by which access is needed?"
+        ],
+        "draft": "Hi Anika, thanks for reaching out. You mentioned needing access to 'the thing' for tomorrow's training. Could you please clarify what specific resource or system you need access to? This will help ensure we can support your training session promptly. Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QE-06",
+      "repeat": 2,
+      "elapsed_s": 4.859,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Anika Shah from Training needs access to a resource for tomorrow's training. The resource is unspecified in the ticket. The request has high priority and is currently open. The requester has not clarified what system or access is required.\",\"suggestedCategory\":\"Access\",\"followUps\":[\"What resource or system do you need access to?\",\"Is there a specific deadline or time by which access is needed?\"],\"draft\":\"Hi Anika, thanks for reaching out. You mentioned needing access to 'the thing' for tomorrow's training. Could you please clarify what specific resource or system you need access to? This will help ensure we can support your training session promptly. Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Anika Shah from Training needs access to a resource for tomorrow's training. The resource is unspecified in the ticket. The request has high priority and is currently open. The requester has not clarified what system or access is required.",
+        "suggestedCategory": "Access",
+        "followUps": [
+          "What resource or system do you need access to?",
+          "Is there a specific deadline or time by which access is needed?"
+        ],
+        "draft": "Hi Anika, thanks for reaching out. You mentioned needing access to 'the thing' for tomorrow's training. Could you please clarify what specific resource or system you need access to? This will help ensure we can support your training session promptly. Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QE-06",
+      "repeat": 3,
+      "elapsed_s": 4.771,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Anika Shah from Training needs access to a resource for tomorrow's training. The resource is unspecified in the ticket. The request has high priority and is currently open. The requester has not clarified what system or access is required.\",\"suggestedCategory\":\"Access\",\"followUps\":[\"What resource or system do you need access to?\",\"Is there a specific deadline or time by which access is needed?\"],\"draft\":\"Hi Anika, thanks for reaching out. You mentioned needing access to 'the thing' for tomorrow's training. Could you please clarify what specific resource or system you need access to? This will help ensure we can support your training session promptly. Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Anika Shah from Training needs access to a resource for tomorrow's training. The resource is unspecified in the ticket. The request has high priority and is currently open. The requester has not clarified what system or access is required.",
+        "suggestedCategory": "Access",
+        "followUps": [
+          "What resource or system do you need access to?",
+          "Is there a specific deadline or time by which access is needed?"
+        ],
+        "draft": "Hi Anika, thanks for reaching out. You mentioned needing access to 'the thing' for tomorrow's training. Could you please clarify what specific resource or system you need access to? This will help ensure we can support your training session promptly. Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QE-07",
+      "repeat": 1,
+      "elapsed_s": 9.039,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Felix Ortega from Design requests FolioBind 3 be installed on DS-12 before Tuesday's cover lock. No license status is known, and no install approval has been recorded. The request is high priority and currently new. The technician needs confirmation on the required resource and license status to proceed.\",\"suggestedCategory\":\"Software\",\"followUps\":[\"What resource do you need access to? (e.g., FolioBind 3 software, a specific file, a machine, etc.)\",\"Do you know whether Ashmere Press already has a FolioBind 3 license?\"],\"draft\":\"Hi Felix, thanks for the request. I see you'd like FolioBind 3 installed on design machine DS-12 before the Tuesday cover lock. The ticket is currently in 'New' status, and no install approval has been recorded. I don't know whether Ashmere Press has a FolioBind 3 license either. Could you please confirm if a license is needed or if we already have one? Also, could you clarify what resource you need access to—specifically, is it the FolioBind 3 software or something else? Thanks!\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Felix Ortega from Design requests FolioBind 3 be installed on DS-12 before Tuesday's cover lock. No license status is known, and no install approval has been recorded. The request is high priority and currently new. The technician needs confirmation on the required resource and license status to proceed.",
+        "suggestedCategory": "Software",
+        "followUps": [
+          "What resource do you need access to? (e.g., FolioBind 3 software, a specific file, a machine, etc.)",
+          "Do you know whether Ashmere Press already has a FolioBind 3 license?"
+        ],
+        "draft": "Hi Felix, thanks for the request. I see you'd like FolioBind 3 installed on design machine DS-12 before the Tuesday cover lock. The ticket is currently in 'New' status, and no install approval has been recorded. I don't know whether Ashmere Press has a FolioBind 3 license either. Could you please confirm if a license is needed or if we already have one? Also, could you clarify what resource you need access to—specifically, is it the FolioBind 3 software or something else? Thanks!"
+      }
+    },
+    {
+      "id": "QE-07",
+      "repeat": 2,
+      "elapsed_s": 8.044,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Felix Ortega from Design requests FolioBind 3 be installed on DS-12 before Tuesday's cover lock. No license status is known, and no install approval has been recorded. The request is high priority and currently new. The technician needs confirmation on the required resource and license status to proceed.\",\"suggestedCategory\":\"Software\",\"followUps\":[\"What resource do you need access to? (e.g., FolioBind 3 software, a specific file, a machine, etc.)\",\"Do you know whether Ashmere Press already has a FolioBind 3 license?\"],\"draft\":\"Hi Felix, thanks for the request. I see you'd like FolioBind 3 installed on design machine DS-12 before the Tuesday cover lock. The ticket is currently in 'New' status, and no install approval has been recorded. I don't know whether Ashmere Press has a FolioBind 3 license either. Could you please confirm if a license is needed or if we already have one? Also, could you clarify what resource you need access to—specifically, is it the FolioBind 3 software or something else? Thanks!\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Felix Ortega from Design requests FolioBind 3 be installed on DS-12 before Tuesday's cover lock. No license status is known, and no install approval has been recorded. The request is high priority and currently new. The technician needs confirmation on the required resource and license status to proceed.",
+        "suggestedCategory": "Software",
+        "followUps": [
+          "What resource do you need access to? (e.g., FolioBind 3 software, a specific file, a machine, etc.)",
+          "Do you know whether Ashmere Press already has a FolioBind 3 license?"
+        ],
+        "draft": "Hi Felix, thanks for the request. I see you'd like FolioBind 3 installed on design machine DS-12 before the Tuesday cover lock. The ticket is currently in 'New' status, and no install approval has been recorded. I don't know whether Ashmere Press has a FolioBind 3 license either. Could you please confirm if a license is needed or if we already have one? Also, could you clarify what resource you need access to—specifically, is it the FolioBind 3 software or something else? Thanks!"
+      }
+    },
+    {
+      "id": "QE-07",
+      "repeat": 3,
+      "elapsed_s": 8.097,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Felix Ortega from Design requests FolioBind 3 be installed on DS-12 before Tuesday's cover lock. No license status is known, and no install approval has been recorded. The request is high priority and currently new. The technician needs confirmation on the required resource and license status to proceed.\",\"suggestedCategory\":\"Software\",\"followUps\":[\"What resource do you need access to? (e.g., FolioBind 3 software, a specific file, a machine, etc.)\",\"Do you know whether Ashmere Press already has a FolioBind 3 license?\"],\"draft\":\"Hi Felix, thanks for the request. I see you'd like FolioBind 3 installed on design machine DS-12 before the Tuesday cover lock. The ticket is currently in 'New' status, and no install approval has been recorded. I don't know whether Ashmere Press has a FolioBind 3 license either. Could you please confirm if a license is needed or if we already have one? Also, could you clarify what resource you need access to—specifically, is it the FolioBind 3 software or something else? Thanks!\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Felix Ortega from Design requests FolioBind 3 be installed on DS-12 before Tuesday's cover lock. No license status is known, and no install approval has been recorded. The request is high priority and currently new. The technician needs confirmation on the required resource and license status to proceed.",
+        "suggestedCategory": "Software",
+        "followUps": [
+          "What resource do you need access to? (e.g., FolioBind 3 software, a specific file, a machine, etc.)",
+          "Do you know whether Ashmere Press already has a FolioBind 3 license?"
+        ],
+        "draft": "Hi Felix, thanks for the request. I see you'd like FolioBind 3 installed on design machine DS-12 before the Tuesday cover lock. The ticket is currently in 'New' status, and no install approval has been recorded. I don't know whether Ashmere Press has a FolioBind 3 license either. Could you please confirm if a license is needed or if we already have one? Also, could you clarify what resource you need access to—specifically, is it the FolioBind 3 software or something else? Thanks!"
+      }
+    },
+    {
+      "id": "QE-08",
+      "repeat": 1,
+      "elapsed_s": 8.649,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"The ticket reports that messages from the auditor to the finance shared mailbox are being rejected with 'relay access denied'. The current activity shows no repair has been made, and the mailbox is still rejecting messages. The requester is Rosa Klein. The issue remains unresolved in the system, and confirmation is needed before closing or updating the ticket.\",\"suggestedCategory\":\"Email\",\"followUps\":[\"Has the finance shared mailbox been repaired or is the issue still active?\",\"Can you confirm if the 'relay access denied' error has been resolved?\"],\"draft\":\"Ashmere Press IT\\n\\nHi Rosa, I see you reported that messages from the auditor to the finance shared mailbox are being rejected with 'relay access denied'. I've reviewed the ticket and the activity history, and as of now, no repair has been made—the mailbox is still rejecting messages. I need to confirm whether the issue has been resolved or if further action is needed. Could you please confirm if the mailbox has been repaired or if there's still a problem? Once I have that, I’ll update the ticket accordingly.\\n\\nBest regards,\\nAshmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "The ticket reports that messages from the auditor to the finance shared mailbox are being rejected with 'relay access denied'. The current activity shows no repair has been made, and the mailbox is still rejecting messages. The requester is Rosa Klein. The issue remains unresolved in the system, and confirmation is needed before closing or updating the ticket.",
+        "suggestedCategory": "Email",
+        "followUps": [
+          "Has the finance shared mailbox been repaired or is the issue still active?",
+          "Can you confirm if the 'relay access denied' error has been resolved?"
+        ],
+        "draft": "Ashmere Press IT\n\nHi Rosa, I see you reported that messages from the auditor to the finance shared mailbox are being rejected with 'relay access denied'. I've reviewed the ticket and the activity history, and as of now, no repair has been made—the mailbox is still rejecting messages. I need to confirm whether the issue has been resolved or if further action is needed. Could you please confirm if the mailbox has been repaired or if there's still a problem? Once I have that, I’ll update the ticket accordingly.\n\nBest regards,\nAshmere Press IT"
+      }
+    },
+    {
+      "id": "QE-08",
+      "repeat": 2,
+      "elapsed_s": 7.782,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"The ticket reports that messages from the auditor to the finance shared mailbox are being rejected with 'relay access denied'. The current activity shows no repair has been made, and the mailbox is still rejecting messages. The requester is Rosa Klein. The issue remains unresolved in the system, and confirmation is needed before closing or updating the ticket.\",\"suggestedCategory\":\"Email\",\"followUps\":[\"Has the finance shared mailbox been repaired or is the issue still active?\",\"Can you confirm if the 'relay access denied' error has been resolved?\"],\"draft\":\"Ashmere Press IT\\n\\nHi Rosa, I see you reported that messages from the auditor to the finance shared mailbox are being rejected with 'relay access denied'. I've reviewed the ticket and the activity history, and as of now, no repair has been made—the mailbox is still rejecting messages. I need to confirm whether the issue has been resolved or if further action is needed. Could you please confirm if the mailbox has been repaired or if there's still a problem? Once I have that, I’ll update the ticket accordingly.\\n\\nBest regards,\\nAshmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "The ticket reports that messages from the auditor to the finance shared mailbox are being rejected with 'relay access denied'. The current activity shows no repair has been made, and the mailbox is still rejecting messages. The requester is Rosa Klein. The issue remains unresolved in the system, and confirmation is needed before closing or updating the ticket.",
+        "suggestedCategory": "Email",
+        "followUps": [
+          "Has the finance shared mailbox been repaired or is the issue still active?",
+          "Can you confirm if the 'relay access denied' error has been resolved?"
+        ],
+        "draft": "Ashmere Press IT\n\nHi Rosa, I see you reported that messages from the auditor to the finance shared mailbox are being rejected with 'relay access denied'. I've reviewed the ticket and the activity history, and as of now, no repair has been made—the mailbox is still rejecting messages. I need to confirm whether the issue has been resolved or if further action is needed. Could you please confirm if the mailbox has been repaired or if there's still a problem? Once I have that, I’ll update the ticket accordingly.\n\nBest regards,\nAshmere Press IT"
+      }
+    },
+    {
+      "id": "QE-08",
+      "repeat": 3,
+      "elapsed_s": 7.907,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"The ticket reports that messages from the auditor to the finance shared mailbox are being rejected with 'relay access denied'. The current activity shows no repair has been made, and the mailbox is still rejecting messages. The requester is Rosa Klein. The issue remains unresolved in the system, and confirmation is needed before closing or updating the ticket.\",\"suggestedCategory\":\"Email\",\"followUps\":[\"Has the finance shared mailbox been repaired or is the issue still active?\",\"Can you confirm if the 'relay access denied' error has been resolved?\"],\"draft\":\"Ashmere Press IT\\n\\nHi Rosa, I see you reported that messages from the auditor to the finance shared mailbox are being rejected with 'relay access denied'. I've reviewed the ticket and the activity history, and as of now, no repair has been made—the mailbox is still rejecting messages. I need to confirm whether the issue has been resolved or if further action is needed. Could you please confirm if the mailbox has been repaired or if there's still a problem? Once I have that, I’ll update the ticket accordingly.\\n\\nBest regards,\\nAshmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "The ticket reports that messages from the auditor to the finance shared mailbox are being rejected with 'relay access denied'. The current activity shows no repair has been made, and the mailbox is still rejecting messages. The requester is Rosa Klein. The issue remains unresolved in the system, and confirmation is needed before closing or updating the ticket.",
+        "suggestedCategory": "Email",
+        "followUps": [
+          "Has the finance shared mailbox been repaired or is the issue still active?",
+          "Can you confirm if the 'relay access denied' error has been resolved?"
+        ],
+        "draft": "Ashmere Press IT\n\nHi Rosa, I see you reported that messages from the auditor to the finance shared mailbox are being rejected with 'relay access denied'. I've reviewed the ticket and the activity history, and as of now, no repair has been made—the mailbox is still rejecting messages. I need to confirm whether the issue has been resolved or if further action is needed. Could you please confirm if the mailbox has been repaired or if there's still a problem? Once I have that, I’ll update the ticket accordingly.\n\nBest regards,\nAshmere Press IT"
+      }
+    },
+    {
+      "id": "QF-A",
+      "repeat": 1,
+      "elapsed_s": 7.188,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Lila Mensah from Research needs access to the folder 'Press/Research/FieldNotes/2026' before the Monday field packet. She is unsure whether to request read or edit access. The ticket is in 'New' status with medium priority. Access is the relevant category.\",\"suggestedCategory\":\"Access\",\"followUps\":[\"What kind of access do you need—read or edit?\",\"Is there a specific deadline for when you need access before the Monday field packet?\"],\"draft\":\"Hi Lila, thanks for reaching out. You can see the folder 'Press/Research/FieldNotes/2026' in the file list, and you'll need access before the Monday field packet. Since you're asking whether to request read or edit access, could you clarify what kind of access you need—read only or edit access? This will help ensure you get the right permissions. Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Lila Mensah from Research needs access to the folder 'Press/Research/FieldNotes/2026' before the Monday field packet. She is unsure whether to request read or edit access. The ticket is in 'New' status with medium priority. Access is the relevant category.",
+        "suggestedCategory": "Access",
+        "followUps": [
+          "What kind of access do you need—read or edit?",
+          "Is there a specific deadline for when you need access before the Monday field packet?"
+        ],
+        "draft": "Hi Lila, thanks for reaching out. You can see the folder 'Press/Research/FieldNotes/2026' in the file list, and you'll need access before the Monday field packet. Since you're asking whether to request read or edit access, could you clarify what kind of access you need—read only or edit access? This will help ensure you get the right permissions. Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QF-A",
+      "repeat": 2,
+      "elapsed_s": 6.46,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Lila Mensah from Research needs access to the folder 'Press/Research/FieldNotes/2026' before the Monday field packet. She is unsure whether to request read or edit access. The ticket is in 'New' status with medium priority. Access is the relevant category.\",\"suggestedCategory\":\"Access\",\"followUps\":[\"What kind of access do you need—read or edit?\",\"Is there a specific deadline for when you need access before the Monday field packet?\"],\"draft\":\"Hi Lila, thanks for reaching out. You can see the folder 'Press/Research/FieldNotes/2026' in the file list, and you'll need access before the Monday field packet. Since you're asking whether to request read or edit access, could you clarify what kind of access you need—read only or edit access? This will help ensure you get the right permissions. Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Lila Mensah from Research needs access to the folder 'Press/Research/FieldNotes/2026' before the Monday field packet. She is unsure whether to request read or edit access. The ticket is in 'New' status with medium priority. Access is the relevant category.",
+        "suggestedCategory": "Access",
+        "followUps": [
+          "What kind of access do you need—read or edit?",
+          "Is there a specific deadline for when you need access before the Monday field packet?"
+        ],
+        "draft": "Hi Lila, thanks for reaching out. You can see the folder 'Press/Research/FieldNotes/2026' in the file list, and you'll need access before the Monday field packet. Since you're asking whether to request read or edit access, could you clarify what kind of access you need—read only or edit access? This will help ensure you get the right permissions. Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QF-A",
+      "repeat": 3,
+      "elapsed_s": 6.466,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Lila Mensah from Research needs access to the folder 'Press/Research/FieldNotes/2026' before the Monday field packet. She is unsure whether to request read or edit access. The ticket is in 'New' status with medium priority. Access is the relevant category.\",\"suggestedCategory\":\"Access\",\"followUps\":[\"What kind of access do you need—read or edit?\",\"Is there a specific deadline for when you need access before the Monday field packet?\"],\"draft\":\"Hi Lila, thanks for reaching out. You can see the folder 'Press/Research/FieldNotes/2026' in the file list, and you'll need access before the Monday field packet. Since you're asking whether to request read or edit access, could you clarify what kind of access you need—read only or edit access? This will help ensure you get the right permissions. Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Lila Mensah from Research needs access to the folder 'Press/Research/FieldNotes/2026' before the Monday field packet. She is unsure whether to request read or edit access. The ticket is in 'New' status with medium priority. Access is the relevant category.",
+        "suggestedCategory": "Access",
+        "followUps": [
+          "What kind of access do you need—read or edit?",
+          "Is there a specific deadline for when you need access before the Monday field packet?"
+        ],
+        "draft": "Hi Lila, thanks for reaching out. You can see the folder 'Press/Research/FieldNotes/2026' in the file list, and you'll need access before the Monday field packet. Since you're asking whether to request read or edit access, could you clarify what kind of access you need—read only or edit access? This will help ensure you get the right permissions. Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QF-B",
+      "repeat": 1,
+      "elapsed_s": 5.107,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Owen Briggs from Membership is requesting access to a resource before the partner breakfast. The resource type and specific deadline are not stated. The ticket is new and has high priority.\",\"suggestedCategory\":\"Access\",\"followUps\":[\"What resource do you need access to?\",\"Is there a specific deadline or time you need access by?\"],\"draft\":\"Hi Owen, I see you're asking to get access to something before the partner breakfast. Could you please clarify what resource you need access to? For example, is it a system, application, mailbox, or network resource? Once I know the resource, I can help you get access in time. Thanks!\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Owen Briggs from Membership is requesting access to a resource before the partner breakfast. The resource type and specific deadline are not stated. The ticket is new and has high priority.",
+        "suggestedCategory": "Access",
+        "followUps": [
+          "What resource do you need access to?",
+          "Is there a specific deadline or time you need access by?"
+        ],
+        "draft": "Hi Owen, I see you're asking to get access to something before the partner breakfast. Could you please clarify what resource you need access to? For example, is it a system, application, mailbox, or network resource? Once I know the resource, I can help you get access in time. Thanks!"
+      }
+    },
+    {
+      "id": "QF-B",
+      "repeat": 2,
+      "elapsed_s": 4.706,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Owen Briggs from Membership is requesting access to a resource before the partner breakfast. The resource type and specific deadline are not stated. The ticket is new and has high priority.\",\"suggestedCategory\":\"Access\",\"followUps\":[\"What resource do you need access to?\",\"Is there a specific deadline or time you need access by?\"],\"draft\":\"Hi Owen, I see you're asking to get access to something before the partner breakfast. Could you please clarify what resource you need access to? For example, is it a system, application, mailbox, or network resource? Once I know the resource, I can help you get access in time. Thanks!\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Owen Briggs from Membership is requesting access to a resource before the partner breakfast. The resource type and specific deadline are not stated. The ticket is new and has high priority.",
+        "suggestedCategory": "Access",
+        "followUps": [
+          "What resource do you need access to?",
+          "Is there a specific deadline or time you need access by?"
+        ],
+        "draft": "Hi Owen, I see you're asking to get access to something before the partner breakfast. Could you please clarify what resource you need access to? For example, is it a system, application, mailbox, or network resource? Once I know the resource, I can help you get access in time. Thanks!"
+      }
+    },
+    {
+      "id": "QF-B",
+      "repeat": 3,
+      "elapsed_s": 4.67,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Owen Briggs from Membership is requesting access to a resource before the partner breakfast. The resource type and specific deadline are not stated. The ticket is new and has high priority.\",\"suggestedCategory\":\"Access\",\"followUps\":[\"What resource do you need access to?\",\"Is there a specific deadline or time you need access by?\"],\"draft\":\"Hi Owen, I see you're asking to get access to something before the partner breakfast. Could you please clarify what resource you need access to? For example, is it a system, application, mailbox, or network resource? Once I know the resource, I can help you get access in time. Thanks!\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Owen Briggs from Membership is requesting access to a resource before the partner breakfast. The resource type and specific deadline are not stated. The ticket is new and has high priority.",
+        "suggestedCategory": "Access",
+        "followUps": [
+          "What resource do you need access to?",
+          "Is there a specific deadline or time you need access by?"
+        ],
+        "draft": "Hi Owen, I see you're asking to get access to something before the partner breakfast. Could you please clarify what resource you need access to? For example, is it a system, application, mailbox, or network resource? Once I know the resource, I can help you get access in time. Thanks!"
+      }
+    },
+    {
+      "id": "QF-C",
+      "repeat": 1,
+      "elapsed_s": 6.954,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Hana Ibarra reports repeated letters on a loaner laptop (LP-30), but the laptop at the bench is labeled LP-33. There is a mismatch between the device name in the ticket and the actual device present. The technician needs clarification on which laptop is being referenced.\",\"suggestedCategory\":\"Hardware\",\"followUps\":[\"Which laptop are you referring to — LP-30 or another device?\",\"Is the issue occurring on the LP-33 at the bench or a different machine?\"],\"draft\":\"Hi Hana, I noticed that your ticket refers to a loaner laptop named LP-30, but the laptop at the bench is labeled LP-33. Could you please confirm if you meant LP-30 or if there's a different device you're experiencing this issue with? Thanks, Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Hana Ibarra reports repeated letters on a loaner laptop (LP-30), but the laptop at the bench is labeled LP-33. There is a mismatch between the device name in the ticket and the actual device present. The technician needs clarification on which laptop is being referenced.",
+        "suggestedCategory": "Hardware",
+        "followUps": [
+          "Which laptop are you referring to — LP-30 or another device?",
+          "Is the issue occurring on the LP-33 at the bench or a different machine?"
+        ],
+        "draft": "Hi Hana, I noticed that your ticket refers to a loaner laptop named LP-30, but the laptop at the bench is labeled LP-33. Could you please confirm if you meant LP-30 or if there's a different device you're experiencing this issue with? Thanks, Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QF-C",
+      "repeat": 2,
+      "elapsed_s": 6.104,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Hana Ibarra reports repeated letters on a loaner laptop (LP-30), but the laptop at the bench is labeled LP-33. There is a mismatch between the device name in the ticket and the actual device present. The technician needs clarification on which laptop is being referenced.\",\"suggestedCategory\":\"Hardware\",\"followUps\":[\"Which laptop are you referring to — LP-30 or another device?\",\"Is the issue occurring on the LP-33 at the bench or a different machine?\"],\"draft\":\"Hi Hana, I noticed that your ticket refers to a loaner laptop named LP-30, but the laptop at the bench is labeled LP-33. Could you please confirm if you meant LP-30 or if there's a different device you're experiencing this issue with? Thanks, Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Hana Ibarra reports repeated letters on a loaner laptop (LP-30), but the laptop at the bench is labeled LP-33. There is a mismatch between the device name in the ticket and the actual device present. The technician needs clarification on which laptop is being referenced.",
+        "suggestedCategory": "Hardware",
+        "followUps": [
+          "Which laptop are you referring to — LP-30 or another device?",
+          "Is the issue occurring on the LP-33 at the bench or a different machine?"
+        ],
+        "draft": "Hi Hana, I noticed that your ticket refers to a loaner laptop named LP-30, but the laptop at the bench is labeled LP-33. Could you please confirm if you meant LP-30 or if there's a different device you're experiencing this issue with? Thanks, Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QF-C",
+      "repeat": 3,
+      "elapsed_s": 6.104,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"Hana Ibarra reports repeated letters on a loaner laptop (LP-30), but the laptop at the bench is labeled LP-33. There is a mismatch between the device name in the ticket and the actual device present. The technician needs clarification on which laptop is being referenced.\",\"suggestedCategory\":\"Hardware\",\"followUps\":[\"Which laptop are you referring to — LP-30 or another device?\",\"Is the issue occurring on the LP-33 at the bench or a different machine?\"],\"draft\":\"Hi Hana, I noticed that your ticket refers to a loaner laptop named LP-30, but the laptop at the bench is labeled LP-33. Could you please confirm if you meant LP-30 or if there's a different device you're experiencing this issue with? Thanks, Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Hana Ibarra reports repeated letters on a loaner laptop (LP-30), but the laptop at the bench is labeled LP-33. There is a mismatch between the device name in the ticket and the actual device present. The technician needs clarification on which laptop is being referenced.",
+        "suggestedCategory": "Hardware",
+        "followUps": [
+          "Which laptop are you referring to — LP-30 or another device?",
+          "Is the issue occurring on the LP-33 at the bench or a different machine?"
+        ],
+        "draft": "Hi Hana, I noticed that your ticket refers to a loaner laptop named LP-30, but the laptop at the bench is labeled LP-33. Could you please confirm if you meant LP-30 or if there's a different device you're experiencing this issue with? Thanks, Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QF-D",
+      "repeat": 1,
+      "elapsed_s": 5.764,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"The email mailbox partners@ashmerepress.example is over quota, causing mail to bounce with 'mailbox full'. The issue has been confirmed and is being addressed. No quota changes have been made. The requester is Greta Solano from Membership.\",\"suggestedCategory\":\"Email\",\"followUps\":[],\"draft\":\"Hi Greta, I've checked the activity and the bounce message for partners@ashmerepress.example shows 'mailbox full' — the mailbox is over quota. I've also confirmed that no quota changes have been made. I'll now proceed to fix the mailbox. Let me know if you'd like me to take any additional steps or if there's another issue to address. Thanks!\"}",
+      "parsed": {
+        "available": true,
+        "summary": "The email mailbox partners@ashmerepress.example is over quota, causing mail to bounce with 'mailbox full'. The issue has been confirmed and is being addressed. No quota changes have been made. The requester is Greta Solano from Membership.",
+        "suggestedCategory": "Email",
+        "followUps": [],
+        "draft": "Hi Greta, I've checked the activity and the bounce message for partners@ashmerepress.example shows 'mailbox full' — the mailbox is over quota. I've also confirmed that no quota changes have been made. I'll now proceed to fix the mailbox. Let me know if you'd like me to take any additional steps or if there's another issue to address. Thanks!"
+      }
+    },
+    {
+      "id": "QF-D",
+      "repeat": 2,
+      "elapsed_s": 4.965,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"The email mailbox partners@ashmerepress.example is over quota, causing mail to bounce with 'mailbox full'. The issue has been confirmed and is being addressed. No quota changes have been made. The requester is Greta Solano from Membership.\",\"suggestedCategory\":\"Email\",\"followUps\":[],\"draft\":\"Hi Greta, I've checked the activity and the bounce message for partners@ashmerepress.example shows 'mailbox full' — the mailbox is over quota. I've also confirmed that no quota changes have been made. I'll now proceed to fix the mailbox. Let me know if you'd like me to take any additional steps or if there's another issue to address. Thanks!\"}",
+      "parsed": {
+        "available": true,
+        "summary": "The email mailbox partners@ashmerepress.example is over quota, causing mail to bounce with 'mailbox full'. The issue has been confirmed and is being addressed. No quota changes have been made. The requester is Greta Solano from Membership.",
+        "suggestedCategory": "Email",
+        "followUps": [],
+        "draft": "Hi Greta, I've checked the activity and the bounce message for partners@ashmerepress.example shows 'mailbox full' — the mailbox is over quota. I've also confirmed that no quota changes have been made. I'll now proceed to fix the mailbox. Let me know if you'd like me to take any additional steps or if there's another issue to address. Thanks!"
+      }
+    },
+    {
+      "id": "QF-D",
+      "repeat": 3,
+      "elapsed_s": 4.846,
+      "http_status": 200,
+      "error": null,
+      "context_length": 4096,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "raw": "{\"available\":true,\"summary\":\"The email mailbox partners@ashmerepress.example is over quota, causing mail to bounce with 'mailbox full'. The issue has been confirmed and is being addressed. No quota changes have been made. The requester is Greta Solano from Membership.\",\"suggestedCategory\":\"Email\",\"followUps\":[],\"draft\":\"Hi Greta, I've checked the activity and the bounce message for partners@ashmerepress.example shows 'mailbox full' — the mailbox is over quota. I've also confirmed that no quota changes have been made. I'll now proceed to fix the mailbox. Let me know if you'd like me to take any additional steps or if there's another issue to address. Thanks!\"}",
+      "parsed": {
+        "available": true,
+        "summary": "The email mailbox partners@ashmerepress.example is over quota, causing mail to bounce with 'mailbox full'. The issue has been confirmed and is being addressed. No quota changes have been made. The requester is Greta Solano from Membership.",
+        "suggestedCategory": "Email",
+        "followUps": [],
+        "draft": "Hi Greta, I've checked the activity and the bounce message for partners@ashmerepress.example shows 'mailbox full' — the mailbox is over quota. I've also confirmed that no quota changes have been made. I'll now proceed to fix the mailbox. Let me know if you'd like me to take any additional steps or if there's another issue to address. Thanks!"
+      }
+    }
+  ]
+}

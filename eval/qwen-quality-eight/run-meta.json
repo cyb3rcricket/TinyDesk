@@ -1,0 +1,239 @@
+{
+  "ps_before": {
+    "models": []
+  },
+  "calls": [
+    {
+      "id": "QE-01",
+      "elapsed_s": 12.551,
+      "http_status": 200,
+      "available": true,
+      "ps_after": {
+        "models": [
+          {
+            "name": "qwen3:4b-instruct-2507-q4_K_M",
+            "model": "qwen3:4b-instruct-2507-q4_K_M",
+            "size": 3175339786,
+            "digest": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+            "details": {
+              "parent_model": "",
+              "format": "gguf",
+              "family": "qwen3",
+              "families": [
+                "qwen3"
+              ],
+              "parameter_size": "4.0B",
+              "quantization_level": "Q4_K_M"
+            },
+            "expires_at": "2026-10-02T20:38:28.022808-05:00",
+            "size_vram": 3175339786,
+            "context_length": 4096
+          }
+        ]
+      }
+    },
+    {
+      "id": "QE-02",
+      "elapsed_s": 10.812,
+      "http_status": 200,
+      "available": true,
+      "ps_after": {
+        "models": [
+          {
+            "name": "qwen3:4b-instruct-2507-q4_K_M",
+            "model": "qwen3:4b-instruct-2507-q4_K_M",
+            "size": 3175339786,
+            "digest": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+            "details": {
+              "parent_model": "",
+              "format": "gguf",
+              "family": "qwen3",
+              "families": [
+                "qwen3"
+              ],
+              "parameter_size": "4.0B",
+              "quantization_level": "Q4_K_M"
+            },
+            "expires_at": "2026-10-02T20:38:38.866069-05:00",
+            "size_vram": 3175339786,
+            "context_length": 4096
+          }
+        ]
+      }
+    },
+    {
+      "id": "QE-03",
+      "elapsed_s": 11.19,
+      "http_status": 200,
+      "available": true,
+      "ps_after": {
+        "models": [
+          {
+            "name": "qwen3:4b-instruct-2507-q4_K_M",
+            "model": "qwen3:4b-instruct-2507-q4_K_M",
+            "size": 3175339786,
+            "digest": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+            "details": {
+              "parent_model": "",
+              "format": "gguf",
+              "family": "qwen3",
+              "families": [
+                "qwen3"
+              ],
+              "parameter_size": "4.0B",
+              "quantization_level": "Q4_K_M"
+            },
+            "expires_at": "2026-10-02T20:38:49.700924-05:00",
+            "size_vram": 3175339786,
+            "context_length": 4096
+          }
+        ]
+      }
+    },
+    {
+      "id": "QE-04",
+      "elapsed_s": 6.07,
+      "http_status": 200,
+      "available": true,
+      "ps_after": {
+        "models": [
+          {
+            "name": "qwen3:4b-instruct-2507-q4_K_M",
+            "model": "qwen3:4b-instruct-2507-q4_K_M",
+            "size": 3175339786,
+            "digest": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+            "details": {
+              "parent_model": "",
+              "format": "gguf",
+              "family": "qwen3",
+              "families": [
+                "qwen3"
+              ],
+              "parameter_size": "4.0B",
+              "quantization_level": "Q4_K_M"
+            },
+            "expires_at": "2026-10-02T20:38:56.128613-05:00",
+            "size_vram": 3175339786,
+            "context_length": 4096
+          }
+        ]
+      }
+    },
+    {
+      "id": "QE-05",
+      "elapsed_s": 8.742,
+      "http_status": 200,
+      "available": true,
+      "ps_after": {
+        "models": [
+          {
+            "name": "qwen3:4b-instruct-2507-q4_K_M",
+            "model": "qwen3:4b-instruct-2507-q4_K_M",
+            "size": 3175339786,
+            "digest": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+            "details": {
+              "parent_model": "",
+              "format": "gguf",
+              "family": "qwen3",
+              "families": [
+                "qwen3"
+              ],
+              "parameter_size": "4.0B",
+              "quantization_level": "Q4_K_M"
+            },
+            "expires_at": "2026-10-02T20:39:04.872424-05:00",
+            "size_vram": 3175339786,
+            "context_length": 4096
+          }
+        ]
+      }
+    },
+    {
+      "id": "QE-06",
+      "elapsed_s": 5.355,
+      "http_status": 200,
+      "available": true,
+      "ps_after": {
+        "models": [
+          {
+            "name": "qwen3:4b-instruct-2507-q4_K_M",
+            "model": "qwen3:4b-instruct-2507-q4_K_M",
+            "size": 3175339786,
+            "digest": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+            "details": {
+              "parent_model": "",
+              "format": "gguf",
+              "family": "qwen3",
+              "families": [
+                "qwen3"
+              ],
+              "parameter_size": "4.0B",
+              "quantization_level": "Q4_K_M"
+            },
+            "expires_at": "2026-10-02T20:39:10.231354-05:00",
+            "size_vram": 3175339786,
+            "context_length": 4096
+          }
+        ]
+      }
+    },
+    {
+      "id": "QE-07",
+      "elapsed_s": 9.829,
+      "http_status": 200,
+      "available": true,
+      "ps_after": {
+        "models": [
+          {
+            "name": "qwen3:4b-instruct-2507-q4_K_M",
+            "model": "qwen3:4b-instruct-2507-q4_K_M",
+            "size": 3175339786,
+            "digest": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+            "details": {
+              "parent_model": "",
+              "format": "gguf",
+              "family": "qwen3",
+              "families": [
+                "qwen3"
+              ],
+              "parameter_size": "4.0B",
+              "quantization_level": "Q4_K_M"
+            },
+            "expires_at": "2026-10-02T20:39:20.061552-05:00",
+            "size_vram": 3175339786,
+            "context_length": 4096
+          }
+        ]
+      }
+    },
+    {
+      "id": "QE-08",
+      "elapsed_s": 8.122,
+      "http_status": 200,
+      "available": true,
+      "ps_after": {
+        "models": [
+          {
+            "name": "qwen3:4b-instruct-2507-q4_K_M",
+            "model": "qwen3:4b-instruct-2507-q4_K_M",
+            "size": 3175339786,
+            "digest": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+            "details": {
+              "parent_model": "",
+              "format": "gguf",
+              "family": "qwen3",
+              "families": [
+                "qwen3"
+              ],
+              "parameter_size": "4.0B",
+              "quantization_level": "Q4_K_M"
+            },
+            "expires_at": "2026-10-02T20:39:28.185357-05:00",
+            "size_vram": 3175339786,
+            "context_length": 4096
+          }
+        ]
+      }
+    }
+  ]
+}
