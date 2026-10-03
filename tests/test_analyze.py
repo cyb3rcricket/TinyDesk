@@ -329,6 +329,48 @@ def test_configured_model_is_used(client, monkeypatch):
     assert fake.calls[0]["timeout"] == 33
 
 
+def test_assistant_metadata_names_local_ollama_without_secrets(client, monkeypatch):
+    monkeypatch.delenv("TINYDESK_AI_PROVIDER", raising=False)
+    monkeypatch.setenv("XAI_API_KEY", "test-key")
+    response = client.get("/api/assistant")
+    assert response.status_code == 200
+    assert response.json() == {
+        "provider": "ollama",
+        "placement": "local",
+        "product": "Ollama",
+        "sendsTicketToProvider": False,
+    }
+    assert "test-key" not in response.text
+    assert "Authorization" not in response.text
+
+
+def test_assistant_metadata_names_cloud_xai_without_secrets(client, monkeypatch):
+    monkeypatch.setenv("TINYDESK_AI_PROVIDER", "xai")
+    monkeypatch.setenv("XAI_API_KEY", "test-key")
+    monkeypatch.setenv("XAI_MODEL", "grok-4.7")
+    response = client.get("/api/assistant")
+    body = response.json()
+    assert body == {
+        "provider": "xai",
+        "placement": "cloud",
+        "product": "xAI Grok",
+        "sendsTicketToProvider": True,
+    }
+    assert set(body) == {"provider", "placement", "product", "sendsTicketToProvider"}
+    assert "test-key" not in response.text
+    assert "grok-4.7" not in response.text
+
+
+def test_unrecognized_provider_is_not_described_as_local(client, monkeypatch):
+    monkeypatch.setenv("TINYDESK_AI_PROVIDER", "other")
+    body = client.get("/api/assistant").json()
+    assert body["provider"] == "unrecognized"
+    assert body["placement"] == "unknown"
+    assert body["product"] == ""
+    assert body["sendsTicketToProvider"] is False
+    assert "other" not in json.dumps(body)
+
+
 def test_categories_match_the_frontend_store():
     text = (ROOT / "js" / "store.js").read_text(encoding="utf-8")
 
@@ -346,8 +388,14 @@ def test_frontend_is_served_and_backend_files_are_not(client):
     index = client.get("/")
     assert index.status_code == 200
     assert "text/html" in index.headers["content-type"]
-    assert "Local AI" in index.text
+    assert 'id="assist-provider"' in index.text
+    assert "local model on this computer" not in index.text
     assert "Prepared sample" not in index.text
+    app_js = client.get("/js/app.js")
+    assert app_js.status_code == 200
+    assert "Local Ollama" in app_js.text
+    assert "Cloud xAI Grok" in app_js.text
+    assert "sends this ticket's information to xAI" in app_js.text
 
     script = client.get("/js/analysis.js")
     assert script.status_code == 200

@@ -43,6 +43,34 @@ class RejectingModelClient:
         raise ModelCallError("bad_config", "UnknownProvider")
 
 
+def assistant_description(settings) -> dict:
+    """Non-secret provider facts for the assistant panel.
+
+    The response names the product and whether analysis sends ticket text.
+    It does not include credentials, model settings, or request headers.
+    """
+    if settings.provider == "ollama":
+        return {
+            "provider": "ollama",
+            "placement": "local",
+            "product": "Ollama",
+            "sendsTicketToProvider": False,
+        }
+    if settings.provider == "xai":
+        return {
+            "provider": "xai",
+            "placement": "cloud",
+            "product": "xAI Grok",
+            "sendsTicketToProvider": True,
+        }
+    return {
+        "provider": "unrecognized",
+        "placement": "unknown",
+        "product": "",
+        "sendsTicketToProvider": False,
+    }
+
+
 def get_model_client() -> OllamaModelClient | XaiModelClient | RejectingModelClient:
     settings = load_settings()
     if settings.provider == "xai" and settings.config_error:
@@ -153,6 +181,11 @@ async def limit_analyze_body(request: Request, call_next):
                     },
                 )
     return await call_next(request)
+
+
+@app.get("/api/assistant")
+def assistant_metadata() -> dict:
+    return assistant_description(load_settings())
 
 
 @app.post(

@@ -1,14 +1,14 @@
 # TinyDesk
 
-TinyDesk is a small help desk for working a daily ticket queue. Tickets, edits, and activity stay in this browser. Analyze ticket asks a local Ollama model for a suggestion. The suggestion is labeled for review. TinyDesk does not change the ticket or send a reply unless you save that yourself.
+TinyDesk is a small help desk for working a daily ticket queue. Tickets, edits, and activity stay in this browser. Analyze ticket asks the configured assistant for a suggestion. With no provider configured, that assistant is Ollama on this computer. When `TINYDESK_AI_PROVIDER=xai`, the assistant is xAI Grok in the cloud, and Analyze ticket sends the ticket's information to xAI. The suggestion is labeled for review. TinyDesk does not change the ticket or send a reply unless you save that yourself.
 
 Ashmere Press, and everyone in the sample queue, is fictional.
 
 ## Setup
 
-TinyDesk needs Python 3.12 and a local Ollama server. On this Mac, `python3` is older than 3.12, so the virtualenv command uses `python3.12`.
+TinyDesk needs Python 3.12. The default assistant uses a local Ollama server. On this Mac, `python3` is older than 3.12, so the virtualenv command uses `python3.12`. xAI Grok is optional and is used only when `TINYDESK_AI_PROVIDER=xai`.
 
-Ollama must already be running. The default model is `qwen3:4b-instruct-2507-q4_K_M`. On a small set of fictional tickets it handled activity history and verified resolutions better than `llama3.2:3b`. It also takes longer, and it can still ask a redundant question or state a fact that is not in the ticket. Review every suggestion before you apply it. TinyDesk does not fall back to another model if Qwen fails.
+When the provider is Ollama, Ollama must already be running. The default model is `qwen3:4b-instruct-2507-q4_K_M`. On a small set of fictional tickets it handled activity history and verified resolutions better than `llama3.2:3b`. It also takes longer, and it can still ask a redundant question or state a fact that is not in the ticket. Review every suggestion before you apply it. TinyDesk does not fall back to another model if Qwen fails.
 
 `llama3.2:3b` and `phi4-mini:latest` can stay installed. To use Llama for one server session:
 
@@ -83,9 +83,9 @@ TinyDesk calls Ollama's Python client at `http://127.0.0.1:11434` and sends a JS
 3. FastAPI checks the body. A missing or invalid field returns `available: false` and a message that names the field, not the ticket text.
 4. The server builds one new system message and one new user message. It does not keep those messages for the next ticket.
 5. The user message includes the current fields and recent activity. TinyDesk builds that text as a copy, and the saved ticket stays complete. The copy is an estimate sized for the default Qwen context window, including the system instructions and room for the reply. Older activity entries are counted, not copied. Text that does not fit keeps its beginning and ends with `[shortened]`. `omittedEarlierActivityCount` is the number of older entries left out. A saved resolution stays in `currentFields`. Ticket text is sent as data, with instructions to ignore any commands inside it.
-6. Ollama returns JSON constrained by the schema. TinyDesk checks that JSON again. `suggestedCategory` must be Access, Network, Hardware, Software, Email, or Other.
-7. A usable result is `available: true` with `summary`, `suggestedCategory`, `followUps`, and `draft`. The panel calls it a local AI suggestion that still needs review.
-8. If Ollama is down, the model is missing, the request takes too long, the input exceeds the context window, or the JSON is not usable, the panel shows `message` and Try again. TinyDesk does not substitute a sample suggestion or another model.
+6. The selected provider returns JSON constrained by the schema. TinyDesk checks that JSON again. `suggestedCategory` must be Access, Network, Hardware, Software, Email, or Other.
+7. A usable result is `available: true` with `summary`, `suggestedCategory`, `followUps`, and `draft`. The panel names Ollama for a local suggestion and xAI Grok for a cloud suggestion. An xAI result also says that the ticket's information was sent to xAI.
+8. If the selected provider is unavailable, the model is missing, the request takes too long, the input exceeds the context window, or the JSON is not usable, the panel shows `message` and Try again. TinyDesk does not substitute a sample suggestion or another provider.
 9. Apply category only changes the category menu. Use draft only fills the reply composer, and asks before replacing text that is already there. Save changes and Save reply are separate.
 
 Saved tickets remain in `localStorage` under `tinydesk.tickets.v1`.
@@ -122,7 +122,7 @@ On a wide window the queue is a table and the assistant sits beside the ticket. 
 
 ## Tests
 
-Automated tests mock Ollama. They do not call the local model.
+Automated tests mock the configured provider. They do not call Ollama or xAI.
 
 ```bash
 source .venv/bin/activate

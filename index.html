@@ -195,8 +195,8 @@
 
         <aside class="assist-panel" aria-labelledby="assist-heading">
           <h2 id="assist-heading">TinyTalk Assist</h2>
-          <p class="demo-label">Local AI</p>
-          <p class="assist-intro">Suggestions come from the local model on this computer. Review the category and the draft before you use them. TinyDesk does not change the ticket or send a reply unless you save those yourself.</p>
+          <p class="demo-label" id="assist-provider">Assistant</p>
+          <p class="assist-intro" id="assist-intro">Review the category and the draft before you use them. TinyDesk does not change the ticket or send a reply unless you save those yourself.</p>
           <button type="button" class="btn btn-primary" id="analyze-btn">Analyze ticket</button>
           <div id="analysis-output" class="analysis-output" aria-live="polite"></div>
         </aside>
@@ -205,7 +205,7 @@
   </main>
 
   <footer class="footer">
-    <p>Replies are saved in this browser and are not emailed. Local AI suggestions are not saved or sent unless you apply them.</p>
+    <p id="assist-footer">Replies are saved in this browser and are not emailed. Suggestions are not saved or sent unless you apply them.</p>
   </footer>
 
   <dialog id="confirm-dialog" aria-labelledby="confirm-title">

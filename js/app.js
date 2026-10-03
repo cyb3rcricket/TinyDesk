@@ -41,6 +41,8 @@ let booted = false;
 let keepBanner = false;
 let analysisSeq = 0;
 let analysisAbort = null;
+let assistantInfo = null;
+let assistantLoad = null;
 
 function must(id) {
   const node = document.getElementById(id);
@@ -102,6 +104,9 @@ function cacheElements() {
     "update-status",
     "analyze-btn",
     "analysis-output",
+    "assist-provider",
+    "assist-intro",
+    "assist-footer",
     "confirm-dialog",
     "confirm-title",
     "confirm-message",
@@ -557,6 +562,70 @@ function onAddUpdate(event) {
   noteStorage();
 }
 
+function assistantCopy(info) {
+  if (info && info.provider === "ollama" && info.placement === "local" && info.sendsTicketToProvider === false) {
+    return {
+      label: "Local Ollama",
+      intro: "Suggestions come from Ollama on this computer. Review the category and the draft before you use them. TinyDesk does not change the ticket or send a reply unless you save those yourself.",
+      loading: "Analyzing this ticket with Ollama on this computer. This can take a little while.",
+      result: "Ollama suggestion. Review it before you apply the category or use the draft. Nothing is saved or sent until you do that yourself.",
+      footer: "Replies are saved in this browser and are not emailed. Ollama suggestions are not saved or sent unless you apply them."
+    };
+  }
+  if (info && info.provider === "xai" && info.placement === "cloud" && info.sendsTicketToProvider === true) {
+    return {
+      label: "Cloud xAI Grok",
+      intro: "Suggestions come from xAI Grok in the cloud. Analyze ticket sends this ticket's information to xAI. Review the category and the draft before you use them. TinyDesk does not change the ticket or send a reply unless you save those yourself.",
+      loading: "Analyzing this ticket with xAI Grok. This sends the ticket's information to xAI. This can take a little while.",
+      result: "xAI Grok suggestion. Review it before you apply the category or use the draft. Nothing is saved or sent until you do that yourself.",
+      footer: "Replies are saved in this browser and are not emailed. Analysis sends ticket information to xAI. Suggestions are not saved or sent unless you apply them."
+    };
+  }
+  if (info && info.provider === "unrecognized") {
+    return {
+      label: "Assistant",
+      intro: "TinyDesk does not recognize the configured assistant, so analysis is not available. TinyDesk does not change the ticket or send a reply unless you save those yourself.",
+      loading: "Analysis is not available because the configured assistant is not recognized.",
+      result: "Suggestion. Review it before you apply the category or use the draft. Nothing is saved or sent until you do that yourself.",
+      footer: "Replies are saved in this browser and are not emailed. Suggestions are not saved or sent unless you apply them."
+    };
+  }
+  return {
+    label: "Assistant",
+    intro: "TinyDesk could not confirm whether suggestions come from local Ollama or cloud xAI Grok. Review any result before you use it. TinyDesk does not change the ticket or send a reply unless you save those yourself.",
+    loading: "Analyzing this ticket. This can take a little while.",
+    result: "Suggestion. Review it before you apply the category or use the draft. Nothing is saved or sent until you do that yourself.",
+    footer: "Replies are saved in this browser and are not emailed. Suggestions are not saved or sent unless you apply them."
+  };
+}
+
+function applyAssistantCopy() {
+  const copy = assistantCopy(assistantInfo);
+  els["assist-provider"].textContent = copy.label;
+  els["assist-intro"].textContent = copy.intro;
+  els["assist-footer"].textContent = copy.footer;
+}
+
+function loadAssistant() {
+  if (!assistantLoad) {
+    assistantLoad = fetch("/api/assistant", { headers: { Accept: "application/json" } })
+      .then((response) => {
+        if (!response.ok) throw new Error("status");
+        return response.json();
+      })
+      .then((body) => {
+        assistantInfo = body;
+      })
+      .catch(() => {
+        assistantInfo = { provider: "unavailable" };
+      })
+      .finally(() => {
+        if (els["assist-provider"]) applyAssistantCopy();
+      });
+  }
+  return assistantLoad;
+}
+
 function resetAnalyzeButton() {
   const button = els["analyze-btn"];
   button.disabled = false;
@@ -585,7 +654,7 @@ function renderAnalysisPending() {
   const box = document.createElement("div");
   box.className = "placeholder-note";
   const paragraph = document.createElement("p");
-  paragraph.textContent = "Analyzing this ticket with the local model. This can take a little while.";
+  paragraph.textContent = assistantCopy(assistantInfo).loading;
   box.append(paragraph);
   output.append(box);
 }
@@ -618,7 +687,7 @@ function renderAnalysis(result) {
 
   const note = document.createElement("p");
   note.className = "review-note";
-  note.textContent = "Local AI suggestion. Review it before you apply the category or use the draft. Nothing is saved or sent until you do that yourself.";
+  note.textContent = assistantCopy(assistantInfo).result;
   output.append(note);
   addAnalysisBlock(output, "Issue summary", result.summary);
   addAnalysisBlock(output, "Suggested category", result.suggestedCategory);
@@ -710,6 +779,8 @@ async function onAnalyze() {
   els["analyze-btn"].disabled = true;
   els["analyze-btn"].textContent = "Analyzing...";
   els["analyze-btn"].setAttribute("aria-busy", "true");
+  await loadAssistant();
+  if (!analysisIsCurrent(seq, ticketId)) return;
   renderAnalysisPending();
 
   try {
@@ -799,6 +870,7 @@ function init() {
   fillSelect(els["field-status"], STATUSES);
   fillSelect(els["new-category"], CATEGORIES, "Choose a category");
   bindEvents();
+  loadAssistant();
   syncComposerMode();
   renderRoute();
   noteStorage();
