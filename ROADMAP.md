@@ -26,11 +26,15 @@ Reported progress:
 - The xAI provider works with local environment configuration.
 - Grok's high-reasoning evaluation reports 12 usable drafts across
   twelve frozen cases.
+- Explicit reasoning and visible-output controls are implemented.
+  Low reasoning is the xAI default. The visible-output cap does not
+  include billed reasoning tokens.
+- The low-reasoning evaluation is recorded: 10 of 12 drafts were
+  usable, 2 need editing, and none were rejected.
 - Local secret-file protection and mocked checks are reported passing.
+- Pull request review and merge are still pending.
 
 Remaining:
-- Complete explicit reasoning and output-limit controls.
-- Evaluate the configured low-reasoning option.
 - Choose the demonstrated configuration based on quality and latency.
 - Finish separate UI and AI integration reviews and PRs.
 - Document setup, cloud data transmission, costs, and known limitations.
