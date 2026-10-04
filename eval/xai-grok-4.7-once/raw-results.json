@@ -1,0 +1,183 @@
+[
+  {
+    "id": "QE-01",
+    "source": "qwen-quality-eight",
+    "http_status": 200,
+    "elapsed_s": 68.927,
+    "error": null,
+    "body": {
+      "available": true,
+      "summary": "Nadia Pell (Photography) reports that the Ashmere VPN connects on her laptop in the office and the photo archive opens, but at home the same laptop stops at contacting gateway with no other error text. She needs the photo archive before the Friday night photo close. Current fields show category Network, priority High, status In Progress, and an empty resolution note. Activity records the ticket opening, a status change from New to In Progress, and an internal note confirming the office VPN connection and photo archive access and the same home stop at contacting gateway with no further error text. Nothing in the ticket says the issue has been fixed.",
+      "suggestedCategory": "Network",
+      "followUps": [],
+      "draft": "Hello Nadia,\n\nWe are working on the Ashmere VPN issue on your laptop. It connects in the office and the photo archive opens, but at home it stops at contacting gateway with no other error text. We have noted that you need the photo archive before the Friday night photo close. We will update you as we learn more.\n\nAshmere Press IT"
+    }
+  },
+  {
+    "id": "QE-02",
+    "source": "qwen-quality-eight",
+    "http_status": 200,
+    "elapsed_s": 36.414,
+    "error": null,
+    "body": {
+      "available": true,
+      "summary": "Idris Lang (Contracts) can sign in to the file server and the folder list opens, but opening Press/Legal/Hold/2026 returns “You do not have permission.” He needs read-only access so he can read the Pell waiver today and does not need to edit it. The ticket is New, priority High, category Access, with an empty resolution note. Activity is only the opening and an internal note restating those facts; no reply is saved and nothing says access was granted. A file-server hostname is not given.",
+      "suggestedCategory": "Access",
+      "followUps": [],
+      "draft": "Hello Idris,\n\nWe have your request for read-only access to Press/Legal/Hold/2026 so you can read the Pell waiver today. You can sign in and see the folder list, but opening that folder returns “You do not have permission,” and you do not need edit access. We will review the permission request.\n\nAshmere Press IT"
+    }
+  },
+  {
+    "id": "QE-03",
+    "source": "qwen-quality-eight",
+    "http_status": 200,
+    "elapsed_s": 29.21,
+    "error": null,
+    "body": {
+      "available": true,
+      "summary": "Tomas Reed (Bindery) reports that printer PR-4 in the bindery stops with panel code 41.2. He restarted the printer once before opening the ticket. Status is In Progress and the resolution note is empty. An internal note says 41.2 is a paper jam sensor, the network cable was reseated and is seated, Tomas and the technician found no paper in the path, and the panel still shows 41.2. Nothing in the ticket says the printer has been repaired or returned to service.",
+      "suggestedCategory": "Hardware",
+      "followUps": [],
+      "draft": "Hello Tomas,\n\nPrinter PR-4 in the bindery is still showing panel code 41.2 after the restart you did. The paper path was checked and no paper was found, and the network cable was reseated and is seated. The code is still on the panel, so this is not resolved yet.\n\nAshmere Press IT"
+    }
+  },
+  {
+    "id": "QE-04",
+    "source": "qwen-quality-eight",
+    "http_status": 200,
+    "elapsed_s": 18.353,
+    "error": null,
+    "body": {
+      "available": true,
+      "summary": "June Okonkwo (Design) reported that monitor MN-19 on her desk flickered whenever the cover layout was open. An internal note records that MN-19 was replaced with spare MN-44; the old monitor flickered within a minute and the spare did not. A saved reply from June says she used MN-44 for 20 minutes on the cover layout and the flicker was gone. Status is Resolved, and the resolution note records the same replacement and a 20-minute cover-layout check with no flicker.",
+      "suggestedCategory": "Hardware",
+      "followUps": [],
+      "draft": "Hi June,\n\nThanks for confirming that spare monitor MN-44 ran the cover layout for 20 minutes with no flicker after MN-19 was replaced. This ticket is marked Resolved based on that check.\n\nAshmere Press IT"
+    }
+  },
+  {
+    "id": "QE-05",
+    "source": "qwen-quality-eight",
+    "http_status": 200,
+    "elapsed_s": 54.153,
+    "error": null,
+    "body": {
+      "available": true,
+      "summary": "Paul Adeyemi (Copy Desk) reports that the space bar on loaner LP-22 is sticking again. The ticket was opened on 2026-09-28 for that same sticking space bar. An internal note says the LP-22 keyboard was replaced on Monday. A saved reply then said the new keyboard was fine and the space bar did not stick while typing a full page, after which the status was changed to Resolved. On 2026-10-02 a saved reply said the sticking was back after it had worked on Monday, and the status was changed from Resolved to In Progress. Current status is In Progress, priority is High, category is Hardware, and the resolution note is empty. The issue is not resolved. What work is blocked and when the laptop is needed are not stated.",
+      "suggestedCategory": "Hardware",
+      "followUps": [
+        "What work is blocked by the sticking space bar on LP-22?",
+        "When is the laptop needed?"
+      ],
+      "draft": "Hi Paul, the space bar on loaner LP-22 is sticking again after the replacement keyboard worked on Monday. What work is this blocking, and when do you need the laptop?\n\nAshmere Press IT"
+    }
+  },
+  {
+    "id": "QE-06",
+    "source": "qwen-quality-eight",
+    "http_status": 200,
+    "elapsed_s": 15.133,
+    "error": null,
+    "body": {
+      "available": true,
+      "summary": "Anika Shah (Training) opened a new high-priority ticket asking for access before tomorrow for tomorrow's training. The resource is unspecified; the description only refers to \"the thing.\" Status is New, the resolution note is empty, and the only activity is ticket creation.",
+      "suggestedCategory": "Access",
+      "followUps": [
+        "Which system, application, mailbox, or other resource do you need access to?"
+      ],
+      "draft": "Hello Anika Shah,\n\nWe received your request for access before tomorrow's training. The ticket does not name the resource you need. Which system, application, mailbox, or other resource do you need access to?\n\nAshmere Press IT"
+    }
+  },
+  {
+    "id": "QE-07",
+    "source": "qwen-quality-eight",
+    "http_status": 200,
+    "elapsed_s": 32.675,
+    "error": null,
+    "body": {
+      "available": true,
+      "summary": "Felix Ortega (Design) asked for FolioBind 3 to be installed on design machine DS-12 before the Tuesday cover lock. He does not know whether a license already exists. The ticket is New, categorized Software, priority High, with no resolution note. An internal note states that no install has been approved and that whether Ashmere Press has a FolioBind 3 license is not recorded.",
+      "suggestedCategory": "Software",
+      "followUps": [],
+      "draft": "Hello Felix, we have your request to install FolioBind 3 on design machine DS-12 before the Tuesday cover lock. A license has not been confirmed, and the install has not been approved. Ashmere Press IT"
+    }
+  },
+  {
+    "id": "QE-08",
+    "source": "qwen-quality-eight",
+    "http_status": 200,
+    "elapsed_s": 33.453,
+    "error": null,
+    "body": {
+      "available": true,
+      "summary": "Rosa Klein (Finance) reports that messages from the auditor to the finance shared mailbox bounce with relay access denied. The ticket is In Progress, priority High, and category Email. An internal note says the bounce text is relay access denied, no repair has been made, and the finance shared mailbox is still rejecting the auditor. The resolution note is empty. The auditor's email address is not named.",
+      "suggestedCategory": "Email",
+      "followUps": [
+        "What email address is the auditor sending from?"
+      ],
+      "draft": "Hello Rosa Klein,\n\nMessages from the auditor to the finance shared mailbox are still being rejected with relay access denied, and no repair has been made. What email address is the auditor sending from?\n\nAshmere Press IT"
+    }
+  },
+  {
+    "id": "QF-A",
+    "source": "ambiguity-instruction-check",
+    "http_status": 200,
+    "elapsed_s": 19.135,
+    "error": null,
+    "body": {
+      "available": true,
+      "summary": "Lila Mensah (Research) can see the folder Press/Research/FieldNotes/2026 in the file list and needs access before the Monday field packet. She does not know whether she should request read or edit access. The ticket is New, priority Medium, category Access, with an empty resolution note and no activity beyond creation.",
+      "suggestedCategory": "Access",
+      "followUps": [
+        "Do you need read access or edit access to Press/Research/FieldNotes/2026?"
+      ],
+      "draft": "Hello Lila,\n\nWe received your request for access to Press/Research/FieldNotes/2026 before the Monday field packet. You can see the folder in the file list, but it is not clear whether you need read access or edit access. Which of those do you need?\n\nAshmere Press IT"
+    }
+  },
+  {
+    "id": "QF-B",
+    "source": "ambiguity-instruction-check",
+    "http_status": 200,
+    "elapsed_s": 30.003,
+    "error": null,
+    "body": {
+      "available": true,
+      "summary": "Owen Briggs (Membership) asks to be given access before the partner breakfast. The request does not name the resource (“it”); the partner breakfast is the stated deadline, not the resource. Priority is High, status is New, and there is no resolution note or later activity.",
+      "suggestedCategory": "Access",
+      "followUps": [
+        "Which resource do you need access to?"
+      ],
+      "draft": "Hi Owen, we can help with access before the partner breakfast, but the ticket does not say what you need to get into. Please reply with the name of the resource. Ashmere Press IT"
+    }
+  },
+  {
+    "id": "QF-C",
+    "source": "ambiguity-instruction-check",
+    "http_status": 200,
+    "elapsed_s": 29.261,
+    "error": null,
+    "body": {
+      "available": true,
+      "summary": "Hana Ibarra (Production) reports that the keyboard on loaner LP-30 repeats letters while she types the galley. The ticket is In Progress at Medium priority, categorized as Hardware, with no resolution note. An internal note says the laptop at the bench is labeled LP-33, which does not match the requested LP-30, so which machine has the repeating keys is unresolved.",
+      "suggestedCategory": "Hardware",
+      "followUps": [
+        "Which loaner has the repeating keyboard: the requested LP-30, or the bench laptop labeled LP-33?"
+      ],
+      "draft": "Hello Hana,\n\nWe have your report that the keyboard on loaner LP-30 repeats letters while you type the galley. The laptop at the bench is labeled LP-33, which does not match LP-30. Please confirm which loaner has the repeating keys so we can check the right machine.\n\nAshmere Press IT"
+    }
+  },
+  {
+    "id": "QF-D",
+    "source": "ambiguity-instruction-check",
+    "http_status": 200,
+    "elapsed_s": 36.942,
+    "error": null,
+    "body": {
+      "available": true,
+      "summary": "Greta Solano (Membership) reports that mail to partners@ashmerepress.example bounces with a mailbox full message. The ticket is In Progress, priority High, category Email, and the resolution note is empty. An internal note says the junk folder was checked, the bounce text is mailbox full, the mailbox is over quota, and no quota change has been made. Nothing in the ticket says the mailbox has been fixed.",
+      "suggestedCategory": "Email",
+      "followUps": [],
+      "draft": "Hello Greta,\n\nWe saw that mail to partners@ashmerepress.example is bouncing with a mailbox full message. That mailbox is over quota, and no quota change has been made. This is still being worked on.\n\nAshmere Press IT"
+    }
+  }
+]

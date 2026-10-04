@@ -53,6 +53,11 @@ Set these in the environment before starting the server. Each request reads them
 | `OLLAMA_BASE_URL` | `http://127.0.0.1:11434` | Ollama server. A trailing slash is removed. |
 | `OLLAMA_MODEL` | `qwen3:4b-instruct-2507-q4_K_M` | Model name passed to Ollama. |
 | `OLLAMA_TIMEOUT_SECONDS` | `120` | How long to wait for the model to finish. Values outside `0` to `600`, or values that are not numbers, use `120`. |
+| `TINYDESK_AI_PROVIDER` | `ollama` | `ollama` or `xai`. A blank value uses Ollama. |
+| `XAI_MODEL` | `grok-4.7` | Model name used only when the provider is `xai`. |
+| `XAI_API_KEY` | none | xAI credential. Read from the environment or from `.env`. |
+| `XAI_REASONING_EFFORT` | `low` | Used only when the provider is `xai`. Accepted values are `low`, `medium`, `high`, and `xhigh`. An unknown value is rejected and no request is sent. |
+| `XAI_MAX_COMPLETION_TOKENS` | `1200` | Visible output cap, used only when the provider is `xai`. A whole number from 1 to 128000. An invalid value is rejected and no request is sent. |
 
 Example:
 
@@ -63,7 +68,11 @@ export OLLAMA_TIMEOUT_SECONDS=120
 python -m backend
 ```
 
-Leave `OLLAMA_MODEL` unset to use the Qwen default. A set value replaces that default for the server process. There is no second model behind it.
+Leave `OLLAMA_MODEL` unset to use the Qwen default. A set value replaces that default for the server process. There is no second model behind Ollama.
+
+`python -m backend` and the app both read a git-ignored `.env` in the project root. Values already set in the environment stay as they are. The HTTP server does not serve that file. With no `TINYDESK_AI_PROVIDER`, analysis uses Ollama. Set `TINYDESK_AI_PROVIDER=xai` and `XAI_API_KEY` to send the same ticket analysis to xAI. The xAI call is one request to `POST https://api.x.ai/v1/chat/completions`, with no automatic retry. Temperature stays `0`.
+
+That request sends `reasoning_effort` and `max_completion_tokens`. `reasoning_effort` defaults to `low` here; `high` remains selectable. If the field is omitted, the API's own default is `high`, so TinyDesk always sends the configured value. `max_completion_tokens` defaults to `1200`. On this endpoint that cap applies to visible output tokens only. It does not include reasoning tokens or function-call tokens. Reasoning tokens are billed separately and are not cut by this cap. `1200` is the room kept for the complete JSON analysis (`summary`, `suggestedCategory`, `followUps`, and `draft`). The deprecated `max_tokens` field is not sent. A response with `finish_reason` `length` is an error. TinyDesk does not show that partial text and does not send the request again.
 
 TinyDesk calls Ollama's Python client at `http://127.0.0.1:11434` and sends a JSON schema in the `/api/chat` `format` field, which is Ollama's documented structured-output mechanism (https://docs.ollama.com/capabilities/structured-outputs). Temperature is `0`. TinyTalk's `SOUL.md`, MemPalace memories, conversation history, and knowledge graph are not loaded. TinyTalk itself is not modified.
 
@@ -102,7 +111,7 @@ On a wide window the queue is a table and the assistant sits beside the ticket. 
 - This phase analyzes and drafts only. It does not change tickets, call tools, or send messages.
 - Replies are stored on the ticket. TinyDesk does not send email.
 - There is no sign-in, no attachments, and no SLA clock.
-- There is no retrieval index, long-term memory, database, cloud model, or extra workflow service.
+- There is no retrieval index, long-term memory, database, or extra workflow service. Ollama is the default model provider. xAI is used only when `TINYDESK_AI_PROVIDER=xai`.
 - Each analysis is independent. Switching tickets clears the panel. A response that arrives after you leave, or after a newer request, is not shown. The browser cancel does not stop an Ollama call that has already started.
 - Saved tickets stay complete in the browser. Analyze builds a separate copy for the model, and only that copy is shortened. A shortened field keeps its beginning and ends with `[shortened]`. `omittedEarlierActivityCount` counts older activity left out of the copy. The copy keeps the current ticket fields and the resolution note ahead of older activity.
 - The size of that copy is a token estimate calibrated for the default model, `qwen3:4b-instruct-2507-q4_K_M`, at a 4096-token runtime context when `num_ctx` is unset. The estimate leaves 1200 tokens for the reply. It does not guarantee that every input fits. Another model, or a different Ollama context setting, can still reject the request. TinyDesk then says the input exceeds the context window and does not switch models.

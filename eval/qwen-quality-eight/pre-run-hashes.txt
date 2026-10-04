@@ -1,0 +1,3 @@
+sha256 recorded before POST /api/analyze-ticket
+8157160c650f36180a07526915ae570a6b20a81f8eb952d06f7b9228b3b7ec7d  fixtures.json
+33fb8b9aaabb9acc3937676fbd33ce19d8d7103f7b6b68c694e8a5e5756eda01  expectations.json

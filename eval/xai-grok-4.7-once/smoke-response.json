@@ -1,0 +1,12 @@
+{
+  "http_status": 200,
+  "elapsed_s": 18.428,
+  "error": null,
+  "body": {
+    "available": true,
+    "summary": "Nina Cole (Reception) reports that the lobby printer named PR-9 shows a paper-out light and no other error. The ticket is New, priority Low, and categorized Hardware, with an empty resolution note. Activity shows only that the ticket was created.",
+    "suggestedCategory": "Hardware",
+    "followUps": [],
+    "draft": "Hello Nina Cole,\n\nWe have your report that the lobby printer PR-9 is showing a paper-out light and no other error. We will follow up on restocking that printer.\n\nAshmere Press IT"
+  }
+}

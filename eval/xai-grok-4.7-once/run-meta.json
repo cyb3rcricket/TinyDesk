@@ -1,0 +1,39 @@
+{
+  "calls": 13,
+  "retries": 0,
+  "smoke_ok": true,
+  "store_js_sha256_before": "c4af6f3bd25640e1ed0bae69c7e535a19e4004b105747503e9c90621f46cd1d0",
+  "store_js_sha256_after": "c4af6f3bd25640e1ed0bae69c7e535a19e4004b105747503e9c90621f46cd1d0",
+  "store_js_unchanged": true,
+  "frozen_hashes_after": {
+    "qwen-fixtures": "8157160c650f36180a07526915ae570a6b20a81f8eb952d06f7b9228b3b7ec7d",
+    "qwen-expectations": "33fb8b9aaabb9acc3937676fbd33ce19d8d7103f7b6b68c694e8a5e5756eda01",
+    "fresh-fixtures": "d2faa6328d38f2c8866da47af694725e7376b1d7519568a01d846df98464cecc",
+    "fresh-expectations": "b2d8698ba519226fe15b542980e463e244b951220c66ece619f71ec996fa31a8"
+  },
+  "frozen_hashes_before": {
+    "qwen-fixtures": "8157160c650f36180a07526915ae570a6b20a81f8eb952d06f7b9228b3b7ec7d",
+    "qwen-expectations": "33fb8b9aaabb9acc3937676fbd33ce19d8d7103f7b6b68c694e8a5e5756eda01",
+    "fresh-fixtures": "d2faa6328d38f2c8866da47af694725e7376b1d7519568a01d846df98464cecc",
+    "fresh-expectations": "b2d8698ba519226fe15b542980e463e244b951220c66ece619f71ec996fa31a8"
+  },
+  "smoke_messages_match_trace": true,
+  "provider_log_lines": [
+    "2026-10-02 21:53:55,172 INFO tinydesk analysis provider=xai model=grok-4.7",
+    "2026-10-02 21:54:13,610 INFO tinydesk analysis provider=xai model=grok-4.7",
+    "2026-10-02 21:55:22,533 INFO tinydesk analysis provider=xai model=grok-4.7",
+    "2026-10-02 21:55:58,950 INFO tinydesk analysis provider=xai model=grok-4.7",
+    "2026-10-02 21:56:28,153 INFO tinydesk analysis provider=xai model=grok-4.7",
+    "2026-10-02 21:56:46,512 INFO tinydesk analysis provider=xai model=grok-4.7",
+    "2026-10-02 21:57:40,663 INFO tinydesk analysis provider=xai model=grok-4.7",
+    "2026-10-02 21:57:55,803 INFO tinydesk analysis provider=xai model=grok-4.7",
+    "2026-10-02 21:58:28,471 INFO tinydesk analysis provider=xai model=grok-4.7",
+    "2026-10-02 21:59:01,924 INFO tinydesk analysis provider=xai model=grok-4.7",
+    "2026-10-02 21:59:21,057 INFO tinydesk analysis provider=xai model=grok-4.7",
+    "2026-10-02 21:59:51,061 INFO tinydesk analysis provider=xai model=grok-4.7",
+    "2026-10-02 22:00:20,322 INFO tinydesk analysis provider=xai model=grok-4.7"
+  ],
+  "credential_leak": false,
+  "trace_count": 13,
+  "frozen_unchanged": true
+}

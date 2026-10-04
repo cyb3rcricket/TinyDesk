@@ -1,0 +1,138 @@
+{
+  "endpoint": "http://127.0.0.1:8080/api/analyze-ticket",
+  "runs": [
+    {
+      "id": "QE-01",
+      "elapsed_s": 12.551,
+      "http_status": 200,
+      "error": null,
+      "raw": "{\"available\":true,\"summary\":\"The Ashmere VPN connects in the office and opens the photo archive, but fails at home on the same laptop when attempting to contact the gateway with no error message. The requester needs access to the photo archive before Friday night. The resource (system, folder, or access point) is unspecified. The issue is categorized under Network with High priority and is currently in progress.\",\"suggestedCategory\":\"Network\",\"followUps\":[\"What system, folder, or resource do you need access to in order to retrieve the photo archive?\",\"What work is blocked and when is it needed?\"],\"draft\":\"Hi Nadia, thanks for reaching out. I've confirmed that the Ashmere VPN works in the office and opens the photo archive there, but at home on the same laptop, it fails when trying to contact the gateway with no error message. Could you please confirm what system, folder, or resource you need access to in order to retrieve the photo archive? Also, is there a specific work block or task that's preventing you from completing this before Friday night? Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "The Ashmere VPN connects in the office and opens the photo archive, but fails at home on the same laptop when attempting to contact the gateway with no error message. The requester needs access to the photo archive before Friday night. The resource (system, folder, or access point) is unspecified. The issue is categorized under Network with High priority and is currently in progress.",
+        "suggestedCategory": "Network",
+        "followUps": [
+          "What system, folder, or resource do you need access to in order to retrieve the photo archive?",
+          "What work is blocked and when is it needed?"
+        ],
+        "draft": "Hi Nadia, thanks for reaching out. I've confirmed that the Ashmere VPN works in the office and opens the photo archive there, but at home on the same laptop, it fails when trying to contact the gateway with no error message. Could you please confirm what system, folder, or resource you need access to in order to retrieve the photo archive? Also, is there a specific work block or task that's preventing you from completing this before Friday night? Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QE-02",
+      "elapsed_s": 10.812,
+      "http_status": 200,
+      "error": null,
+      "raw": "{\"available\":true,\"summary\":\"Idris Lang from Contracts needs read access to a file in the Press/Legal/Hold/2026 folder on the file server. He can sign in and see the folder list but receives a permission error when attempting to open it. He only needs to view the Pell waiver today and does not need to edit it. The resource (specific file or folder) is not explicitly named in the request. The ticket is in 'New' status with high priority.\",\"suggestedCategory\":\"Access\",\"followUps\":[\"What specific system, folder, or resource do you need access to? (e.g., Press/Legal/Hold/2026 or a specific file within it)\",\"Is the Pell waiver a file or a subfolder within Press/Legal/Hold/2026?\"],\"draft\":\"Hi Idris, thanks for reaching out. I see you're trying to access the folder Press/Legal/Hold/2026 on the file server. You can sign in and see the folder list, but you're getting a 'You do not have permission' message when trying to open it. You only need read access to the Pell waiver today, and you don't need to edit it. Could you please confirm what specific system, folder, or resource you need access to? For example, is it the full folder or just a specific file within it? Thanks, Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Idris Lang from Contracts needs read access to a file in the Press/Legal/Hold/2026 folder on the file server. He can sign in and see the folder list but receives a permission error when attempting to open it. He only needs to view the Pell waiver today and does not need to edit it. The resource (specific file or folder) is not explicitly named in the request. The ticket is in 'New' status with high priority.",
+        "suggestedCategory": "Access",
+        "followUps": [
+          "What specific system, folder, or resource do you need access to? (e.g., Press/Legal/Hold/2026 or a specific file within it)",
+          "Is the Pell waiver a file or a subfolder within Press/Legal/Hold/2026?"
+        ],
+        "draft": "Hi Idris, thanks for reaching out. I see you're trying to access the folder Press/Legal/Hold/2026 on the file server. You can sign in and see the folder list, but you're getting a 'You do not have permission' message when trying to open it. You only need read access to the Pell waiver today, and you don't need to edit it. Could you please confirm what specific system, folder, or resource you need access to? For example, is it the full folder or just a specific file within it? Thanks, Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QE-03",
+      "elapsed_s": 11.19,
+      "http_status": 200,
+      "error": null,
+      "raw": "{\"available\":true,\"summary\":\"Printer PR-4 in the bindery shows error 41.2 after restart and physical inspection. The error indicates a paper jam sensor issue, but no paper is present. The network cable has been reseated. The requester has already taken initial steps. The resource (printer) is named, but the work blocked and purpose are not specified. Clarification is needed on the specific task or work that is blocked by this error.\",\"suggestedCategory\":\"Hardware\",\"followUps\":[\"What is the exact system, folder, or resource that needs access or support?\",\"Is there a specific work or task that is blocked by this printer error?\"],\"draft\":\"Hi Tomas, thanks for reaching out. I see you've already restarted printer PR-4 and we both checked the paper path — no paper is present, and the network cable has been reseated. The panel still shows error 41.2, which points to a paper jam sensor issue. Since the printer is in the bindery and the error persists despite physical checks, I'm wondering if there's a known setting or firmware update that might resolve this. Could you confirm if the printer is configured correctly or if there's a known history of this error on PR-4? Also, is there a specific work you're blocked on that requires this printer to function? Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Printer PR-4 in the bindery shows error 41.2 after restart and physical inspection. The error indicates a paper jam sensor issue, but no paper is present. The network cable has been reseated. The requester has already taken initial steps. The resource (printer) is named, but the work blocked and purpose are not specified. Clarification is needed on the specific task or work that is blocked by this error.",
+        "suggestedCategory": "Hardware",
+        "followUps": [
+          "What is the exact system, folder, or resource that needs access or support?",
+          "Is there a specific work or task that is blocked by this printer error?"
+        ],
+        "draft": "Hi Tomas, thanks for reaching out. I see you've already restarted printer PR-4 and we both checked the paper path — no paper is present, and the network cable has been reseated. The panel still shows error 41.2, which points to a paper jam sensor issue. Since the printer is in the bindery and the error persists despite physical checks, I'm wondering if there's a known setting or firmware update that might resolve this. Could you confirm if the printer is configured correctly or if there's a known history of this error on PR-4? Also, is there a specific work you're blocked on that requires this printer to function? Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QE-04",
+      "elapsed_s": 6.07,
+      "http_status": 200,
+      "error": null,
+      "raw": "{\"available\":true,\"summary\":\"Monitor MN-19 on June Okonkwo's desk flickered when the cover layout was open. The issue was resolved by replacing MN-19 with spare MN-44. Testing confirmed no flicker during 20 minutes of use. The ticket is now marked Resolved.\",\"suggestedCategory\":\"Hardware\",\"followUps\":[],\"draft\":\"Hi June, thanks for the update! The flicker issue with monitor MN-19 has been resolved by replacing it with spare MN-44. You've confirmed that the cover layout runs smoothly without flicker during testing. Great work. Let me know if you encounter any other issues with your design workflow. Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Monitor MN-19 on June Okonkwo's desk flickered when the cover layout was open. The issue was resolved by replacing MN-19 with spare MN-44. Testing confirmed no flicker during 20 minutes of use. The ticket is now marked Resolved.",
+        "suggestedCategory": "Hardware",
+        "followUps": [],
+        "draft": "Hi June, thanks for the update! The flicker issue with monitor MN-19 has been resolved by replacing it with spare MN-44. You've confirmed that the cover layout runs smoothly without flicker during testing. Great work. Let me know if you encounter any other issues with your design workflow. Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QE-05",
+      "elapsed_s": 8.742,
+      "http_status": 200,
+      "error": null,
+      "raw": "{\"available\":true,\"summary\":\"The space bar on loaner LP-22 is sticking again after a previous replacement. The initial replacement worked, but the issue has returned. The requester has reported the problem, and the ticket has been reopened. The resource (LP-22) is named, but the work blocked by the issue is not specified.\",\"suggestedCategory\":\"Hardware\",\"followUps\":[\"What is the exact system, device, or resource that is experiencing the issue? (Currently specified as LP-22, but please confirm if that is the correct machine.)\",\"Is there any specific work or task that is currently blocked by this issue?\"],\"draft\":\"Hi Paul, thanks for reaching out. It looks like the space bar issue on the loaner LP-22 returned after the keyboard was replaced. I noticed that the new keyboard worked fine initially, but the sticking has come back. Could you confirm if the issue is still happening on the same machine, LP-22? Also, is there any specific work or task that's blocked by this issue? Ashmere Press IT\"}",
+      "parsed": {
+        "available": true,
+        "summary": "The space bar on loaner LP-22 is sticking again after a previous replacement. The initial replacement worked, but the issue has returned. The requester has reported the problem, and the ticket has been reopened. The resource (LP-22) is named, but the work blocked by the issue is not specified.",
+        "suggestedCategory": "Hardware",
+        "followUps": [
+          "What is the exact system, device, or resource that is experiencing the issue? (Currently specified as LP-22, but please confirm if that is the correct machine.)",
+          "Is there any specific work or task that is currently blocked by this issue?"
+        ],
+        "draft": "Hi Paul, thanks for reaching out. It looks like the space bar issue on the loaner LP-22 returned after the keyboard was replaced. I noticed that the new keyboard worked fine initially, but the sticking has come back. Could you confirm if the issue is still happening on the same machine, LP-22? Also, is there any specific work or task that's blocked by this issue? Ashmere Press IT"
+      }
+    },
+    {
+      "id": "QE-06",
+      "elapsed_s": 5.355,
+      "http_status": 200,
+      "error": null,
+      "raw": "{\"available\":true,\"summary\":\"Anika Shah from Training needs access to a resource for tomorrow's training. The resource is unspecified. The request has high priority and is currently open. The requester has not specified what system, folder, or resource is needed.\",\"suggestedCategory\":\"Access\",\"followUps\":[\"What system, folder, or resource do you need access to?\",\"Is there any specific work that is blocked until this access is granted?\"],\"draft\":\"Hi Anika, thanks for reaching out. I see you're looking for access to a resource for tomorrow's training. Could you please clarify what system, folder, or resource you need access to? This will help me ensure you get the right permissions in time. Thanks!\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Anika Shah from Training needs access to a resource for tomorrow's training. The resource is unspecified. The request has high priority and is currently open. The requester has not specified what system, folder, or resource is needed.",
+        "suggestedCategory": "Access",
+        "followUps": [
+          "What system, folder, or resource do you need access to?",
+          "Is there any specific work that is blocked until this access is granted?"
+        ],
+        "draft": "Hi Anika, thanks for reaching out. I see you're looking for access to a resource for tomorrow's training. Could you please clarify what system, folder, or resource you need access to? This will help me ensure you get the right permissions in time. Thanks!"
+      }
+    },
+    {
+      "id": "QE-07",
+      "elapsed_s": 9.829,
+      "http_status": 200,
+      "error": null,
+      "raw": "{\"available\":true,\"summary\":\"Felix Ortega from Design requests installation of FolioBind 3 on design machine DS-12 before Tuesday's cover lock. No license status is recorded, and no install approval has been issued. The resource (FolioBind 3) is specified, but the system (DS-12) is named. The request includes a deadline but no confirmation of whether a license exists or is required. Clarification is needed on the exact resource and version requirements.\",\"suggestedCategory\":\"Software\",\"followUps\":[\"What specific system, folder, or resource is needed for FolioBind 3 installation?\",\"Is there a specific version or configuration required for FolioBind 3?\"],\"draft\":\"Hi Felix, thanks for reaching out. I see you're asking to install FolioBind 3 on design machine DS-12 before the Tuesday cover lock. You're wondering whether Ashmere Press already has a license for it, and I've noted that the license status isn't recorded in our system. To move forward, could you confirm whether you need access to FolioBind 3 on DS-12 specifically, and if there's a specific version or installation requirement? Also, just to be clear—do you need this software installed on DS-12, or is there another system or folder involved? Thanks for your help in clarifying this.\"}",
+      "parsed": {
+        "available": true,
+        "summary": "Felix Ortega from Design requests installation of FolioBind 3 on design machine DS-12 before Tuesday's cover lock. No license status is recorded, and no install approval has been issued. The resource (FolioBind 3) is specified, but the system (DS-12) is named. The request includes a deadline but no confirmation of whether a license exists or is required. Clarification is needed on the exact resource and version requirements.",
+        "suggestedCategory": "Software",
+        "followUps": [
+          "What specific system, folder, or resource is needed for FolioBind 3 installation?",
+          "Is there a specific version or configuration required for FolioBind 3?"
+        ],
+        "draft": "Hi Felix, thanks for reaching out. I see you're asking to install FolioBind 3 on design machine DS-12 before the Tuesday cover lock. You're wondering whether Ashmere Press already has a license for it, and I've noted that the license status isn't recorded in our system. To move forward, could you confirm whether you need access to FolioBind 3 on DS-12 specifically, and if there's a specific version or installation requirement? Also, just to be clear—do you need this software installed on DS-12, or is there another system or folder involved? Thanks for your help in clarifying this."
+      }
+    },
+    {
+      "id": "QE-08",
+      "elapsed_s": 8.122,
+      "http_status": 200,
+      "error": null,
+      "raw": "{\"available\":true,\"summary\":\"The ticket describes messages from the auditor being rejected with 'relay access denied' when sent to a finance shared mailbox. The issue remains unresolved, as confirmed in the activity history. The requested resource (shared mailbox) is not named in the description, and the configuration of the sender server is unclear. Clarification is needed on both the mailbox name and the sender configuration.\",\"suggestedCategory\":\"Email\",\"followUps\":[\"What is the exact name of the shared mailbox receiving the messages from the auditor?\",\"Is the auditor's mail server configured to send messages directly to the finance shared mailbox?\"],\"draft\":\"Hi Rosa, I'm reviewing your ticket about messages from the auditor being rejected with 'relay access denied' when sent to the finance shared mailbox. The issue is still active — the mailbox continues to reject messages, and no repair has been made yet. Could you please confirm whether the finance shared mailbox is still the correct destination and whether the auditor's mail server is configured to send messages directly to it? This will help us determine the next step. Thanks!\"}",
+      "parsed": {
+        "available": true,
+        "summary": "The ticket describes messages from the auditor being rejected with 'relay access denied' when sent to a finance shared mailbox. The issue remains unresolved, as confirmed in the activity history. The requested resource (shared mailbox) is not named in the description, and the configuration of the sender server is unclear. Clarification is needed on both the mailbox name and the sender configuration.",
+        "suggestedCategory": "Email",
+        "followUps": [
+          "What is the exact name of the shared mailbox receiving the messages from the auditor?",
+          "Is the auditor's mail server configured to send messages directly to the finance shared mailbox?"
+        ],
+        "draft": "Hi Rosa, I'm reviewing your ticket about messages from the auditor being rejected with 'relay access denied' when sent to the finance shared mailbox. The issue is still active — the mailbox continues to reject messages, and no repair has been made yet. Could you please confirm whether the finance shared mailbox is still the correct destination and whether the auditor's mail server is configured to send messages directly to it? This will help us determine the next step. Thanks!"
+      }
+    }
+  ]
+}
