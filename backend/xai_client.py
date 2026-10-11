@@ -1,10 +1,13 @@
 """xAI chat completions for one ticket analysis.
 
 The API key is read from the environment at call time. It is not stored on
-the client, written to logs, or copied into the trace file. Each call is a
-single HTTP request. httpx is not given a retry transport.
+the client, written to logs, or copied into the trace file. The optional
+trace file never stores ticket text: each message is recorded as its role,
+length, and SHA-256 hash only. Each call is a single HTTP request. httpx is
+not given a retry transport.
 """
 
+import hashlib
 import json
 import os
 import time
@@ -66,6 +69,22 @@ def _generation_error(settings: Settings) -> str | None:
     return None
 
 
+def _message_digests(messages: list[dict]) -> list[dict]:
+    """Describe messages without keeping their text."""
+    digests = []
+    for message in messages:
+        content = message.get("content") if isinstance(message, dict) else None
+        text = content if isinstance(content, str) else ""
+        digests.append(
+            {
+                "role": message.get("role") if isinstance(message, dict) else None,
+                "chars": len(text),
+                "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+            }
+        )
+    return digests
+
+
 def _write_trace(record: dict) -> None:
     raw_path = os.environ.get("TINYDESK_AI_TRACE", "").strip()
     if not raw_path:
@@ -85,33 +104,28 @@ class XaiModelClient:
         self.settings = settings
         self._transport = transport
 
+    def _trace(self, model: str, messages: list[dict], *, error: str | None, **extra) -> None:
+        record = {
+            "provider": "xai",
+            "requested_model": model,
+            "messages": _message_digests(messages),
+            "request_settings": _request_settings(self.settings),
+            **extra,
+            "completion_status": error or "complete",
+        }
+        if error:
+            record["error"] = error
+        _write_trace(record)
+
     def complete(self, *, model: str, messages: list[dict], schema: dict, timeout: float) -> str:
         generation_error = _generation_error(self.settings)
         if generation_error:
-            _write_trace(
-                {
-                    "provider": "xai",
-                    "requested_model": model,
-                    "messages": messages,
-                    "request_settings": _request_settings(self.settings),
-                    "error": generation_error,
-                    "completion_status": generation_error,
-                }
-            )
+            self._trace(model, messages, error=generation_error)
             raise ModelCallError(generation_error, "BadConfig")
 
         key = os.environ.get("XAI_API_KEY", "").strip()
         if not key:
-            _write_trace(
-                {
-                    "provider": "xai",
-                    "requested_model": model,
-                    "messages": messages,
-                    "request_settings": _request_settings(self.settings),
-                    "error": "missing_key",
-                    "completion_status": "missing_key",
-                }
-            )
+            self._trace(model, messages, error="missing_key")
             raise ModelCallError("missing_key", "MissingKey")
 
         outbound_schema = dict(schema)
@@ -143,28 +157,10 @@ class XaiModelClient:
             with httpx.Client(timeout=timeout_config, transport=self._transport) as client:
                 response = client.post(XAI_CHAT_URL, headers=headers, json=payload)
         except httpx.TimeoutException as exc:
-            _write_trace(
-                {
-                    "provider": "xai",
-                    "requested_model": model,
-                    "messages": messages,
-                    "request_settings": _request_settings(self.settings),
-                    "error": "timeout",
-                    "completion_status": "timeout",
-                }
-            )
+            self._trace(model, messages, error="timeout")
             raise ModelCallError("timeout", type(exc).__name__) from None
         except httpx.HTTPError as exc:
-            _write_trace(
-                {
-                    "provider": "xai",
-                    "requested_model": model,
-                    "messages": messages,
-                    "request_settings": _request_settings(self.settings),
-                    "error": "unavailable",
-                    "completion_status": "unavailable",
-                }
-            )
+            self._trace(model, messages, error="unavailable")
             raise ModelCallError("unavailable", type(exc).__name__) from None
 
         body: dict = {}
@@ -206,22 +202,17 @@ class XaiModelClient:
                 reason, error_type = "invalid_output", "EmptyContent"
             else:
                 content = raw_content
-        record = {
-            "provider": "xai",
-            "requested_model": model,
-            "returned_model": body.get("model"),
-            "messages": messages,
-            "request_settings": _request_settings(self.settings),
-            "status_code": response.status_code,
-            "duration_ms": int((time.perf_counter() - started) * 1000),
-            "finish_reason": finish_reason,
-            "usage": usage,
-            "cost_usd": cost_usd_from_usage(usage),
-            "completion_status": reason or "complete",
-        }
-        if reason:
-            record["error"] = reason
-        _write_trace(record)
+        self._trace(
+            model,
+            messages,
+            error=reason,
+            returned_model=body.get("model"),
+            status_code=response.status_code,
+            duration_ms=int((time.perf_counter() - started) * 1000),
+            finish_reason=finish_reason,
+            usage=usage,
+            cost_usd=cost_usd_from_usage(usage),
+        )
         if reason:
             raise ModelCallError(reason, error_type, response.status_code)
         return content
