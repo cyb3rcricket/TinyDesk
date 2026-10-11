@@ -1,6 +1,6 @@
 """Local Ollama chat.
 
-TinyDesk sends each ticket to the configured local model through Ollama's
+TinyDesk sends each ticket to the configured model through Ollama's
 Python client. The default model is qwen3:4b-instruct-2507-q4_K_M. Set
 OLLAMA_MODEL to use another installed model. Structured output uses the JSON
 schema documented for `/api/chat` `format`. Each call is a new request with

@@ -205,7 +205,7 @@ def test_empty_followups_are_allowed(client):
 @pytest.mark.parametrize(
     ("reason", "snippet"),
     [
-        ("unavailable", "could not reach the local model"),
+        ("unavailable", "could not reach Ollama"),
         ("timeout", "took too long"),
         ("model_missing", "model is not available"),
         ("bad_response", "unexpected response"),
@@ -391,6 +391,7 @@ def test_frontend_is_served_and_backend_files_are_not(client):
     assert 'id="assist-provider"' in index.text
     assert "local model on this computer" not in index.text
     assert "Prepared sample" not in index.text
+    assert client.get("/index.html").text == index.text
     app_js = client.get("/js/app.js")
     assert app_js.status_code == 200
     assert "Local Ollama" in app_js.text

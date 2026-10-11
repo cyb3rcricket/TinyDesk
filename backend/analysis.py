@@ -38,18 +38,18 @@ logger = logging.getLogger("tinydesk.analysis")
 
 FAILURE_MESSAGES = {
     "unavailable": (
-        "TinyDesk could not reach the local model. Check that Ollama is running, then try again."
+        "TinyDesk could not reach Ollama. Check that Ollama is running at OLLAMA_BASE_URL, then try again."
     ),
-    "timeout": "The local model took too long to answer. Try again.",
+    "timeout": "The Ollama model took too long to answer. Try again.",
     "model_missing": (
         "The configured Ollama model is not available. Check the model name, then try again."
     ),
     "context_limit": (
-        "The local model rejected this analysis because the input exceeds its context window. "
+        "The Ollama model rejected this analysis because the input exceeds its context window. "
         "The saved ticket was not changed, and TinyDesk did not switch models."
     ),
-    "invalid_output": "The local model returned a result TinyDesk could not use. Try again.",
-    "bad_response": "The local model returned an unexpected response. Try again.",
+    "invalid_output": "The Ollama model returned a result TinyDesk could not use. Try again.",
+    "bad_response": "The Ollama model returned an unexpected response. Try again.",
 }
 
 XAI_FAILURE_MESSAGES = {
