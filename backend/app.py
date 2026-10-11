@@ -210,12 +210,8 @@ def analyze_ticket(
 
 
 @app.get("/")
-def serve_index() -> FileResponse:
-    return FileResponse(ROOT / "index.html", media_type="text/html")
-
-
 @app.get("/index.html")
-def serve_index_file() -> FileResponse:
+def serve_index() -> FileResponse:
     return FileResponse(ROOT / "index.html", media_type="text/html")
 
 
