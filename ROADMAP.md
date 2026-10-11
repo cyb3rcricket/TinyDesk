@@ -1,7 +1,7 @@
 # TinyDesk Roadmap
 
 TinyDesk is a help desk demo for fictional Ashmere Press tickets.
-TinyTalk Assist helps a technician understand tickets, identify
+TinyDesk Assist helps a technician understand tickets, identify
 missing information, and prepare their next response.
 
 The goal is useful assistance with clear evidence and human control.

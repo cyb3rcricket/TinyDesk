@@ -97,7 +97,7 @@ def get_model_client() -> OllamaModelClient | XaiModelClient | RejectingModelCli
     return RejectingModelClient()
 
 
-def validation_message(exc: RequestValidationError) -> str:
+def invalid_field_labels(exc: RequestValidationError) -> list[str]:
     labels: list[str] = []
     for error in exc.errors():
         parts = [str(part) for part in error.get("loc", ()) if part != "body"]
@@ -105,6 +105,11 @@ def validation_message(exc: RequestValidationError) -> str:
         label = FIELD_LABELS.get(key, "request")
         if label not in labels:
             labels.append(label)
+    return labels
+
+
+def validation_message(exc: RequestValidationError) -> str:
+    labels = invalid_field_labels(exc)
     if not labels or labels == ["request"]:
         return "This ticket could not be analyzed because the request was not valid."
     if len(labels) == 1:
@@ -116,13 +121,7 @@ def validation_message(exc: RequestValidationError) -> str:
 @app.exception_handler(RequestValidationError)
 async def reject_invalid_ticket(request: Request, exc: RequestValidationError) -> JSONResponse:
     message = validation_message(exc)
-    labels = []
-    for error in exc.errors():
-        parts = [str(part) for part in error.get("loc", ()) if part != "body"]
-        key = parts[0] if parts else "request"
-        label = FIELD_LABELS.get(key, "request")
-        if label not in labels:
-            labels.append(label)
+    labels = invalid_field_labels(exc)
     logger.warning(
         "ticket analysis rejected reason=invalid_request fields=%s",
         ",".join(labels),
@@ -195,7 +194,7 @@ def assistant_metadata() -> dict:
 )
 def analyze_ticket(
     ticket: TicketRequest,
-    model: OllamaModelClient = Depends(get_model_client),
+    model: OllamaModelClient | XaiModelClient | RejectingModelClient = Depends(get_model_client),
 ) -> AnalysisResponse:
     try:
         return TicketAnalyzer(model).analyze(ticket)

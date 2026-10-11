@@ -1,3 +1,4 @@
+import hashlib
 import json
 
 import httpx
@@ -61,7 +62,13 @@ def test_one_request_sends_schema_without_retry_and_trace_omits_the_key(monkeypa
     assert "Authorization" not in trace
     assert "Bearer" not in trace
     saved = json.loads(trace)
-    assert saved["messages"] == [{"role": "user", "content": "ticket"}]
+    assert saved["messages"] == [
+        {
+            "role": "user",
+            "chars": 6,
+            "sha256": hashlib.sha256(b"ticket").hexdigest(),
+        }
+    ]
     assert saved["requested_model"] == "grok-4.7"
 
 
@@ -134,7 +141,37 @@ def test_trace_redacts_a_key_that_appears_in_ticket_text(monkeypatch, tmp_path):
     )
     trace = (tmp_path / "trace.jsonl").read_text(encoding="utf-8")
     assert "test-key" not in trace
-    assert "[redacted]" in trace
+    assert "the note says" not in trace
+
+
+def test_trace_never_stores_ticket_text(monkeypatch, tmp_path):
+    monkeypatch.setenv("XAI_API_KEY", "test-key")
+    monkeypatch.setenv("TINYDESK_AI_TRACE", str(tmp_path / "trace.jsonl"))
+    ticket_text = "Mara at Ashmere Press cannot reach the VPN from home since Tuesday."
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(503, json={"error": {"message": "busy"}})
+
+    client = XaiModelClient(settings(), transport=httpx.MockTransport(handler))
+    with pytest.raises(ModelCallError):
+        client.complete(
+            model="grok-4.7",
+            messages=[
+                {"role": "system", "content": "You are TinyDesk's ticket assistant."},
+                {"role": "user", "content": ticket_text},
+            ],
+            schema={"type": "object"},
+            timeout=30,
+        )
+    trace = (tmp_path / "trace.jsonl").read_text(encoding="utf-8")
+    assert ticket_text not in trace
+    assert "Mara" not in trace
+    assert "VPN" not in trace
+    saved = json.loads(trace)
+    assert [m["role"] for m in saved["messages"]] == ["system", "user"]
+    assert saved["messages"][1]["chars"] == len(ticket_text)
+    assert saved["messages"][1]["sha256"] == hashlib.sha256(ticket_text.encode("utf-8")).hexdigest()
+    assert set(saved["messages"][1]) == {"role", "chars", "sha256"}
 
 
 def test_configured_effort_and_cap_are_sent(monkeypatch):
