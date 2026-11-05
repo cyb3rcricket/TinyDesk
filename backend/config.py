@@ -1,6 +1,9 @@
+import logging
 import os
 from dataclasses import dataclass
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_BASE_URL = "http://127.0.0.1:11434"
 DEFAULT_MODEL = "qwen3:4b-instruct-2507-q4_K_M"
@@ -97,6 +100,12 @@ def load_settings() -> Settings:
             parsed = 0
         if 0 < parsed <= MAX_TIMEOUT_SECONDS:
             timeout = parsed
+        else:
+            logger.warning(
+                "rejected OLLAMA_TIMEOUT_SECONDS=%s; using %s",
+                raw_timeout,
+                DEFAULT_TIMEOUT_SECONDS,
+            )
     effort, cap, config_error = _xai_generation(provider)
     return Settings(base_url.rstrip("/"), model, timeout, provider, effort, cap, config_error)
 

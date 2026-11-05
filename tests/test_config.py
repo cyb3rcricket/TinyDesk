@@ -1,3 +1,4 @@
+import logging
 import os
 
 from backend.config import load_local_env, load_settings
@@ -183,3 +184,21 @@ def test_invalid_timeout_uses_the_default(monkeypatch):
     for raw in ("nope", "0", "-5", "900"):
         monkeypatch.setenv("OLLAMA_TIMEOUT_SECONDS", raw)
         assert load_settings().timeout_seconds == 120
+
+
+def test_rejected_timeout_is_logged(monkeypatch, caplog):
+    monkeypatch.delenv("OLLAMA_BASE_URL", raising=False)
+    monkeypatch.delenv("OLLAMA_MODEL", raising=False)
+    for raw in ("nope", "0", "-5", "900"):
+        caplog.clear()
+        monkeypatch.setenv("OLLAMA_TIMEOUT_SECONDS", raw)
+        with caplog.at_level(logging.WARNING, logger="backend.config"):
+            assert load_settings().timeout_seconds == 120
+        assert "OLLAMA_TIMEOUT_SECONDS" in caplog.text
+        assert raw in caplog.text
+
+    caplog.clear()
+    monkeypatch.setenv("OLLAMA_TIMEOUT_SECONDS", "30")
+    with caplog.at_level(logging.WARNING, logger="backend.config"):
+        assert load_settings().timeout_seconds == 30
+    assert caplog.text == ""

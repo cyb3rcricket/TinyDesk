@@ -321,7 +321,7 @@ function load() {
 
 function commit(tickets) {
   const saved = clone(tickets);
-  writeStorage(saved);
+  if (!writeStorage(saved)) return null;
   return clone(saved);
 }
 
@@ -396,7 +396,7 @@ export function createTicket(input) {
     ]
   };
   tickets.push(ticket);
-  commit(tickets);
+  if (!commit(tickets)) return { ok: false, error: getStorageWarning() };
   return { ok: true, ticket: clone(ticket) };
 }
 
@@ -458,7 +458,7 @@ export function saveTicketFields(id, input) {
   ticket.status = status;
   ticket.resolutionNote = status === "Resolved" ? note : "";
   ticket.updatedAt = now;
-  commit(tickets);
+  if (!commit(tickets)) return { ok: false, error: getStorageWarning() };
   return { ok: true, ticket: clone(ticket) };
 }
 
@@ -475,7 +475,7 @@ export function addUpdate(id, input) {
   const now = new Date().toISOString();
   ticket.activity.push({ id: makeId(kind), kind, body, at: now });
   ticket.updatedAt = now;
-  commit(tickets);
+  if (!commit(tickets)) return { ok: false, error: getStorageWarning() };
   return { ok: true, ticket: clone(ticket) };
 }
 

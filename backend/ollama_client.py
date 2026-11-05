@@ -67,6 +67,8 @@ class OllamaModelClient:
                 close()
 
         content = getattr(getattr(response, "message", None), "content", None)
+        if getattr(response, "done_reason", None) == "length":
+            raise ModelCallError("output_capped", "LengthFinish")
         if not isinstance(content, str) or not content.strip():
             raise ModelCallError("invalid_output", "EmptyContent")
         return content

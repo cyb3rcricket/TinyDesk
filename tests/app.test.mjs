@@ -87,21 +87,67 @@ function installDom(hash) {
   };
 }
 
-test("a malformed ticket hash shows the queue", async () => {
+const STORAGE_ERROR =
+  "The latest change could not be saved in this browser. It will disappear when you close the tab.";
+
+test("ticket page routing and storage warnings", async (t) => {
   installDom("#/ticket/%");
   await import(new URL("../js/app.js", import.meta.url).href);
-  assert.equal(document.title, "Ticket queue · TinyDesk");
-  assert.equal(nodes.get("view-queue").hidden, false);
-  assert.equal(nodes.get("view-ticket").hidden, true);
 
-  location.hash = "#/ticket/TD-2408";
-  windowListeners.hashchange();
-  assert.equal(document.title, "TD-2408 · TinyDesk");
-  assert.equal(nodes.get("view-ticket").hidden, false);
+  await t.test("a malformed ticket hash shows the queue", () => {
+    assert.equal(document.title, "Ticket queue · TinyDesk");
+    assert.equal(nodes.get("view-queue").hidden, false);
+    assert.equal(nodes.get("view-ticket").hidden, true);
 
-  location.hash = "#/ticket/%ZZ";
-  windowListeners.hashchange();
-  assert.equal(document.title, "Ticket queue · TinyDesk");
-  assert.equal(nodes.get("view-queue").hidden, false);
-  assert.equal(nodes.get("view-ticket").hidden, true);
+    location.hash = "#/ticket/TD-2408";
+    windowListeners.hashchange();
+    assert.equal(document.title, "TD-2408 · TinyDesk");
+    assert.equal(nodes.get("view-ticket").hidden, false);
+
+    location.hash = "#/ticket/%ZZ";
+    windowListeners.hashchange();
+    assert.equal(document.title, "Ticket queue · TinyDesk");
+    assert.equal(nodes.get("view-queue").hidden, false);
+    assert.equal(nodes.get("view-ticket").hidden, true);
+  });
+
+  await t.test("a failed save shows an error and the warning stays on later routes", () => {
+    const data = new Map();
+    globalThis.localStorage = {
+      getItem(key) {
+        return data.has(key) ? data.get(key) : null;
+      },
+      setItem(key, value) {
+        data.set(String(key), String(value));
+      },
+      removeItem(key) {
+        data.delete(key);
+      },
+      clear() {
+        data.clear();
+      }
+    };
+
+    location.hash = "#/ticket/TD-2401";
+    windowListeners.hashchange();
+    assert.equal(document.title, "TD-2401 · TinyDesk");
+    nodes.get("field-priority").value = "Low";
+    globalThis.localStorage.setItem = () => {
+      throw new Error("quota");
+    };
+
+    nodes.get("fields-form").listeners.submit[0]({ preventDefault() {} });
+    assert.equal(nodes.get("save-status").textContent, STORAGE_ERROR);
+    assert.equal(nodes.get("save-status").className.includes("is-error"), true);
+
+    location.hash = "#/";
+    windowListeners.hashchange();
+    assert.equal(nodes.get("app-banner").hidden, false);
+    assert.equal(nodes.get("app-banner").textContent, STORAGE_ERROR);
+
+    location.hash = "#/new";
+    windowListeners.hashchange();
+    assert.equal(nodes.get("app-banner").hidden, false);
+    assert.equal(nodes.get("app-banner").textContent, STORAGE_ERROR);
+  });
 });

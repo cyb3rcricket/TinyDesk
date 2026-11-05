@@ -50,6 +50,10 @@ FAILURE_MESSAGES = {
     ),
     "invalid_output": "The Ollama model returned a result TinyDesk could not use. Try again.",
     "bad_response": "The Ollama model returned an unexpected response. Try again.",
+    "output_capped": (
+        "The Ollama response was cut off before the analysis finished. "
+        "TinyDesk did not show a partial result."
+    ),
 }
 
 XAI_FAILURE_MESSAGES = {
@@ -422,6 +426,7 @@ class TicketAnalyzer:
         started: float,
     ) -> None:
         elapsed_ms = int((time.perf_counter() - started) * 1000)
+        ticket_id = ticket_id.replace("\r", "").replace("\n", "")
         logger.warning(
             "ticket analysis failed ticket_id=%s reason=%s error_type=%s status_code=%s duration_ms=%s",
             ticket_id,

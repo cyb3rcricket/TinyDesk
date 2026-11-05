@@ -238,6 +238,57 @@ def test_length_finish_discards_partial_analysis_and_does_not_retry(monkeypatch,
     assert saved["request_settings"]["max_completion_tokens"] == 1200
 
 
+def _rejecting_client(body: dict) -> XaiModelClient:
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(400, json=body)
+
+    return XaiModelClient(settings(), transport=httpx.MockTransport(handler))
+
+
+def test_structured_context_limit_code_is_context_limit(monkeypatch):
+    monkeypatch.setenv("XAI_API_KEY", "test-key")
+    client = _rejecting_client(
+        {
+            "error": {
+                "message": "model produced no text",
+                "type": "invalid_request_error",
+                "code": "context_length_exceeded",
+            }
+        }
+    )
+    with pytest.raises(ModelCallError) as caught:
+        complete(client)
+    assert caught.value.reason == "context_limit"
+
+
+def test_structured_context_limit_type_or_top_level_code_is_context_limit(monkeypatch):
+    monkeypatch.setenv("XAI_API_KEY", "test-key")
+    for body in (
+        {"error": {"type": "context_length_exceeded", "message": "too long"}},
+        {"code": "context_length_exceeded", "error": "maximum context length exceeded"},
+    ):
+        client = _rejecting_client(body)
+        with pytest.raises(ModelCallError) as caught:
+            complete(client)
+        assert caught.value.reason == "context_limit"
+
+
+def test_context_words_without_the_structured_code_stay_bad_response(monkeypatch):
+    monkeypatch.setenv("XAI_API_KEY", "test-key")
+    client = _rejecting_client(
+        {
+            "error": {
+                "message": "Invalid context token parameter",
+                "type": "invalid_request_error",
+                "code": "invalid_argument",
+            }
+        }
+    )
+    with pytest.raises(ModelCallError) as caught:
+        complete(client)
+    assert caught.value.reason == "bad_response"
+
+
 def test_client_does_not_trust_proxy_environment(monkeypatch):
     monkeypatch.setenv("XAI_API_KEY", "test-key")
     monkeypatch.setenv("HTTPS_PROXY", "http://proxy.example:8080")

@@ -193,6 +193,15 @@ def test_blank_summary_is_rejected(client):
     assert response.json()["available"] is False
 
 
+def test_followups_are_truncated_to_three():
+    from backend.schemas import ModelAnalysis
+
+    payload = dict(VALID_MODEL)
+    payload["followUps"] = ["one", " two ", "", "three", "four", "five", "six"]
+    parsed = ModelAnalysis.model_validate(payload)
+    assert parsed.followUps == ["one", "two", "three"]
+
+
 def test_empty_followups_are_allowed(client):
     payload = dict(VALID_MODEL)
     payload["followUps"] = ["  ", "Which printer name is selected?"]
@@ -224,6 +233,47 @@ def test_backend_failures_are_visible(client, caplog, reason, snippet):
     assert SECRET not in response.text
     assert SECRET not in caplog.text
     assert reason in caplog.text
+
+
+def test_capped_ollama_response_is_an_error_without_partial_fields(client, monkeypatch):
+    monkeypatch.delenv("TINYDESK_AI_PROVIDER", raising=False)
+    fake = FakeModel([ModelCallError("output_capped", "LengthFinish")])
+    use_model(fake)
+    response = client.post("/api/analyze-ticket", json=ticket(description=SECRET))
+    body = response.json()
+    assert response.status_code == 200
+    assert body["available"] is False
+    assert body["message"] == (
+        "The Ollama response was cut off before the analysis finished. "
+        "TinyDesk did not show a partial result."
+    )
+    assert "summary" not in body
+    assert "suggestedCategory" not in body
+    assert "followUps" not in body
+    assert "draft" not in body
+    assert SECRET not in response.text
+
+
+def test_failure_log_strips_line_breaks_from_the_ticket_id(client, caplog):
+    fake = FakeModel([ModelCallError("bad_response", "HTTPStatusError", 400)])
+    use_model(fake)
+    with caplog.at_level(logging.WARNING, logger="tinydesk.analysis"):
+        response = client.post(
+            "/api/analyze-ticket",
+            json=ticket(id="TD-1\nINJECTED reason=auth"),
+        )
+    assert response.status_code == 200
+    failed = [
+        line
+        for line in caplog.text.splitlines()
+        if "ticket analysis failed" in line or line.startswith("INJECTED")
+    ]
+    assert failed == [
+        line
+        for line in failed
+        if "TD-1INJECTED reason=auth" in line and "reason=bad_response" in line
+    ]
+    assert len(failed) == 1
 
 
 def test_capped_xai_response_is_an_error_without_partial_fields(client, monkeypatch):

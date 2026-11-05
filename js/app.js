@@ -444,6 +444,11 @@ function renderRoute() {
   if (route.name === "new") heading = renderNew();
   if (route.name === "ticket") heading = renderTicket(route.id);
 
+  if (getStorageWarning()) {
+    showBanner(getStorageWarning(), "error");
+    keepBanner = false;
+  }
+
   if (booted && heading) {
     heading.setAttribute("tabindex", "-1");
     heading.focus();

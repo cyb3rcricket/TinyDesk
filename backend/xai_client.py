@@ -25,6 +25,7 @@ from backend.ollama_client import ModelCallError
 XAI_CHAT_URL = "https://api.x.ai/v1/chat/completions"
 COST_TICKS_PER_USD = 10_000_000_000
 PROMPT_CACHE_KEY = "tinydesk-analyze-ticket"
+_CONTEXT_LIMIT_CODES = frozenset({"context_length_exceeded"})
 
 
 def cost_usd_from_usage(usage: dict | None) -> float | None:
@@ -67,6 +68,23 @@ def _generation_error(settings: Settings) -> str | None:
     if not 1 <= cap <= MAX_XAI_COMPLETION_TOKENS:
         return "bad_output_cap"
     return None
+
+
+def _is_context_limit(body: dict) -> bool:
+    """True when the response's structured error code or type is a context limit.
+
+    Message text is ignored. A 400 that only mentions context and tokens, or
+    that carries a different code, stays a bad response.
+    """
+    candidates: list[object] = []
+    error = body.get("error")
+    if isinstance(error, dict):
+        candidates.extend(error.get(key) for key in ("code", "type"))
+    candidates.extend(body.get(key) for key in ("code", "type"))
+    for candidate in candidates:
+        if isinstance(candidate, str) and candidate.strip().lower() in _CONTEXT_LIMIT_CODES:
+            return True
+    return False
 
 
 def _message_digests(messages: list[dict]) -> list[dict]:
@@ -188,8 +206,7 @@ class XaiModelClient:
         elif response.status_code == 404:
             reason, error_type = "model_missing", "HTTPStatusError"
         elif response.status_code >= 400:
-            detail = json.dumps(body) if body else ""
-            if "context" in detail.lower() and "token" in detail.lower():
+            if _is_context_limit(body):
                 reason = "context_limit"
             else:
                 reason = "bad_response"
