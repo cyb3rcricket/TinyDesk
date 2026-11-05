@@ -262,14 +262,20 @@ function makeId(prefix) {
   return `${prefix}-${Date.now().toString(36)}-${rand}`;
 }
 
+function normalizeActivity(activity) {
+  if (!Array.isArray(activity)) return [];
+  return activity.filter((item) => item && typeof item === "object" && typeof item.at === "string");
+}
+
 function normalizeTicket(value) {
   if (!value || typeof value !== "object" || typeof value.id !== "string") return null;
+  if (typeof value.createdAt !== "string" || typeof value.updatedAt !== "string") return null;
   return {
     ...value,
     department: typeof value.department === "string" ? value.department : "",
     resolutionNote: typeof value.resolutionNote === "string" ? value.resolutionNote : "",
     seeded: Boolean(value.seeded),
-    activity: Array.isArray(value.activity) ? value.activity : []
+    activity: normalizeActivity(value.activity)
   };
 }
 

@@ -139,6 +139,49 @@ test("an earlier tab keeps a ticket created in another tab", async () => {
   assert.equal(tabB.getTickets().length, tabA.getTickets().length);
 });
 
+test("records without string timestamps are dropped before sorting", async () => {
+  const { data } = installStorage();
+  const store = await loadStore();
+  store.getTickets();
+  const raw = JSON.parse(data.get(STORAGE_KEY));
+  raw.push({ id: "TD-NO-TIME", subject: "Missing timestamps", status: "New" });
+  raw.push({
+    id: "TD-BAD-UPDATED",
+    subject: "Numeric updatedAt",
+    createdAt: "2026-10-02T00:00:00.000Z",
+    updatedAt: 1700000000000,
+    activity: []
+  });
+  raw.push({
+    id: "TD-MIXED",
+    subject: "Mixed activity",
+    createdAt: "2026-10-03T00:00:00.000Z",
+    updatedAt: "2026-10-03T00:00:00.000Z",
+    status: "New",
+    activity: [
+      { kind: "opened", body: "ok", at: "2026-10-03T00:00:00.000Z" },
+      { kind: "internal", body: "number", at: 5 },
+      { kind: "internal", body: "missing" },
+      null
+    ]
+  });
+  data.set(STORAGE_KEY, JSON.stringify(raw));
+
+  const fresh = await loadStore();
+  const tickets = fresh.getTickets();
+  assert.equal(tickets.some((ticket) => ticket.id === "TD-NO-TIME"), false);
+  assert.equal(tickets.some((ticket) => ticket.id === "TD-BAD-UPDATED"), false);
+  const mixed = fresh.getTicket("TD-MIXED");
+  assert.ok(mixed);
+  assert.deepEqual(
+    mixed.activity.map((item) => item.body),
+    ["ok"]
+  );
+  mixed.activity
+    .map((item, index) => ({ item, index }))
+    .sort((a, b) => a.item.at.localeCompare(b.item.at) || a.index - b.index);
+});
+
 test("a failed localStorage write is returned as an error", async () => {
   const { data } = installStorage();
   const store = await loadStore();

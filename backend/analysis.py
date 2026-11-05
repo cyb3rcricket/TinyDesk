@@ -327,10 +327,11 @@ def _reduce_payload_state(ticket: TicketRequest, state: dict) -> bool:
 def build_model_payload(ticket: TicketRequest) -> dict:
     """Copy the fields the model needs. The ticket argument is left as saved.
 
-    The copy starts with the latest activity and a per-field cap, then shrinks
-    until the system prompt, user message, and reserved reply fit in the
-    runtime context window. History is reduced before the description and
-    resolution note. Shortened text keeps its beginning.
+    The copy starts with the latest activity and a per-field cap. For Ollama,
+    it then shrinks until the system prompt, user message, and reserved reply
+    fit in the runtime context window. History is reduced before the description
+    and resolution note. Shortened text keeps its beginning. Other providers,
+    including xAI, keep this copy with the per-field caps and without that shrink.
     """
     selected = list(ticket.activity[-RECENT_ACTIVITY_LIMIT:])
     state = {
@@ -340,6 +341,8 @@ def build_model_payload(ticket: TicketRequest) -> dict:
         "description_limit": len(ticket.description),
         "resolution_limit": min(len(ticket.resolutionNote), MODEL_TEXT_LIMIT),
     }
+    if load_settings().provider != "ollama":
+        return _payload_from_state(ticket, state)
     seen: set[tuple] = set()
     while True:
         payload = _payload_from_state(ticket, state)

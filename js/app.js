@@ -163,7 +163,12 @@ function parseRoute() {
   if (hash === "#/new") return { name: "new" };
   const prefix = "#/ticket/";
   if (hash.startsWith(prefix)) {
-    return { name: "ticket", id: decodeURIComponent(hash.slice(prefix.length)) };
+    try {
+      return { name: "ticket", id: decodeURIComponent(hash.slice(prefix.length)) };
+    } catch (error) {
+      if (!(error instanceof URIError)) throw error;
+      return { name: "queue" };
+    }
   }
   return { name: "queue" };
 }

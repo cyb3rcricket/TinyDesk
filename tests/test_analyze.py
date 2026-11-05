@@ -298,6 +298,77 @@ def test_request_over_the_byte_limit_is_rejected(client):
     assert "too large" in response.json()["message"]
 
 
+def _invoke_analyze(body: bytes, headers: list[tuple[bytes, bytes]]) -> tuple[int, dict]:
+    import asyncio
+
+    scope = {
+        "type": "http",
+        "asgi": {"version": "3.0"},
+        "http_version": "1.1",
+        "method": "POST",
+        "scheme": "http",
+        "path": "/api/analyze-ticket",
+        "raw_path": b"/api/analyze-ticket",
+        "query_string": b"",
+        "headers": headers,
+        "client": ("127.0.0.1", 50000),
+        "server": ("testserver", 80),
+        "root_path": "",
+    }
+    sent = False
+
+    async def receive():
+        nonlocal sent
+        if not sent:
+            sent = True
+            return {"type": "http.request", "body": body, "more_body": False}
+        return {"type": "http.disconnect"}
+
+    messages = []
+
+    async def send(message):
+        messages.append(message)
+
+    asyncio.run(app(scope, receive, send))
+    status = next(message["status"] for message in messages if message["type"] == "http.response.start")
+    payload = b"".join(
+        message.get("body", b"") for message in messages if message["type"] == "http.response.body"
+    )
+    return status, json.loads(payload.decode())
+
+
+def test_chunked_analyze_body_over_the_cap_is_rejected():
+    status, body = _invoke_analyze(
+        b"x" * 250_244,
+        [(b"content-type", b"application/json")],
+    )
+    assert status == 413
+    assert body["available"] is False
+    assert "too large" in body["message"]
+
+
+@pytest.mark.parametrize("raw_length", [None, b"0", b"-1"])
+def test_missing_or_non_positive_content_length_is_rejected(raw_length):
+    headers = [(b"content-type", b"application/json")]
+    if raw_length is not None:
+        headers.append((b"content-length", raw_length))
+    status, body = _invoke_analyze(b"{}", headers)
+    assert status == 413
+    assert body["available"] is False
+
+
+def test_understated_content_length_still_enforces_the_byte_cap():
+    status, body = _invoke_analyze(
+        b"x" * 250_244,
+        [
+            (b"content-type", b"application/json"),
+            (b"content-length", b"100"),
+        ],
+    )
+    assert status == 413
+    assert body["available"] is False
+
+
 def test_get_is_not_allowed(client):
     response = client.get("/api/analyze-ticket")
     assert response.status_code == 405
@@ -626,3 +697,32 @@ def test_token_dense_input_stays_inside_the_combined_budget():
     if prepared["activity"]:
         assert prepared["activity"][-1]["body"].startswith(prefix)
         assert prepared["activity"][-1]["body"].endswith(SHORTENED_MARK)
+
+
+def test_xai_long_ticket_is_not_marked_shortened(monkeypatch):
+    note = "R" * MODEL_TEXT_LIMIT
+    description = "R" * 5000
+    activity = [
+        {"kind": "internal", "body": "R" * 400, "at": "2026-10-01T00:00:00.000Z"}
+        for _ in range(10)
+    ]
+    model = TicketRequest.model_validate(
+        ticket(
+            subject="Long xAI ticket",
+            description=description,
+            status="Resolved",
+            resolutionNote=note,
+            activity=activity,
+        )
+    )
+    monkeypatch.setenv("TINYDESK_AI_PROVIDER", "ollama")
+    assert SHORTENED_MARK in json.dumps(build_model_payload(model))
+
+    monkeypatch.setenv("TINYDESK_AI_PROVIDER", "xai")
+    prepared = build_model_payload(model)
+    payload_json = user_message(model).split("\n\n", 1)[1]
+    assert "[shortened]" not in payload_json
+    assert "[shortened]" not in json.dumps(prepared)
+    assert prepared["description"] == description
+    assert prepared["currentFields"]["resolutionNote"] == note
+    assert [item["body"] for item in prepared["activity"]] == [item.body for item in model.activity]

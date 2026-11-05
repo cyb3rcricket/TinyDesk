@@ -154,7 +154,11 @@ class XaiModelClient:
         timeout_config = httpx.Timeout(connect=5.0, read=timeout, write=30.0, pool=5.0)
         started = time.perf_counter()
         try:
-            with httpx.Client(timeout=timeout_config, transport=self._transport) as client:
+            with httpx.Client(
+                timeout=timeout_config,
+                transport=self._transport,
+                trust_env=False,
+            ) as client:
                 response = client.post(XAI_CHAT_URL, headers=headers, json=payload)
         except httpx.TimeoutException as exc:
             self._trace(model, messages, error="timeout")

@@ -238,6 +238,29 @@ def test_length_finish_discards_partial_analysis_and_does_not_retry(monkeypatch,
     assert saved["request_settings"]["max_completion_tokens"] == 1200
 
 
+def test_client_does_not_trust_proxy_environment(monkeypatch):
+    monkeypatch.setenv("XAI_API_KEY", "test-key")
+    monkeypatch.setenv("HTTPS_PROXY", "http://proxy.example:8080")
+    seen = {}
+
+    class RecordingClient(httpx.Client):
+        def __init__(self, *args, **kwargs):
+            seen["trust_env"] = kwargs.get("trust_env")
+            super().__init__(*args, **kwargs)
+
+    monkeypatch.setattr("backend.xai_client.httpx.Client", RecordingClient)
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            json={"model": "grok-4.7", "choices": [{"message": {"content": "{\"summary\":\"ok\"}"}}]},
+        )
+
+    client = XaiModelClient(settings(), transport=httpx.MockTransport(handler))
+    assert complete(client) == "{\"summary\":\"ok\"}"
+    assert seen["trust_env"] is False
+
+
 def test_invalid_generation_settings_make_no_request(monkeypatch):
     monkeypatch.setenv("XAI_API_KEY", "test-key")
     calls = {"n": 0}
