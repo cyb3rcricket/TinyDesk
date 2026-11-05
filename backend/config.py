@@ -1,6 +1,9 @@
+import logging
 import os
 from dataclasses import dataclass
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_BASE_URL = "http://127.0.0.1:11434"
 DEFAULT_MODEL = "qwen3:4b-instruct-2507-q4_K_M"
@@ -29,6 +32,22 @@ class Settings:
     config_error: str | None = None
 
 
+def _strip_unquoted_comment(value: str) -> str:
+    """Drop a trailing # comment. A # inside single or double quotes stays."""
+    quote = ""
+    for index, char in enumerate(value):
+        if quote:
+            if char == quote:
+                quote = ""
+            continue
+        if char in {"'", '"'}:
+            quote = char
+            continue
+        if char == "#":
+            return value[:index].rstrip()
+    return value
+
+
 def load_local_env(path: Path | None = None) -> None:
     """Load a local env file into the process.
 
@@ -40,7 +59,7 @@ def load_local_env(path: Path | None = None) -> None:
         return
     file = LOCAL_ENV_FILE if path is None else path
     try:
-        text = file.read_text(encoding="utf-8")
+        text = file.read_text(encoding="utf-8-sig")
     except OSError:
         return
     for raw_line in text.splitlines():
@@ -55,7 +74,7 @@ def load_local_env(path: Path | None = None) -> None:
         key = key.strip()
         if not key or not key.replace("_", "").isalnum() or key in os.environ:
             continue
-        value = value.strip()
+        value = _strip_unquoted_comment(value.strip()).strip()
         if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
             value = value[1:-1]
         os.environ[key] = value
@@ -81,6 +100,12 @@ def load_settings() -> Settings:
             parsed = 0
         if 0 < parsed <= MAX_TIMEOUT_SECONDS:
             timeout = parsed
+        else:
+            logger.warning(
+                "rejected OLLAMA_TIMEOUT_SECONDS=%s; using %s",
+                raw_timeout,
+                DEFAULT_TIMEOUT_SECONDS,
+            )
     effort, cap, config_error = _xai_generation(provider)
     return Settings(base_url.rstrip("/"), model, timeout, provider, effort, cap, config_error)
 

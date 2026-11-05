@@ -100,7 +100,7 @@ class ModelAnalysis(BaseModel):
             if len(text) > 500:
                 raise ValueError("follow-up is too long")
             cleaned.append(text)
-            if len(cleaned) == 6:
+            if len(cleaned) == 3:
                 break
         return cleaned
 

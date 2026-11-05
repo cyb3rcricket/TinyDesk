@@ -145,6 +145,21 @@ def test_ollama_errors_map_to_reasons(error, reason, status):
     assert stub.closed is True
 
 
+def test_length_done_reason_is_output_capped():
+    stub = Stub(
+        result=SimpleNamespace(
+            done_reason="length",
+            message=SimpleNamespace(content='{"summary":"partial"}'),
+        )
+    )
+    client = client_for(stub)
+    with pytest.raises(ModelCallError) as caught:
+        client.complete(model="llama3.2:3b", messages=[], schema={}, timeout=45)
+    assert caught.value.reason == "output_capped"
+    assert caught.value.error_type == "LengthFinish"
+    assert stub.closed is True
+
+
 def test_empty_model_content_is_invalid_output():
     stub = Stub(result=SimpleNamespace(message=SimpleNamespace(content="  ")))
     client = client_for(stub)

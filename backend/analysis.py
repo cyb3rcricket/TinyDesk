@@ -50,6 +50,10 @@ FAILURE_MESSAGES = {
     ),
     "invalid_output": "The Ollama model returned a result TinyDesk could not use. Try again.",
     "bad_response": "The Ollama model returned an unexpected response. Try again.",
+    "output_capped": (
+        "The Ollama response was cut off before the analysis finished. "
+        "TinyDesk did not show a partial result."
+    ),
 }
 
 XAI_FAILURE_MESSAGES = {
@@ -327,10 +331,11 @@ def _reduce_payload_state(ticket: TicketRequest, state: dict) -> bool:
 def build_model_payload(ticket: TicketRequest) -> dict:
     """Copy the fields the model needs. The ticket argument is left as saved.
 
-    The copy starts with the latest activity and a per-field cap, then shrinks
-    until the system prompt, user message, and reserved reply fit in the
-    runtime context window. History is reduced before the description and
-    resolution note. Shortened text keeps its beginning.
+    The copy starts with the latest activity and a per-field cap. For Ollama,
+    it then shrinks until the system prompt, user message, and reserved reply
+    fit in the runtime context window. History is reduced before the description
+    and resolution note. Shortened text keeps its beginning. Other providers,
+    including xAI, keep this copy with the per-field caps and without that shrink.
     """
     selected = list(ticket.activity[-RECENT_ACTIVITY_LIMIT:])
     state = {
@@ -340,6 +345,8 @@ def build_model_payload(ticket: TicketRequest) -> dict:
         "description_limit": len(ticket.description),
         "resolution_limit": min(len(ticket.resolutionNote), MODEL_TEXT_LIMIT),
     }
+    if load_settings().provider != "ollama":
+        return _payload_from_state(ticket, state)
     seen: set[tuple] = set()
     while True:
         payload = _payload_from_state(ticket, state)
@@ -419,6 +426,7 @@ class TicketAnalyzer:
         started: float,
     ) -> None:
         elapsed_ms = int((time.perf_counter() - started) * 1000)
+        ticket_id = ticket_id.replace("\r", "").replace("\n", "")
         logger.warning(
             "ticket analysis failed ticket_id=%s reason=%s error_type=%s status_code=%s duration_ms=%s",
             ticket_id,

@@ -161,24 +161,56 @@ async def hide_local_config(request: Request, call_next):
     return await call_next(request)
 
 
+def _request_too_large() -> JSONResponse:
+    logger.warning("ticket analysis rejected reason=request_too_large")
+    return JSONResponse(
+        status_code=413,
+        content={
+            "available": False,
+            "message": "This ticket is too large to analyze.",
+        },
+    )
+
+
+def _content_length_within_cap(raw_length: str | None) -> bool:
+    """False when Content-Length is missing, not an integer, or not positive and within the cap."""
+    if raw_length is None:
+        return False
+    try:
+        size = int(raw_length)
+    except ValueError:
+        return False
+    return 0 < size <= MAX_REQUEST_BYTES
+
+
+async def _read_body_within_cap(request: Request) -> bytes | None:
+    """Read the POST body, stopping once it passes the cap. None means too large.
+
+    The HTTP middleware replays a body downstream only when it was cached on
+    the request. Streaming without that cache hands the route an empty body.
+    """
+    received = 0
+    chunks: list[bytes] = []
+    async for chunk in request.stream():
+        if not chunk:
+            continue
+        received += len(chunk)
+        if received > MAX_REQUEST_BYTES:
+            return None
+        chunks.append(chunk)
+    body = b"".join(chunks)
+    request._body = body
+    return body
+
+
 @app.middleware("http")
 async def limit_analyze_body(request: Request, call_next):
     if request.method == "POST" and request.url.path == "/api/analyze-ticket":
-        raw_length = request.headers.get("content-length")
-        if raw_length is not None:
-            try:
-                size = int(raw_length)
-            except ValueError:
-                size = MAX_REQUEST_BYTES + 1
-            if size > MAX_REQUEST_BYTES:
-                logger.warning("ticket analysis rejected reason=request_too_large")
-                return JSONResponse(
-                    status_code=413,
-                    content={
-                        "available": False,
-                        "message": "This ticket is too large to analyze.",
-                    },
-                )
+        if not _content_length_within_cap(request.headers.get("content-length")):
+            return _request_too_large()
+        body = await _read_body_within_cap(request)
+        if body is None:
+            return _request_too_large()
     return await call_next(request)
 
 

@@ -1,3 +1,4 @@
+import logging
 import os
 
 from backend.config import load_local_env, load_settings
@@ -132,9 +133,72 @@ def test_dotenv_skip_does_not_read_the_default_file(monkeypatch):
     assert os.environ.get("TINYDESK_AI_PROVIDER") is None
 
 
+def test_local_env_reads_past_a_leading_bom(monkeypatch, tmp_path):
+    monkeypatch.delenv("TINYDESK_AI_PROVIDER", raising=False)
+    monkeypatch.delenv("XAI_MODEL", raising=False)
+    env_file = tmp_path / ".env"
+    env_file.write_bytes(b"\xef\xbb\xbfTINYDESK_AI_PROVIDER=xai\nXAI_MODEL=grok-4.7\n")
+    try:
+        load_local_env(env_file)
+        settings = load_settings()
+        assert settings.provider == "xai"
+        assert settings.model == "grok-4.7"
+    finally:
+        os.environ.pop("TINYDESK_AI_PROVIDER", None)
+        os.environ.pop("XAI_MODEL", None)
+
+
+def test_local_env_strips_unquoted_comments_and_keeps_quoted_hashes(monkeypatch, tmp_path):
+    monkeypatch.delenv("TINYDESK_AI_PROVIDER", raising=False)
+    monkeypatch.delenv("XAI_MODEL", raising=False)
+    monkeypatch.delenv("OLLAMA_BASE_URL", raising=False)
+    monkeypatch.delenv("XAI_REASONING_EFFORT", raising=False)
+    env_file = tmp_path / ".env"
+    env_file.write_text(
+        "\n".join(
+            [
+                "export TINYDESK_AI_PROVIDER=xai # cloud provider",
+                'XAI_MODEL="grok # 4.7"',
+                "OLLAMA_BASE_URL=http://127.0.0.1:11434 # local only",
+                "XAI_REASONING_EFFORT='low # effort'",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    try:
+        load_local_env(env_file)
+        assert os.environ["TINYDESK_AI_PROVIDER"] == "xai"
+        assert os.environ["XAI_MODEL"] == "grok # 4.7"
+        assert os.environ["OLLAMA_BASE_URL"] == "http://127.0.0.1:11434"
+        assert os.environ["XAI_REASONING_EFFORT"] == "low # effort"
+    finally:
+        os.environ.pop("TINYDESK_AI_PROVIDER", None)
+        os.environ.pop("XAI_MODEL", None)
+        os.environ.pop("OLLAMA_BASE_URL", None)
+        os.environ.pop("XAI_REASONING_EFFORT", None)
+
+
 def test_invalid_timeout_uses_the_default(monkeypatch):
     monkeypatch.delenv("OLLAMA_BASE_URL", raising=False)
     monkeypatch.delenv("OLLAMA_MODEL", raising=False)
     for raw in ("nope", "0", "-5", "900"):
         monkeypatch.setenv("OLLAMA_TIMEOUT_SECONDS", raw)
         assert load_settings().timeout_seconds == 120
+
+
+def test_rejected_timeout_is_logged(monkeypatch, caplog):
+    monkeypatch.delenv("OLLAMA_BASE_URL", raising=False)
+    monkeypatch.delenv("OLLAMA_MODEL", raising=False)
+    for raw in ("nope", "0", "-5", "900"):
+        caplog.clear()
+        monkeypatch.setenv("OLLAMA_TIMEOUT_SECONDS", raw)
+        with caplog.at_level(logging.WARNING, logger="backend.config"):
+            assert load_settings().timeout_seconds == 120
+        assert "OLLAMA_TIMEOUT_SECONDS" in caplog.text
+        assert raw in caplog.text
+
+    caplog.clear()
+    monkeypatch.setenv("OLLAMA_TIMEOUT_SECONDS", "30")
+    with caplog.at_level(logging.WARNING, logger="backend.config"):
+        assert load_settings().timeout_seconds == 30
+    assert caplog.text == ""

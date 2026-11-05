@@ -9,7 +9,6 @@ export const STATUSES = ["New", "In Progress", "Waiting on User", "Resolved"];
 export const PRIORITIES = ["Low", "Medium", "High"];
 export const CATEGORIES = ["Access", "Network", "Hardware", "Software", "Email", "Other"];
 
-let cache = null;
 let storageWarning = "";
 
 function clone(value) {
@@ -263,14 +262,20 @@ function makeId(prefix) {
   return `${prefix}-${Date.now().toString(36)}-${rand}`;
 }
 
+function normalizeActivity(activity) {
+  if (!Array.isArray(activity)) return [];
+  return activity.filter((item) => item && typeof item === "object" && typeof item.at === "string");
+}
+
 function normalizeTicket(value) {
   if (!value || typeof value !== "object" || typeof value.id !== "string") return null;
+  if (typeof value.createdAt !== "string" || typeof value.updatedAt !== "string") return null;
   return {
     ...value,
     department: typeof value.department === "string" ? value.department : "",
     resolutionNote: typeof value.resolutionNote === "string" ? value.resolutionNote : "",
     seeded: Boolean(value.seeded),
-    activity: Array.isArray(value.activity) ? value.activity : []
+    activity: normalizeActivity(value.activity)
   };
 }
 
@@ -295,32 +300,29 @@ function writeStorage(tickets) {
 }
 
 function load() {
-  if (cache) return clone(cache);
-
   const raw = readStorage();
   if (raw === null) {
-    cache = createSeed();
-    writeStorage(cache);
-    return clone(cache);
+    const seeded = createSeed();
+    writeStorage(seeded);
+    return clone(seeded);
   }
 
   try {
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) throw new Error("expected a list");
-    cache = parsed.map(normalizeTicket).filter(Boolean);
-    return clone(cache);
+    return parsed.map(normalizeTicket).filter(Boolean);
   } catch {
-    cache = createSeed();
-    writeStorage(cache);
+    const seeded = createSeed();
+    writeStorage(seeded);
     storageWarning = "Saved TinyDesk data could not be read, so the sample tickets were restored.";
-    return clone(cache);
+    return clone(seeded);
   }
 }
 
 function commit(tickets) {
-  cache = clone(tickets);
-  writeStorage(cache);
-  return clone(cache);
+  const saved = clone(tickets);
+  if (!writeStorage(saved)) return null;
+  return clone(saved);
 }
 
 export function getStorageWarning() {
@@ -394,7 +396,7 @@ export function createTicket(input) {
     ]
   };
   tickets.push(ticket);
-  commit(tickets);
+  if (!commit(tickets)) return { ok: false, error: getStorageWarning() };
   return { ok: true, ticket: clone(ticket) };
 }
 
@@ -417,6 +419,7 @@ export function saveTicketFields(id, input) {
 
   const now = new Date().toISOString();
   const entries = [];
+  const clearingNote = status !== "Resolved" && Boolean(ticket.resolutionNote);
   if (ticket.category !== category) {
     entries.push({
       kind: "field",
@@ -432,9 +435,12 @@ export function saveTicketFields(id, input) {
   if (ticket.status !== status) {
     let body = `Status changed from ${ticket.status} to ${status}.`;
     if (status === "Resolved") body += ` Resolution: ${note}`;
+    else if (clearingNote) body += " Resolution note cleared.";
     entries.push({ kind: "status", body });
   } else if (status === "Resolved" && (ticket.resolutionNote || "") !== note) {
     entries.push({ kind: "status", body: "Resolution note updated." });
+  } else if (clearingNote) {
+    entries.push({ kind: "status", body: "Resolution note cleared." });
   }
 
   if (!entries.length) return { ok: true, unchanged: true, ticket: clone(ticket) };
@@ -450,9 +456,9 @@ export function saveTicketFields(id, input) {
   ticket.category = category;
   ticket.priority = priority;
   ticket.status = status;
-  if (status === "Resolved") ticket.resolutionNote = note;
+  ticket.resolutionNote = status === "Resolved" ? note : "";
   ticket.updatedAt = now;
-  commit(tickets);
+  if (!commit(tickets)) return { ok: false, error: getStorageWarning() };
   return { ok: true, ticket: clone(ticket) };
 }
 
@@ -469,7 +475,7 @@ export function addUpdate(id, input) {
   const now = new Date().toISOString();
   ticket.activity.push({ id: makeId(kind), kind, body, at: now });
   ticket.updatedAt = now;
-  commit(tickets);
+  if (!commit(tickets)) return { ok: false, error: getStorageWarning() };
   return { ok: true, ticket: clone(ticket) };
 }
 
